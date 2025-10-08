@@ -2,7 +2,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 const FAQSection = () => {
   const faqs = [{
     question: "What's included with my ticket?",
-    answer: "All tickets include full-day access to workshops, networking events, lunch, community gallery, profile highlight, and digital resources. VIP tickets include additional perks like pre-event dinner and exclusive lounge access."
+    answer: "All tickets include full-day access to workshops, community gallery, profile highlight, and digital resources. VIP tickets include additional perks and exclusive lounge access."
   }, {
     question: "Is there a refund policy?",
     answer: "Yes, we offer full refunds up to 30 days before the event. Between 30-14 days, we offer 50% refunds. No refunds within 14 days of the event, but tickets are transferable to another attendee."
@@ -12,9 +12,6 @@ const FAQSection = () => {
   }, {
     question: "What's the dress code?",
     answer: "Smart casual. Come comfortable and ready to create! We're all about authentic connections and creative energy."
-  }, {
-    question: "Are meals and refreshments included?",
-    answer: "Yes! Lunch and refreshments throughout the day are included with all tickets. VIP ticket holders also get access to the pre-event dinner."
   }, {
     question: "What AI tools will we use?",
     answer: "We'll be working with a variety of AI tools including Suno, ChatGPT, Midjourney, and others. No prior AI experience required—our workshops are designed for all skill levels."
