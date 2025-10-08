@@ -43,9 +43,9 @@ const AgendaSection = () => {
                 <AccordionItem 
                   key={index} 
                   value={`item-${index}`}
-                  className="border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-colors"
+                  className="border border-border rounded-xl overflow-hidden hover:border-primary hover:shadow-[0_0_20px_rgba(251,146,60,0.4)] transition-all duration-300"
                 >
-                  <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-accent/50">
+                  <AccordionTrigger className="px-6 py-4 hover:no-underline">
                     <div className="flex items-center gap-4 text-left">
                       <span className="text-primary font-bold text-lg shrink-0">
                         {session.time}
