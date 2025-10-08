@@ -62,7 +62,7 @@ const Footer = () => {
                 placeholder="Your email" 
                 className="bg-background/10 border-background/20 text-background placeholder:text-background/60"
               />
-              <Button variant="ghost" className="shrink-0">
+              <Button variant="ghost" className="shrink-0 border border-white/20 hover:border-white/40">
                 <Mail className="w-4 h-4" />
               </Button>
             </div>
