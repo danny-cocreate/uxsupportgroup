@@ -1,10 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Award, Star, Users2 } from "lucide-react";
+import teamCelebration from "@/assets/team-celebration.jpg";
 
 const ProfileCallout = () => {
   return (
-    <section className="py-24 bg-gradient-accent">
-      <div className="container mx-auto px-4">
+    <section className="py-24 bg-gradient-accent relative overflow-hidden">
+      {/* Background image faded */}
+      <img 
+        src={teamCelebration} 
+        alt="" 
+        className="absolute inset-0 w-full h-full object-cover opacity-8 mix-blend-soft-light"
+      />
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>

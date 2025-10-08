@@ -1,3 +1,5 @@
+import networkingCommunity from "@/assets/networking-community.jpg";
+
 const SocialProof = () => {
   const attendees = [
     { name: "Sarah Chen", role: "Principal Designer", company: "Tech Corp" },
@@ -9,8 +11,14 @@ const SocialProof = () => {
   ];
 
   return (
-    <section className="py-24 bg-card">
-      <div className="container mx-auto px-4">
+    <section className="py-24 bg-card relative overflow-hidden">
+      {/* Background image faded */}
+      <img 
+        src={networkingCommunity} 
+        alt="" 
+        className="absolute bottom-0 left-0 w-full h-2/3 object-cover opacity-5"
+      />
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-bold mb-6">
             Who's <span className="text-gradient">Joining?</span>

@@ -58,8 +58,13 @@ const Hero = () => {
               {[1, 2, 3, 4].map((i) => (
                 <div 
                   key={i}
-                  className="w-12 h-12 rounded-full bg-gradient-to-br from-white/40 to-white/20 border-2 border-white/50 backdrop-blur-sm"
-                />
+                  className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/60 to-secondary/60 border-2 border-white/70 backdrop-blur-sm flex items-center justify-center text-white font-bold text-xs"
+                >
+                  {i === 1 && '👤'}
+                  {i === 2 && '👨'}
+                  {i === 3 && '👩'}
+                  {i === 4 && '🧑'}
+                </div>
               ))}
             </div>
             <p className="text-white/80 text-sm">

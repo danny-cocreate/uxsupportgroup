@@ -1,8 +1,15 @@
 import { Sparkles, Users, Award } from "lucide-react";
+import communityWorkshop from "@/assets/community-workshop.jpg";
 
 const ConceptSection = () => {
   return (
     <section className="py-24 relative overflow-hidden">
+      {/* Background image faded */}
+      <img 
+        src={communityWorkshop} 
+        alt="" 
+        className="absolute top-0 right-0 w-1/2 h-full object-cover opacity-10 mix-blend-multiply"
+      />
       <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-secondary/10 to-transparent" />
       
       <div className="container mx-auto px-4 relative z-10">
