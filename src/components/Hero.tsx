@@ -23,7 +23,7 @@ const Hero = () => {
             <p className="text-sm font-medium text-foreground">10 Dec 2025  |  limited to  100 Seats</p>
           </div>
           
-          <h1 className="text-6xl font-bold text-foreground leading-tight mb-6 md:text-7xl">AIxUX Virtual Summit</h1>
+          <h1 className="text-6xl font-bold text-foreground leading-tight mb-6 md:text-7xl">AI<span className="text-gradient">x</span>UX Virtual Summit</h1>
           
           <h2 className="text-3xl font-bold text-foreground mb-16 leading-tight md:text-4xl">
             Unlock your UX super powers with AI
