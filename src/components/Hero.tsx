@@ -19,7 +19,7 @@ const Hero = () => {
             <img src={uxsgLogo} alt="UXSG" className="h-12 w-auto" />
           </div>
           
-          <div className="inline-block mb-6 px-6 py-2 bg-foreground/5 backdrop-blur-sm rounded-full border border-foreground/20">
+          <div className="inline-block mb-6 px-6 py-2 bg-gradient-to-r from-primary/10 via-secondary/10 to-primary/10 backdrop-blur-sm rounded-full border border-foreground/20">
             <p className="text-sm font-medium text-foreground">10 Dec 2025  |  limited to  100 Seats</p>
           </div>
           
