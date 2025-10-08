@@ -26,7 +26,7 @@ const Hero = () => {
           </div>
           
           <div className="inline-block mb-6 px-6 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-            <p className="text-white/90 text-sm font-medium">October 2025 · NYC · Just 60 Seats</p>
+            <p className="text-white/90 text-sm font-medium">10 Dec 2025 · NYC · 100 Seats</p>
           </div>
           
           <h1 className="text-6xl md:text-8xl font-bold text-white leading-tight mb-6">
