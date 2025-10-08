@@ -1,3 +1,5 @@
+import genericProfile from "@/assets/generic-profile.png";
+
 const SocialProof = () => {
   const attendees = [{
     name: "Sarah Chen",
@@ -38,10 +40,12 @@ const SocialProof = () => {
         
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 max-w-5xl mx-auto">
           {attendees.map((attendee, index) => <div key={index} className="text-center group hover:scale-105 transition-transform">
-              <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-primary to-secondary p-1">
-                <div className="w-full h-full rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center text-2xl font-bold text-primary">
-                  {attendee.name.split(' ').map(n => n[0]).join('')}
-                </div>
+              <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden bg-muted">
+                <img 
+                  src={genericProfile} 
+                  alt="Profile" 
+                  className="w-full h-full object-cover"
+                />
               </div>
               <h3 className="font-semibold text-sm mb-1">{attendee.name}</h3>
               <p className="text-xs text-muted-foreground">{attendee.role}</p>
