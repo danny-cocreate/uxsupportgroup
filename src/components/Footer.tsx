@@ -8,10 +8,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div>
             <h3 className="text-3xl font-bold mb-4">AIxUX Summit</h3>
-            <p className="text-background/80 mb-4">
-              The anti-conference for designers and product builders. 
-              October 2025, NYC.
-            </p>
+            <p className="text-background/80 mb-4">The anti-conference for UX professionals</p>
             <div className="mb-4">
               <p className="text-background/60 text-xs mb-2">Organized by</p>
               <img src={uxsgLogo} alt="UXSG" className="h-8 w-auto" />
