@@ -48,26 +48,24 @@ const ConceptSection = () => {
             <span className="text-gradient">at This Summit</span>
           </h2>
           
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+          <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
             {outcomes.map((outcome, index) => (
               <div
                 key={index}
-                className="group relative p-8 rounded-2xl bg-card border border-border hover:border-primary/50 transition-all duration-300 hover-scale"
+                className="relative p-6 rounded-xl bg-card border border-border"
               >
-                <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl ${outcome.gradient} rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                
                 <div className="relative">
-                  <div className="flex items-start gap-4 mb-4">
-                    <span className="text-6xl font-bold text-primary/20">
+                  <div className="flex items-start gap-3 mb-3">
+                    <span className="text-4xl font-bold text-primary/20">
                       {String(index + 1).padStart(2, '0')}
                     </span>
                   </div>
                   
-                  <h3 className="text-2xl md:text-3xl font-bold mb-4 leading-tight">
+                  <h3 className="text-xl font-bold mb-3 leading-tight">
                     {outcome.title}
                   </h3>
                   
-                  <p className="text-lg text-muted-foreground leading-relaxed">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
                     {outcome.description}
                   </p>
                 </div>
