@@ -29,7 +29,7 @@ const AgendaSection = () => {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-6xl font-bold mb-6">
-              Agenda <span className="text-gradient">at a Glance</span>
+              <span className="text-gradient">Agenda</span> at a Glance
             </h2>
             <p className="text-xl text-muted-foreground">
               Workshops, co-creation labs, and surprise sessions focused on 
