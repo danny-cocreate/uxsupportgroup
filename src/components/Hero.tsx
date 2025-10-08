@@ -25,7 +25,7 @@ const Hero = () => {
           
           <h1 className="text-6xl font-bold text-white leading-tight mb-6 md:text-7xl">AIxUX Virtual Summit</h1>
           
-          <h2 className="text-3xl mb-8 leading-tight md:text-4xl font-medium text-zinc-600">
+          <h2 className="text-3xl font-bold text-white/95 mb-8 leading-tight md:text-4xl">
             Unlock your UX super powers with AI
           </h2>
           
