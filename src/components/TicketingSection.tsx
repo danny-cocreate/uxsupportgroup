@@ -119,7 +119,7 @@ const TicketingSection = () => {
             </div>
             
             <Button 
-              className="w-full h-14 text-lg font-bold"
+              className="w-full h-14 text-lg font-bold bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all"
               size="lg"
             >
               {isEarlyBird ? "Claim Early Bird Ticket" : "Get Your Ticket"}
