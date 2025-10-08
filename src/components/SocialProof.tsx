@@ -28,7 +28,7 @@ const SocialProof = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-bold mb-6">
-            Who's <span className="text-gradient">Facilitators</span>
+            Meet the <span className="text-gradient">Facilitators</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Meet your future collaborators—network with leading designers, 
