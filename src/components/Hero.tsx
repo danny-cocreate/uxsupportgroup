@@ -43,14 +43,7 @@ const Hero = () => {
             </div>
           </div>
           
-          <div className="mt-12 flex items-center gap-4">
-            <div className="flex -space-x-3">
-              {[1, 2, 3, 4].map(i => <div key={i} className="w-12 h-12 rounded-full bg-gradient-to-br from-foreground/20 to-foreground/10 border-2 border-foreground/30 backdrop-blur-sm" />)}
-            </div>
-            <p className="text-foreground/70 text-sm">
-              <span className="font-bold text-foreground">30+</span> industry leaders confirmed
-            </p>
-          </div>
+          
         </div>
       </div>
     </section>;
