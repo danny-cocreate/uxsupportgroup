@@ -37,7 +37,7 @@ const Hero = () => {
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
             
-            <div className="bg-white/10 backdrop-blur-sm px-6 py-4 rounded-lg border border-white/20">
+            <div>
               <p className="text-white/80 text-sm mb-1">Early Bird Special</p>
               <p className="text-white font-bold text-lg">Only 40 tickets at $99</p>
             </div>
