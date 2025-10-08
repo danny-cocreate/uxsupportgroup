@@ -73,15 +73,7 @@ const TicketingSection = () => {
               </p>
             </div>
             
-            <div className="bg-gradient-accent rounded-xl p-6 mb-8">
-              <h4 className="font-bold mb-4 text-center">What's Included</h4>
-              <ul className="space-y-3">
-                {features.map((feature, i) => <li key={i} className="flex items-start gap-3">
-                    <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                    <span className="text-sm">{feature}</span>
-                  </li>)}
-              </ul>
-            </div>
+            
             
             <Button className="w-full h-14 text-lg font-bold bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group" size="lg">
               {isEarlyBird ? "Claim Early Bird Ticket" : "Get Your Ticket"}
