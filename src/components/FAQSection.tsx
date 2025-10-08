@@ -2,7 +2,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 const FAQSection = () => {
   const faqs = [{
     question: "What's included with my ticket?",
-    answer: "All tickets include full-day access to workshops, community gallery, profile highlight, and digital resources."
+    answer: "All tickets include full-day access to workshops, community gallery, profile highlight, and digital resources. VIP tickets include additional perks and exclusive lounge access."
   }, {
     question: "Is there a refund policy?",
     answer: "Yes, we offer full refunds up to 30 days before the event. Between 30-14 days, we offer 50% refunds. No refunds within 14 days of the event, but tickets are transferable to another attendee."
