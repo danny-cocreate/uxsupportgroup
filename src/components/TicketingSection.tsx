@@ -1,40 +1,31 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Check, Zap } from "lucide-react";
+import { Check, Zap, Clock } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 
 const TicketingSection = () => {
-  const tickets = [
-    {
-      name: "Early Bird",
-      price: "$99",
-      originalPrice: "$199",
-      seats: 40,
-      available: 15,
-      icon: Zap,
-      features: [
-        "Full day access",
-        "All workshops & sessions",
-        "Profile highlight",
-        "Networking events",
-        "Community gallery"
-      ],
-      urgent: true,
-    },
-    {
-      name: "General Admission",
-      price: "$199",
-      seats: 40,
-      available: 40,
-      icon: Check,
-      features: [
-        "Full day access",
-        "All workshops & sessions",
-        "Profile highlight",
-        "Networking events",
-        "Digital resources"
-      ],
-    },
+  // Toggle this to simulate early bird sold out / regular pricing
+  const isEarlyBird = true; // Set to false to show regular pricing
+  
+  const earlyBirdSeats = 40;
+  const earlyBirdAvailable = 15;
+  const totalSeats = 60;
+  const totalAvailable = isEarlyBird ? earlyBirdAvailable : 25;
+  
+  const currentPrice = isEarlyBird ? "$99" : "$199";
+  const originalPrice = isEarlyBird ? "$199" : null;
+  
+  const percentSold = isEarlyBird 
+    ? ((earlyBirdSeats - earlyBirdAvailable) / earlyBirdSeats) * 100
+    : ((totalSeats - totalAvailable) / totalSeats) * 100;
+
+  const features = [
+    "Full day access to all sessions",
+    "Interactive workshops & breakouts",
+    "Networking with industry leaders",
+    "Profile feature in community gallery",
+    "Digital resources & materials",
+    "Certificate of attendance"
   ];
 
   return (
@@ -47,86 +38,113 @@ const TicketingSection = () => {
             Secure Your <span className="text-gradient">Spot</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Early bird tickets selling fast—unlock your future and be featured 
-            as an inaugural attendee
+            {isEarlyBird 
+              ? "Early bird tickets selling fast—unlock your future at a special price"
+              : "Join the inaugural AIxUX Summit and connect with industry pioneers"
+            }
           </p>
         </div>
         
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
-          {tickets.map((ticket, index) => {
-            const Icon = ticket.icon;
-            const percentSold = ((ticket.seats - ticket.available) / ticket.seats) * 100;
+        {!isEarlyBird && (
+          <div className="max-w-3xl mx-auto mb-8 bg-muted/50 border border-muted-foreground/20 rounded-xl p-4 text-center">
+            <p className="text-sm text-muted-foreground">
+              ⚡ <strong>Early Bird Tickets Sold Out</strong> — Regular pricing now in effect
+            </p>
+          </div>
+        )}
+        
+        <div className="max-w-2xl mx-auto mb-16">
+          <Card className="p-10 relative overflow-hidden border-2 border-primary/30 shadow-2xl">
+            {isEarlyBird && (
+              <div className="absolute top-0 right-0 bg-gradient-to-br from-primary to-secondary text-white px-6 py-2 text-sm font-bold rounded-bl-2xl flex items-center gap-2">
+                <Zap className="w-4 h-4" />
+                LIMITED TIME
+              </div>
+            )}
             
-            return (
-              <Card 
-                key={index}
-                className="p-8 relative overflow-hidden transition-all hover:scale-105 border-border hover:border-primary/50"
-              >
-                {ticket.urgent && (
-                  <div className="absolute top-0 right-0 bg-primary text-white px-4 py-1 text-sm font-bold rounded-bl-lg">
-                    LIMITED
-                  </div>
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 mb-4">
+                {isEarlyBird ? (
+                  <Zap className="w-10 h-10 text-primary" />
+                ) : (
+                  <Clock className="w-10 h-10 text-primary" />
                 )}
-                
-                <div className="mb-6">
-                  <Icon className="w-12 h-12 mb-4 text-muted-foreground" />
-                  <h3 className="text-2xl font-bold mb-2">{ticket.name}</h3>
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-4xl font-bold text-primary">{ticket.price}</span>
-                    {ticket.originalPrice && (
-                      <span className="text-lg text-muted-foreground line-through">
-                        {ticket.originalPrice}
-                      </span>
-                    )}
-                  </div>
-                </div>
-                
-                <div className="mb-6">
-                  <div className="flex justify-between text-sm mb-2">
-                    <span className="text-muted-foreground">Availability</span>
-                    <span className="font-semibold">{ticket.available}/{ticket.seats} left</span>
-                  </div>
-                  <Progress value={percentSold} className="h-2" />
-                </div>
-                
-                <ul className="space-y-3 mb-8">
-                  {ticket.features.map((feature, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                      <span className="text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-                
-                <Button 
-                  className="w-full"
-                  size="lg"
-                >
-                  Claim Ticket
-                </Button>
-              </Card>
-            );
-          })}
+              </div>
+              <h3 className="text-3xl font-bold mb-3">
+                {isEarlyBird ? "Early Bird Ticket" : "General Admission"}
+              </h3>
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <span className="text-6xl font-bold text-primary">{currentPrice}</span>
+                {originalPrice && (
+                  <span className="text-2xl text-muted-foreground line-through">
+                    {originalPrice}
+                  </span>
+                )}
+              </div>
+              {isEarlyBird && (
+                <p className="text-primary font-semibold">
+                  Save $100 with Early Bird pricing!
+                </p>
+              )}
+            </div>
+            
+            <div className="mb-8">
+              <div className="flex justify-between text-sm mb-3">
+                <span className="text-muted-foreground">
+                  {isEarlyBird ? "Early Bird Availability" : "Tickets Remaining"}
+                </span>
+                <span className="font-bold text-primary">
+                  {isEarlyBird ? `${earlyBirdAvailable}/${earlyBirdSeats}` : `${totalAvailable}/${totalSeats}`} left
+                </span>
+              </div>
+              <Progress value={percentSold} className="h-3 mb-2" />
+              <p className="text-xs text-muted-foreground text-center">
+                {isEarlyBird 
+                  ? "Early bird pricing ends when sold out or 2 weeks before event"
+                  : "Limited seats remaining for this exclusive event"
+                }
+              </p>
+            </div>
+            
+            <div className="bg-gradient-accent rounded-xl p-6 mb-8">
+              <h4 className="font-bold mb-4 text-center">What's Included</h4>
+              <ul className="space-y-3">
+                {features.map((feature, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                    <span className="text-sm">{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <Button 
+              className="w-full h-14 text-lg font-bold"
+              size="lg"
+            >
+              {isEarlyBird ? "Claim Early Bird Ticket" : "Get Your Ticket"}
+            </Button>
+            
+            {isEarlyBird && (
+              <p className="text-center text-xs text-muted-foreground mt-4">
+                🔥 Act fast! Price increases to $199 after early bird tickets sell out
+              </p>
+            )}
+          </Card>
         </div>
         
-        <div className="max-w-2xl mx-auto text-center bg-card rounded-2xl p-8 border-2 border-primary/20">
-          <h3 className="text-2xl font-bold mb-4">
-            🔥 Early Bird Tickets Selling Fast
-          </h3>
-          <p className="text-muted-foreground mb-6">
-            Join the founding cohort of the AIxUX Summit. Only 15 early bird tickets 
-            remaining at the special price of $99. After that, tickets go up to $199.
-          </p>
-          <div className="flex items-center justify-center gap-8 text-sm">
-            <div>
-              <div className="text-3xl font-bold text-primary">60</div>
-              <div className="text-muted-foreground">Total Seats</div>
-            </div>
-            <div className="w-px h-12 bg-border" />
-            <div>
-              <div className="text-3xl font-bold text-primary">25</div>
-              <div className="text-muted-foreground">Tickets Left</div>
-            </div>
+        <div className="max-w-3xl mx-auto grid md:grid-cols-3 gap-6">
+          <div className="text-center p-6 rounded-xl bg-card border border-border">
+            <div className="text-4xl font-bold text-primary mb-2">{totalSeats}</div>
+            <p className="text-sm text-muted-foreground">Total Seats</p>
+          </div>
+          <div className="text-center p-6 rounded-xl bg-card border border-border">
+            <div className="text-4xl font-bold text-primary mb-2">{totalAvailable}</div>
+            <p className="text-sm text-muted-foreground">Still Available</p>
+          </div>
+          <div className="text-center p-6 rounded-xl bg-card border border-border">
+            <div className="text-4xl font-bold text-primary mb-2">1</div>
+            <p className="text-sm text-muted-foreground">Day Event</p>
           </div>
         </div>
       </div>
