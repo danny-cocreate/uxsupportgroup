@@ -1,26 +1,24 @@
-import Hero from "@/components/Hero";
-import StatsSection from "@/components/StatsSection";
-import SocialProof from "@/components/SocialProof";
-import ConceptSection from "@/components/ConceptSection";
-import AgendaSection from "@/components/AgendaSection";
-import TicketingSection from "@/components/TicketingSection";
-import ProfileCallout from "@/components/ProfileCallout";
-import FAQSection from "@/components/FAQSection";
+import Header from "@/components/Header";
+import SummitBanner from "@/components/SummitBanner";
+import HomeHero from "@/components/HomeHero";
+import HomeStats from "@/components/HomeStats";
+import WhatWeOffer from "@/components/WhatWeOffer";
+import UpcomingEvents from "@/components/UpcomingEvents";
 import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <main className="min-h-screen">
-      <Hero />
-      <StatsSection />
-      <ConceptSection />
-      <SocialProof />
-      <AgendaSection />
-      <TicketingSection />
-      <ProfileCallout />
-      <FAQSection />
+    <div className="min-h-screen">
+      <SummitBanner />
+      <Header />
+      <main>
+        <HomeHero />
+        <HomeStats />
+        <WhatWeOffer />
+        <UpcomingEvents />
+      </main>
       <Footer />
-    </main>
+    </div>
   );
 };
 
