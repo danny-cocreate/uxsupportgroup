@@ -14,24 +14,20 @@ const Hero = () => {
       
       <div className="container relative z-10 mx-auto px-4 pt-6 pb-20">
         <div className="max-w-4xl">
-          <div className="mb-8 flex items-center justify-between">
-            <div>
-              <p className="text-foreground/70 font-medium mb-3 text-xs">Organized by</p>
-              <img src={uxsgLogo} alt="UXSG" className="h-12 w-auto" />
-            </div>
-            
-            <div className="px-6 py-2 bg-gradient-to-r from-primary/10 via-secondary/10 to-primary/10 backdrop-blur-sm rounded-full border border-foreground/20">
-              <p className="text-sm font-medium text-foreground">10 Dec 2025  |  limited to  100 Seats</p>
-            </div>
+          <div className="mb-8">
+            <p className="text-foreground/70 font-medium mb-3 text-xs">Organized by</p>
+            <img src={uxsgLogo} alt="UXSG" className="h-12 w-auto" />
           </div>
           
           <h1 className="text-6xl font-bold text-foreground leading-tight mb-6 md:text-7xl">AI<span className="text-gradient">x</span>UX Virtual Summit</h1>
           
-          <h2 className="text-3xl font-bold text-foreground mb-16 leading-tight md:text-4xl">
+          <h2 className="text-3xl font-bold text-foreground mb-8 leading-tight md:text-4xl">
             Unlock your UX super powers with AI
           </h2>
           
-          
+          <div className="inline-block mb-10 px-6 py-2 bg-gradient-to-r from-primary/10 via-secondary/10 to-primary/10 backdrop-blur-sm rounded-full border border-foreground/20">
+            <p className="text-sm font-medium text-foreground">10 Dec 2025  |  limited to  100 Seats</p>
+          </div>
           
           <div className="flex flex-col sm:flex-row gap-4 items-start">
             <Button size="lg" className="text-lg px-8 py-6 bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group">
