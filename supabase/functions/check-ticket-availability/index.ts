@@ -34,14 +34,33 @@ serve(async (req) => {
     logStep("Date check", { now: now.toISOString(), cutoff: EARLY_BIRD_CUTOFF_DATE.toISOString(), isPastCutoff });
 
     // Count successful early bird payments
-    const checkoutSessions = await stripe.checkout.sessions.list({
+    // Note: We need to fetch each session individually with expanded line_items
+    // or use a more efficient approach with payment_intents
+    const paymentIntents = await stripe.paymentIntents.list({
       limit: 100,
     });
 
-    const earlyBirdSold = checkoutSessions.data.filter(session => 
-      session.payment_status === "paid" && 
-      session.line_items?.data?.some(item => item.price?.id === EARLY_BIRD_PRICE_ID)
-    ).length;
+    let earlyBirdSold = 0;
+    for (const pi of paymentIntents.data) {
+      if (pi.status === "succeeded") {
+        // Get the checkout session for this payment intent
+        const sessions = await stripe.checkout.sessions.list({
+          payment_intent: pi.id,
+          limit: 1,
+          expand: ['line_items']
+        });
+        
+        if (sessions.data.length > 0) {
+          const session = sessions.data[0];
+          const hasEarlyBird = session.line_items?.data?.some(
+            (item: any) => item.price?.id === EARLY_BIRD_PRICE_ID
+          );
+          if (hasEarlyBird) {
+            earlyBirdSold++;
+          }
+        }
+      }
+    }
 
     logStep("Early bird tickets sold", { count: earlyBirdSold });
 
