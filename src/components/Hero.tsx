@@ -2,7 +2,31 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import heroBg from "@/assets/liquid-data-bust.png";
 import uxsgLogo from "@/assets/uxsg-logo.svg";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+
 const Hero = () => {
+  const [isEarlyBird, setIsEarlyBird] = useState(true);
+  const [earlyBirdRemaining, setEarlyBirdRemaining] = useState(40);
+
+  useEffect(() => {
+    const checkAvailability = async () => {
+      try {
+        const { data } = await supabase.functions.invoke('check-ticket-availability');
+        if (data) {
+          setIsEarlyBird(data.isEarlyBird);
+          setEarlyBirdRemaining(data.earlyBirdRemaining);
+        }
+      } catch (error) {
+        console.error('Error checking availability:', error);
+      }
+    };
+    checkAvailability();
+  }, []);
+
+  const scrollToTicketing = () => {
+    document.querySelector('#ticketing')?.scrollIntoView({ behavior: 'smooth' });
+  };
   return <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background with gradient overlay */}
       <img src={heroBg} alt="" className="absolute inset-0 w-full h-full object-cover" />
@@ -30,14 +54,27 @@ const Hero = () => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 items-start">
-            <Button size="lg" className="text-lg px-8 py-6 bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group">
+            <Button 
+              size="lg" 
+              className="text-lg px-8 py-6 bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group"
+              onClick={scrollToTicketing}
+            >
               Claim Your Ticket
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
             
             <div>
-              <p className="text-foreground/70 text-sm mb-1">Early Bird Special</p>
-              <p className="text-foreground font-bold text-base">Only 40 tickets at $99</p>
+              {isEarlyBird ? (
+                <>
+                  <p className="text-foreground/70 text-sm mb-1">Early Bird Special</p>
+                  <p className="text-foreground font-bold text-base">Only {earlyBirdRemaining} tickets left at $99</p>
+                </>
+              ) : (
+                <>
+                  <p className="text-foreground/70 text-sm mb-1">Regular Pricing</p>
+                  <p className="text-foreground font-bold text-base">Tickets at $199</p>
+                </>
+              )}
             </div>
           </div>
           

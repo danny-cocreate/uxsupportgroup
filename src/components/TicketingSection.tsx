@@ -1,20 +1,72 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Check, Zap, Clock, ArrowRight } from "lucide-react";
+import { Zap, Clock, ArrowRight } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+
+const EARLY_BIRD_PRICE_ID = "price_1SGlggEt4aAP5ylPfhAvGpJW";
+const REGULAR_PRICE_ID = "price_1SGlhNEt4aAP5ylPGONodFHs";
+
 const TicketingSection = () => {
-  // Toggle this to simulate early bird sold out / regular pricing
-  const isEarlyBird = true; // Set to false to show regular pricing
+  const [isEarlyBird, setIsEarlyBird] = useState(true);
+  const [earlyBirdRemaining, setEarlyBirdRemaining] = useState(15);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isCheckingAvailability, setIsCheckingAvailability] = useState(true);
 
   const earlyBirdSeats = 40;
-  const earlyBirdAvailable = 15;
-  const totalSeats = 60;
-  const totalAvailable = isEarlyBird ? earlyBirdAvailable : 25;
+  const totalSeats = 100;
   const currentPrice = isEarlyBird ? "$99" : "$199";
   const originalPrice = isEarlyBird ? "$199" : null;
-  const percentSold = isEarlyBird ? (earlyBirdSeats - earlyBirdAvailable) / earlyBirdSeats * 100 : (totalSeats - totalAvailable) / totalSeats * 100;
-  const features = ["Full day access to all sessions", "Interactive workshops & breakouts", "Networking with industry leaders", "Profile feature in community gallery", "Digital resources & materials", "Certificate of attendance"];
-  return <section className="py-24 relative overflow-hidden bg-foreground text-background">
+  const percentSold = isEarlyBird 
+    ? ((earlyBirdSeats - earlyBirdRemaining) / earlyBirdSeats * 100) 
+    : 65; // Placeholder for regular tickets
+
+  useEffect(() => {
+    checkAvailability();
+    // Check availability every 30 seconds
+    const interval = setInterval(checkAvailability, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const checkAvailability = async () => {
+    try {
+      const { data, error } = await supabase.functions.invoke('check-ticket-availability');
+      
+      if (error) throw error;
+      
+      setIsEarlyBird(data.isEarlyBird);
+      setEarlyBirdRemaining(data.earlyBirdRemaining);
+    } catch (error) {
+      console.error('Error checking availability:', error);
+    } finally {
+      setIsCheckingAvailability(false);
+    }
+  };
+
+  const handlePurchase = async () => {
+    setIsLoading(true);
+    try {
+      const priceId = isEarlyBird ? EARLY_BIRD_PRICE_ID : REGULAR_PRICE_ID;
+      
+      const { data, error } = await supabase.functions.invoke('create-checkout', {
+        body: { priceId }
+      });
+
+      if (error) throw error;
+
+      if (data.url) {
+        window.open(data.url, '_blank');
+      }
+    } catch (error) {
+      console.error('Error creating checkout:', error);
+      toast.error('Failed to create checkout session. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  return <section id="ticketing" className="py-24 relative overflow-hidden bg-foreground text-background">
       <div className="absolute inset-0 gradient-hero opacity-10" />
       
       <div className="container mx-auto px-4 relative z-10">
@@ -64,7 +116,7 @@ const TicketingSection = () => {
                   {isEarlyBird ? "Early Bird Availability" : "Tickets Remaining"}
                 </span>
                 <span className="font-bold text-primary">
-                  {isEarlyBird ? `${earlyBirdAvailable}/${earlyBirdSeats}` : `${totalAvailable}/${totalSeats}`} left
+                  {isEarlyBird ? `${earlyBirdRemaining}/${earlyBirdSeats}` : `35/${totalSeats}`} left
                 </span>
               </div>
               <Progress value={percentSold} className="h-3 mb-2" />
@@ -75,8 +127,13 @@ const TicketingSection = () => {
             
             
             
-            <Button className="w-full h-14 text-lg font-bold bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group" size="lg">
-              {isEarlyBird ? "Claim Early Bird Ticket" : "Get Your Ticket"}
+            <Button 
+              className="w-full h-14 text-lg font-bold bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group" 
+              size="lg"
+              onClick={handlePurchase}
+              disabled={isLoading || isCheckingAvailability}
+            >
+              {isLoading ? "Processing..." : isEarlyBird ? "Claim Early Bird Ticket" : "Get Your Ticket"}
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
             
