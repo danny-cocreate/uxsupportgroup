@@ -37,7 +37,7 @@ const Hero = () => {
             
             <div>
               <p className="text-foreground/70 text-sm mb-1">Early Bird Special</p>
-              <p className="text-foreground font-bold text-lg">Only 40 tickets at $99</p>
+              <p className="text-foreground font-bold text-base">Only 40 tickets at $99</p>
             </div>
           </div>
           
