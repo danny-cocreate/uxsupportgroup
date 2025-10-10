@@ -30,9 +30,9 @@ const Footer = () => {
           <div>
             <h4 className="text-xl font-bold mb-4">Partners</h4>
             <ul className="space-y-2 text-background/80">
-              <li><a href="#" className="hover:text-primary transition-colors">Become a Sponsor</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Partner Inquiry</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Media Kit</a></li>
+              <li><a href="/sponsor" className="hover:text-primary transition-colors">Become a Sponsor</a></li>
+              <li><a href="/partner" className="hover:text-primary transition-colors">Partner Inquiry</a></li>
+              <li><a href="/media-kit" className="hover:text-primary transition-colors">Media Kit</a></li>
             </ul>
           </div>
           
