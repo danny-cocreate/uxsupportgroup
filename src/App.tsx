@@ -7,6 +7,9 @@ import Index from "./pages/Index";
 import Summit from "./pages/Summit";
 import About from "./pages/About";
 import Membership from "./pages/Membership";
+import Sponsor from "./pages/Sponsor";
+import Partner from "./pages/Partner";
+import MediaKit from "./pages/MediaKit";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +25,9 @@ const App = () => (
           <Route path="/summit" element={<Summit />} />
           <Route path="/about" element={<About />} />
           <Route path="/membership" element={<Membership />} />
+          <Route path="/sponsor" element={<Sponsor />} />
+          <Route path="/partner" element={<Partner />} />
+          <Route path="/media-kit" element={<MediaKit />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
