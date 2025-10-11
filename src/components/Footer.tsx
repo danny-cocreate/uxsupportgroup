@@ -51,7 +51,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-background/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-background/60 text-sm">
-          <p>© 2025 AIxUX Summit. All rights reserved.</p>
+          <p>© 2025 UX Support Group. All rights reserved.</p>
           <div className="flex gap-6">
             <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>

@@ -26,8 +26,14 @@ const Header = () => {
         </nav>
         
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="sm">Login</Button>
-          <Button size="sm">Join Now</Button>
+          <Button variant="outline" size="sm" asChild>
+            <a href="/summit">Get Summit Tickets</a>
+          </Button>
+          <Button size="sm" asChild>
+            <a href="https://www.meetup.com/ux-support-group/" target="_blank" rel="noopener noreferrer">
+              Join Our Meetup
+            </a>
+          </Button>
         </div>
       </div>
     </header>

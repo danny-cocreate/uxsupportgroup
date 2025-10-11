@@ -1,31 +1,68 @@
 import genericProfile from "@/assets/generic-profile.png";
 
 const SocialProof = () => {
-  const attendees = [{
-    name: "Sarah Chen",
-    role: "Principal Designer",
-    company: "Tech Corp"
-  }, {
-    name: "Marcus Johnson",
-    role: "Product Lead",
-    company: "Innovation Labs"
-  }, {
-    name: "Elena Rodriguez",
-    role: "UX Director",
-    company: "Design Studio"
-  }, {
-    name: "David Kim",
-    role: "AI Researcher",
-    company: "Future AI"
-  }, {
-    name: "Priya Patel",
-    role: "Design Systems",
-    company: "Scale Inc"
-  }, {
-    name: "Alex Morgan",
-    role: "Product Designer",
-    company: "Startup Co"
-  }];
+  const facilitators = [
+    {
+      name: "Suyen Stevenson",
+      role: "MC & Event Coordinator",
+      linkedin: "https://www.linkedin.com/in/suyenlyn/",
+      initials: "SS"
+    },
+    {
+      name: "Silvia Balu",
+      role: "Express Yourself with AI",
+      linkedin: "https://www.linkedin.com/in/silviabalu/",
+      initials: "SB"
+    },
+    {
+      name: "Alexis Brochu",
+      role: "UX to Strategy—Business with AI",
+      linkedin: "https://www.linkedin.com/in/alexisbrochu/",
+      initials: "AB"
+    },
+    {
+      name: "Hayley Dahle",
+      role: "Live Design Challenge",
+      linkedin: "#",
+      initials: "HD"
+    },
+    {
+      name: "Farooq",
+      role: "Live Design Challenge",
+      linkedin: "#",
+      initials: "F"
+    },
+    {
+      name: "Farah Khan",
+      role: "Live Design Challenge",
+      linkedin: "#",
+      initials: "FK"
+    },
+    {
+      name: "Yatong Wang",
+      role: "Live Design Challenge",
+      linkedin: "#",
+      initials: "YW"
+    },
+    {
+      name: "Volkan Unsal",
+      role: "Learning to Learn with AI",
+      linkedin: "https://www.linkedin.com/in/volkanunsal/",
+      initials: "VU"
+    },
+    {
+      name: "Renata Rocha",
+      role: "AI Learning & Development Roadmap",
+      linkedin: "https://www.linkedin.com/in/rerocha/",
+      initials: "RR"
+    },
+    {
+      name: "Danny Setiawan",
+      role: "Founder & Organizer",
+      linkedin: "https://www.linkedin.com/in/dnystwn/",
+      initials: "DS"
+    }
+  ];
   return <section className="py-24 bg-card">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
@@ -38,19 +75,22 @@ const SocialProof = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 max-w-5xl mx-auto">
-          {attendees.map((attendee, index) => <div key={index} className="text-center group hover:scale-105 transition-transform">
-              <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden bg-muted">
-                <img 
-                  src={genericProfile} 
-                  alt="Profile" 
-                  className="w-full h-full object-cover"
-                />
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 max-w-6xl mx-auto">
+          {facilitators.map((facilitator, index) => (
+            <a 
+              key={index} 
+              href={facilitator.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-center group hover:scale-105 transition-transform"
+            >
+              <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="text-2xl font-bold text-primary">{facilitator.initials}</span>
               </div>
-              <h3 className="font-semibold text-sm mb-1">{attendee.name}</h3>
-              <p className="text-xs text-muted-foreground">{attendee.role}</p>
-              <p className="text-xs text-muted-foreground">{attendee.company}</p>
-            </div>)}
+              <h3 className="font-semibold text-sm mb-1">{facilitator.name}</h3>
+              <p className="text-xs text-muted-foreground">{facilitator.role}</p>
+            </a>
+          ))}
         </div>
       </div>
     </section>;
