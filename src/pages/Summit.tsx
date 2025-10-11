@@ -1,3 +1,4 @@
+import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import StatsSection from "@/components/StatsSection";
 import SocialProof from "@/components/SocialProof";
@@ -10,8 +11,10 @@ import Footer from "@/components/Footer";
 
 const Summit = () => {
   return (
-    <main className="min-h-screen">
-      <Hero />
+    <div className="min-h-screen">
+      <Header />
+      <main>
+        <Hero />
       <StatsSection />
       <ConceptSection />
       <SocialProof />
@@ -19,8 +22,9 @@ const Summit = () => {
       <TicketingSection />
       <ProfileCallout />
       <FAQSection />
+      </main>
       <Footer />
-    </main>
+    </div>
   );
 };
 
