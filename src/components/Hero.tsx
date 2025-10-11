@@ -4,15 +4,15 @@ import heroBg from "@/assets/liquid-data-bust.png";
 import uxsgLogo from "@/assets/uxsg-logo.svg";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-
 const Hero = () => {
   const [isEarlyBird, setIsEarlyBird] = useState(true);
   const [earlyBirdRemaining, setEarlyBirdRemaining] = useState(40);
-
   useEffect(() => {
     const checkAvailability = async () => {
       try {
-        const { data } = await supabase.functions.invoke('check-ticket-availability');
+        const {
+          data
+        } = await supabase.functions.invoke('check-ticket-availability');
         if (data) {
           setIsEarlyBird(data.isEarlyBird);
           setEarlyBirdRemaining(data.earlyBirdRemaining);
@@ -23,9 +23,10 @@ const Hero = () => {
     };
     checkAvailability();
   }, []);
-
   const scrollToTicketing = () => {
-    document.querySelector('#ticketing')?.scrollIntoView({ behavior: 'smooth' });
+    document.querySelector('#ticketing')?.scrollIntoView({
+      behavior: 'smooth'
+    });
   };
   return <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Background with gradient overlay */}
@@ -38,10 +39,7 @@ const Hero = () => {
       
       <div className="container relative z-10 mx-auto px-4 pt-6 pb-20">
         <div className="max-w-4xl">
-          <div className="mb-8">
-            <p className="text-foreground/70 font-medium mb-3 text-xs">Organized by</p>
-            <img src={uxsgLogo} alt="UXSG" className="h-12 w-auto" />
-          </div>
+          
           
           <h1 className="text-6xl font-bold text-foreground leading-tight mb-6 md:text-7xl">AI<span className="text-gradient">x</span>UX Virtual Summit</h1>
           
@@ -54,27 +52,19 @@ const Hero = () => {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 items-start">
-            <Button 
-              size="lg" 
-              className="text-lg px-8 py-6 bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group"
-              onClick={scrollToTicketing}
-            >
+            <Button size="lg" className="text-lg px-8 py-6 bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group" onClick={scrollToTicketing}>
               Claim Your Ticket
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
             
             <div>
-              {isEarlyBird ? (
-                <>
+              {isEarlyBird ? <>
                   <p className="text-foreground/70 text-sm mb-1">Early Bird Special</p>
                   <p className="text-foreground font-bold text-base">Only {earlyBirdRemaining} tickets left at $99</p>
-                </>
-              ) : (
-                <>
+                </> : <>
                   <p className="text-foreground/70 text-sm mb-1">Regular Pricing</p>
                   <p className="text-foreground font-bold text-base">Tickets at $199</p>
-                </>
-              )}
+                </>}
             </div>
           </div>
           
