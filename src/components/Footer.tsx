@@ -50,7 +50,7 @@ const Footer = () => {
   return <footer className="bg-foreground text-background py-16">
       <div className="container mx-auto px-4">
         <div className="mb-12">
-          <img src={uxsgLogo} alt="UXSG" className="h-18 w-auto mb-12" />
+          <img src={uxsgLogo} alt="UXSG" className="h-14 w-auto mb-12" />
         </div>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12">
