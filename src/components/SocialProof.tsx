@@ -1,69 +1,103 @@
-import genericProfile from "@/assets/generic-profile.png";
+import { Card, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { ExternalLink } from "lucide-react";
+import SuyenL from "@/assets/SuyenL.jpeg";
+import SilviaB from "@/assets/SilviaB.jpeg";
+import AlexisB from "@/assets/AlexisB.png";
+import VolkanU from "@/assets/VolkanU.jpeg";
+import RenataR from "@/assets/RenataR.jpeg";
+import DannyS from "@/assets/DannyS.jpeg";
+import HayleyD from "@/assets/HayleyD.jpeg";
+import FarooqK from "@/assets/FarooqK.jpeg";
+import FarahK from "@/assets/FarahK.jpeg";
+import YatongW from "@/assets/YatongW.jpeg";
 
 const SocialProof = () => {
   const facilitators = [
     {
       name: "Suyen Stevenson",
-      role: "MC & Event Coordinator",
+      title: "Facilitator, Details TBA",
+      company: null,
+      bio: "Specialist in UX design and conference moderation.",
       linkedin: "https://www.linkedin.com/in/suyenlyn/",
-      initials: "SS"
+      image: SuyenL
     },
     {
       name: "Silvia Balu",
-      role: "Express Yourself with AI",
+      title: "Product/UX Lead",
+      company: "Team Gesundheit GmbH",
+      bio: "Lead, International UX & AI Community. Speaker and host of AI-powered UX webinars, recognized for innovation in design research.",
       linkedin: "https://www.linkedin.com/in/silviabalu/",
-      initials: "SB"
+      image: SilviaB
     },
     {
       name: "Alexis Brochu",
-      role: "UX to Strategy—Business with AI",
+      title: "Lead Product Manager",
+      company: "California Governor's Office of Emergency Services",
+      bio: "Expert in government digital transformation and product leadership. Former: Sikich, Mallinckrodt Pharmaceuticals.",
       linkedin: "https://www.linkedin.com/in/alexisbrochu/",
-      initials: "AB"
-    },
-    {
-      name: "Hayley Dahle",
-      role: "Live Design Challenge",
-      linkedin: "#",
-      initials: "HD"
-    },
-    {
-      name: "Farooq",
-      role: "Live Design Challenge",
-      linkedin: "#",
-      initials: "F"
-    },
-    {
-      name: "Farah Khan",
-      role: "Live Design Challenge",
-      linkedin: "#",
-      initials: "FK"
-    },
-    {
-      name: "Yatong Wang",
-      role: "Live Design Challenge",
-      linkedin: "#",
-      initials: "YW"
+      image: AlexisB
     },
     {
       name: "Volkan Unsal",
-      role: "Learning to Learn with AI",
+      title: "Senior Frontend Engineer",
+      company: "Amazon Web Services (AWS)",
+      bio: "Expert in cloud technology, civic tech, and startup development. Former: Co-Founder, Citiesense; Code for America.",
       linkedin: "https://www.linkedin.com/in/volkanunsal/",
-      initials: "VU"
+      image: VolkanU
     },
     {
       name: "Renata Rocha",
-      role: "AI Learning & Development Roadmap",
+      title: "Product Designer",
+      company: "Amazon",
+      bio: "Specialist in e-commerce design and experience at global technology brands. Former: ContentSquare, Academy Product Design Studio.",
       linkedin: "https://www.linkedin.com/in/rerocha/",
-      initials: "RR"
+      image: RenataR
     },
     {
       name: "Danny Setiawan",
-      role: "Founder & Organizer",
+      title: "Founder",
+      company: "CoCreate Consulting",
+      bio: "Leader in UX strategy for global media and startup growth. Former: Yahoo!, The Economist.",
       linkedin: "https://www.linkedin.com/in/dnystwn/",
-      initials: "DS"
+      image: DannyS
+    },
+    {
+      name: "Hayley Dahle",
+      title: "Director, UX/CAD",
+      company: "FULLBEAUTY Brands",
+      bio: "Expert in digital transformation and consumer brand experience design.",
+      linkedin: "#",
+      image: HayleyD
+    },
+    {
+      name: "Farooq Shad",
+      title: "Senior Software Engineer UI/UX",
+      company: "ibex. Pakistan",
+      bio: "Specialist in enterprise UI/UX for global platforms. Former: UI/UX Designer, YPO Project.",
+      linkedin: "#",
+      image: FarooqK
+    },
+    {
+      name: "Farah Khan",
+      title: "Product",
+      company: "Paytient",
+      bio: "Product strategy for fintech and enterprise technology. Former: Stripe, Dell EMC.",
+      linkedin: "#",
+      image: FarahK
+    },
+    {
+      name: "Yatong Wang",
+      title: "User Experience Designer",
+      company: "Lenovo",
+      bio: "Specialist in UX/Product design for technology and nonprofits. Former: Spatial Front Inc.",
+      linkedin: "#",
+      image: YatongW
     }
   ];
-  return <section className="py-24 bg-card">
+
+  return (
+    <section className="py-24 bg-card">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-bold mb-6">
@@ -75,24 +109,43 @@ const SocialProof = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
           {facilitators.map((facilitator, index) => (
-            <a 
-              key={index} 
-              href={facilitator.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-center group hover:scale-105 transition-transform"
-            >
-              <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-primary/10 flex items-center justify-center">
-                <span className="text-2xl font-bold text-primary">{facilitator.initials}</span>
-              </div>
-              <h3 className="font-semibold text-sm mb-1">{facilitator.name}</h3>
-              <p className="text-xs text-muted-foreground">{facilitator.role}</p>
-            </a>
+            <Card key={index} className="group hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4 mb-4">
+                  <Avatar className="w-20 h-20 flex-shrink-0">
+                    <AvatarImage src={facilitator.image} alt={facilitator.name} />
+                    <AvatarFallback>{facilitator.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-bold text-lg mb-1">{facilitator.name}</h3>
+                    <p className="text-sm text-muted-foreground mb-1">{facilitator.title}</p>
+                    {facilitator.company && (
+                      <p className="text-sm font-semibold text-foreground">{facilitator.company}</p>
+                    )}
+                  </div>
+                  {facilitator.linkedin !== "#" && (
+                    <a
+                      href={facilitator.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary hover:text-primary/80 transition-colors flex-shrink-0"
+                      aria-label={`Visit ${facilitator.name}'s LinkedIn profile`}
+                    >
+                      <ExternalLink className="w-5 h-5" />
+                    </a>
+                  )}
+                </div>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {facilitator.bio}
+                </p>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
 export default SocialProof;
