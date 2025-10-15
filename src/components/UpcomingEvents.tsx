@@ -6,7 +6,7 @@ const UpcomingEvents = () => {
   return (
     <section className="py-24 bg-background">
       <div className="container mx-auto px-4">
-        <h2 className="text-5xl font-bold text-center mb-12">Upcoming Events</h2>
+        <h2 className="text-4xl font-bold text-center mb-12">Upcoming Events</h2>
         
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-xl text-muted-foreground mb-8">
