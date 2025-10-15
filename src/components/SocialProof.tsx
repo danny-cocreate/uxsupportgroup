@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { ExternalLink } from "lucide-react";
+import { Linkedin } from "lucide-react";
 import SuyenL from "@/assets/SuyenL-2.jpeg";
 import SilviaB from "@/assets/SilviaB-2.jpeg";
 import AlexisB from "@/assets/AlexisB-2.png";
@@ -105,13 +105,22 @@ const SocialProof = () => {
                     <p className="text-sm text-muted-foreground mb-1">{facilitator.title}</p>
                     {facilitator.company && <p className="text-sm font-semibold text-foreground">{facilitator.company}</p>}
                   </div>
-                  {facilitator.linkedin !== "#" && <a href={facilitator.linkedin} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 transition-colors flex-shrink-0" aria-label={`Visit ${facilitator.name}'s LinkedIn profile`}>
-                      <ExternalLink className="w-5 h-5" />
-                    </a>}
                 </div>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-sm text-muted-foreground leading-relaxed mb-3">
                   {facilitator.bio}
                 </p>
+                {facilitator.linkedin !== "#" && (
+                  <a 
+                    href={facilitator.linkedin} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors text-sm font-medium"
+                    aria-label={`Visit ${facilitator.name}'s LinkedIn profile`}
+                  >
+                    <Linkedin className="w-4 h-4" />
+                    LinkedIn Profile
+                  </a>
+                )}
               </CardContent>
             </Card>)}
         </div>
