@@ -121,7 +121,7 @@ const TicketingSection = () => {
                     {originalPrice}
                   </span>}
               </div>
-              {isEarlyBird && <p className="text-primary font-semibold">
+              {isEarlyBird && <p className="text-foreground font-semibold">
                   Save $100 with Early Bird pricing!
                 </p>}
             </div>
