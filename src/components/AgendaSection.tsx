@@ -11,7 +11,7 @@ const AgendaSection = () => {
     { time: "9:30 AM", title: "Keynote: The Future of AI & UX", facilitator: "Danny/Ian", desc: "Inspirational opening, live poll on AI priorities" },
     { time: "10:00 AM", title: "Express Yourself with AI", facilitator: "Silvia", desc: "Hands-on: Create a song with Suno; add artifact to profile" },
     { time: "10:45 AM", title: "Live Design Challenge: AI in Action", facilitator: "3–5 designers", desc: "Designers tackle surprise prompt live using AI tools; audience Q&A and voting" },
-    { time: "11:30 AM", title: "Why Executives Don't Care About Your Design Work (And How to Fix It)", facilitator: "Alexis Brochu", desc: "Interactive: Use AI to analyze a product, draft a strategic business case" },
+    { time: "11:30 AM", title: "Why Executives Don't Care About Your Design Work (And How to Fix It)", facilitator: "Alexis Brochu", desc: "Your design is excellent. Your stakeholders are confused. Learn the \"So What?\" Chain—a questioning technique that reveals whether your work truly connects to business outcomes or just stops at user satisfaction. Through hands-on practice, you'll learn to answer the question every executive is silently asking: \"Why should I fund this?\"" },
     { time: "12:15 PM", title: "Lunch & Community Gallery Tour", facilitator: "Open/Self-Guided", desc: "45-min lunch + gallery walk exploring attendee artifacts" },
     { time: "1:00 PM", title: "Agentic UX—Build Your Own Agent", facilitator: "Danny", desc: "Step-by-step creation of a personal AI agent" },
     { time: "1:45 PM", title: "Learning to Learn with AI", facilitator: "Volkan", desc: "Skill-building: AI research and learning strategies" },
