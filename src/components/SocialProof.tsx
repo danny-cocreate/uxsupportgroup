@@ -8,7 +8,7 @@ import VolkanU from "@/assets/VolkanU-2.jpeg";
 import RenataR from "@/assets/RenataR-2.jpeg";
 import DannyS from "@/assets/DannyS-2.jpeg";
 import HayleyD from "@/assets/HayleyD-2.jpeg";
-import FarooqK from "@/assets/FarooqK-2.jpeg";
+import FarooqK from "@/assets/FarooqK-3.jpg";
 import FarahK from "@/assets/FarahK-2.jpeg";
 import YatongW from "@/assets/YatongW-2.jpeg";
 const SocialProof = () => {
