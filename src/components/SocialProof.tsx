@@ -13,26 +13,19 @@ import FarahK from "@/assets/FarahK-2.jpeg";
 import YatongW from "@/assets/YatongW-2.jpeg";
 const SocialProof = () => {
   const facilitators = [{
+    name: "Danny Setiawan",
+    title: "Founder, Instructor",
+    company: "CoCreate | Ex. The Economist, Yahoo!",
+    bio: "Leader in UX strategy for global media and startup growth. Former: Yahoo!, The Economist.",
+    linkedin: "https://www.linkedin.com/in/dnystwn/",
+    image: DannyS
+  }, {
     name: "Suyen Stevenson",
     title: "Facilitator, Details TBA",
     company: null,
     bio: "Specialist in UX design and conference moderation.",
     linkedin: "https://www.linkedin.com/in/suyenlyn/",
     image: SuyenL
-  }, {
-    name: "Silvia Balu",
-    title: "Product/UX Lead",
-    company: "Team Gesundheit GmbH",
-    bio: "Lead, International UX & AI Community. Speaker and host of AI-powered UX webinars, recognized for innovation in design research.",
-    linkedin: "https://www.linkedin.com/in/silviabalu/",
-    image: SilviaB
-  }, {
-    name: "Alexis Brochu",
-    title: "Lead Product Manager",
-    company: "California Governor's Office of Emergency Services",
-    bio: "Expert in government digital transformation and product leadership. Former: Sikich, Mallinckrodt Pharmaceuticals.",
-    linkedin: "https://www.linkedin.com/in/alexisbrochu/",
-    image: AlexisB
   }, {
     name: "Volkan Unsal",
     title: "Senior Frontend Engineer",
@@ -41,6 +34,13 @@ const SocialProof = () => {
     linkedin: "https://www.linkedin.com/in/volkanunsal/",
     image: VolkanU
   }, {
+    name: "Alexis Brochu",
+    title: "Lead Product Manager",
+    company: "California Governor's Office of Emergency Services",
+    bio: "Expert in government digital transformation and product leadership. Former: Sikich, Mallinckrodt Pharmaceuticals.",
+    linkedin: "https://www.linkedin.com/in/alexisbrochu/",
+    image: AlexisB
+  }, {
     name: "Renata Rocha",
     title: "Product Designer",
     company: "Amazon",
@@ -48,12 +48,12 @@ const SocialProof = () => {
     linkedin: "https://www.linkedin.com/in/rerocha/",
     image: RenataR
   }, {
-    name: "Danny Setiawan",
-    title: "Founder, Instructor",
-    company: "CoCreate | Ex. The Economist, Yahoo!",
-    bio: "Leader in UX strategy for global media and startup growth. Former: Yahoo!, The Economist.",
-    linkedin: "https://www.linkedin.com/in/dnystwn/",
-    image: DannyS
+    name: "Silvia Balu",
+    title: "Product/UX Lead",
+    company: "Team Gesundheit GmbH",
+    bio: "Lead, International UX & AI Community. Speaker and host of AI-powered UX webinars, recognized for innovation in design research.",
+    linkedin: "https://www.linkedin.com/in/silviabalu/",
+    image: SilviaB
   }, {
     name: "Hayley Dahle",
     title: "Director, UX/CAD",
