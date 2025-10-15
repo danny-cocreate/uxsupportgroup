@@ -116,7 +116,7 @@ const TicketingSection = () => {
                 {isEarlyBird ? "Early Bird Ticket" : "General Admission"}
               </h3>
               <div className="flex items-center justify-center gap-3 mb-4">
-                <span className="text-6xl font-bold text-primary">{currentPrice}</span>
+                <span className="text-6xl font-bold text-foreground">{currentPrice}</span>
                 {originalPrice && <span className="text-2xl text-muted-foreground line-through">
                     {originalPrice}
                   </span>}
