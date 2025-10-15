@@ -8,14 +8,12 @@ import TicketingSection from "@/components/TicketingSection";
 import ProfileCallout from "@/components/ProfileCallout";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
-
 const Summit = () => {
-  return (
-    <div className="min-h-screen">
+  return <div className="min-h-screen">
       <Header />
       <main>
         <Hero />
-      <StatsSection />
+      
       <ConceptSection />
       <SocialProof />
       <AgendaSection />
@@ -24,8 +22,6 @@ const Summit = () => {
       <FAQSection />
       </main>
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Summit;

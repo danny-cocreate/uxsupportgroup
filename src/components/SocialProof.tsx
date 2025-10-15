@@ -11,107 +11,89 @@ import HayleyD from "@/assets/HayleyD-2.jpeg";
 import FarooqK from "@/assets/FarooqK-2.jpeg";
 import FarahK from "@/assets/FarahK-2.jpeg";
 import YatongW from "@/assets/YatongW-2.jpeg";
-
 const SocialProof = () => {
-  const facilitators = [
-    {
-      name: "Suyen Stevenson",
-      title: "Facilitator, Details TBA",
-      company: null,
-      bio: "Specialist in UX design and conference moderation.",
-      linkedin: "https://www.linkedin.com/in/suyenlyn/",
-      image: SuyenL
-    },
-    {
-      name: "Silvia Balu",
-      title: "Product/UX Lead",
-      company: "Team Gesundheit GmbH",
-      bio: "Lead, International UX & AI Community. Speaker and host of AI-powered UX webinars, recognized for innovation in design research.",
-      linkedin: "https://www.linkedin.com/in/silviabalu/",
-      image: SilviaB
-    },
-    {
-      name: "Alexis Brochu",
-      title: "Lead Product Manager",
-      company: "California Governor's Office of Emergency Services",
-      bio: "Expert in government digital transformation and product leadership. Former: Sikich, Mallinckrodt Pharmaceuticals.",
-      linkedin: "https://www.linkedin.com/in/alexisbrochu/",
-      image: AlexisB
-    },
-    {
-      name: "Volkan Unsal",
-      title: "Senior Frontend Engineer",
-      company: "Amazon Web Services (AWS)",
-      bio: "Expert in cloud technology, civic tech, and startup development. Former: Co-Founder, Citiesense; Code for America.",
-      linkedin: "https://www.linkedin.com/in/volkanunsal/",
-      image: VolkanU
-    },
-    {
-      name: "Renata Rocha",
-      title: "Product Designer",
-      company: "Amazon",
-      bio: "Specialist in e-commerce design and experience at global technology brands. Former: ContentSquare, Academy Product Design Studio.",
-      linkedin: "https://www.linkedin.com/in/rerocha/",
-      image: RenataR
-    },
-    {
-      name: "Danny Setiawan",
-      title: "Founder",
-      company: "CoCreate Consulting",
-      bio: "Leader in UX strategy for global media and startup growth. Former: Yahoo!, The Economist.",
-      linkedin: "https://www.linkedin.com/in/dnystwn/",
-      image: DannyS
-    },
-    {
-      name: "Hayley Dahle",
-      title: "Director, UX/CAD",
-      company: "FULLBEAUTY Brands",
-      bio: "Expert in digital transformation and consumer brand experience design.",
-      linkedin: "#",
-      image: HayleyD
-    },
-    {
-      name: "Farooq Shad",
-      title: "Senior Software Engineer UI/UX",
-      company: "ibex. Pakistan",
-      bio: "Specialist in enterprise UI/UX for global platforms. Former: UI/UX Designer, YPO Project.",
-      linkedin: "#",
-      image: FarooqK
-    },
-    {
-      name: "Farah Khan",
-      title: "Product",
-      company: "Paytient",
-      bio: "Product strategy for fintech and enterprise technology. Former: Stripe, Dell EMC.",
-      linkedin: "#",
-      image: FarahK
-    },
-    {
-      name: "Yatong Wang",
-      title: "User Experience Designer",
-      company: "Lenovo",
-      bio: "Specialist in UX/Product design for technology and nonprofits. Former: Spatial Front Inc.",
-      linkedin: "#",
-      image: YatongW
-    }
-  ];
-
-  return (
-    <section className="py-24 bg-card">
+  const facilitators = [{
+    name: "Suyen Stevenson",
+    title: "Facilitator, Details TBA",
+    company: null,
+    bio: "Specialist in UX design and conference moderation.",
+    linkedin: "https://www.linkedin.com/in/suyenlyn/",
+    image: SuyenL
+  }, {
+    name: "Silvia Balu",
+    title: "Product/UX Lead",
+    company: "Team Gesundheit GmbH",
+    bio: "Lead, International UX & AI Community. Speaker and host of AI-powered UX webinars, recognized for innovation in design research.",
+    linkedin: "https://www.linkedin.com/in/silviabalu/",
+    image: SilviaB
+  }, {
+    name: "Alexis Brochu",
+    title: "Lead Product Manager",
+    company: "California Governor's Office of Emergency Services",
+    bio: "Expert in government digital transformation and product leadership. Former: Sikich, Mallinckrodt Pharmaceuticals.",
+    linkedin: "https://www.linkedin.com/in/alexisbrochu/",
+    image: AlexisB
+  }, {
+    name: "Volkan Unsal",
+    title: "Senior Frontend Engineer",
+    company: "Amazon Web Services (AWS)",
+    bio: "Expert in cloud technology, civic tech, and startup development. Former: Co-Founder, Citiesense; Code for America.",
+    linkedin: "https://www.linkedin.com/in/volkanunsal/",
+    image: VolkanU
+  }, {
+    name: "Renata Rocha",
+    title: "Product Designer",
+    company: "Amazon",
+    bio: "Specialist in e-commerce design and experience at global technology brands. Former: ContentSquare, Academy Product Design Studio.",
+    linkedin: "https://www.linkedin.com/in/rerocha/",
+    image: RenataR
+  }, {
+    name: "Danny Setiawan",
+    title: "Founder",
+    company: "CoCreate Consulting",
+    bio: "Leader in UX strategy for global media and startup growth. Former: Yahoo!, The Economist.",
+    linkedin: "https://www.linkedin.com/in/dnystwn/",
+    image: DannyS
+  }, {
+    name: "Hayley Dahle",
+    title: "Director, UX/CAD",
+    company: "FULLBEAUTY Brands",
+    bio: "Expert in digital transformation and consumer brand experience design.",
+    linkedin: "#",
+    image: HayleyD
+  }, {
+    name: "Farooq Shad",
+    title: "Senior Software Engineer UI/UX",
+    company: "ibex. Pakistan",
+    bio: "Specialist in enterprise UI/UX for global platforms. Former: UI/UX Designer, YPO Project.",
+    linkedin: "#",
+    image: FarooqK
+  }, {
+    name: "Farah Khan",
+    title: "Product",
+    company: "Paytient",
+    bio: "Product strategy for fintech and enterprise technology. Former: Stripe, Dell EMC.",
+    linkedin: "#",
+    image: FarahK
+  }, {
+    name: "Yatong Wang",
+    title: "User Experience Designer",
+    company: "Lenovo",
+    bio: "Specialist in UX/Product design for technology and nonprofits. Former: Spatial Front Inc.",
+    linkedin: "#",
+    image: YatongW
+  }];
+  return <section className="py-24 bg-card">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-5xl md:text-6xl font-bold mb-6">
             Meet the <span className="text-gradient">Facilitators</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Meet your future collaborators—network with leading designers, 
-            engineers, and visionaries in AI
-          </p>
+          
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {facilitators.map((facilitator, index) => (
-            <Card key={index} className="group hover:shadow-lg transition-shadow">
+          {facilitators.map((facilitator, index) => <Card key={index} className="group hover:shadow-lg transition-shadow">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4 mb-4">
                   <Avatar className="w-20 h-20 flex-shrink-0">
@@ -121,31 +103,19 @@ const SocialProof = () => {
                   <div className="flex-1 min-w-0">
                     <h3 className="font-bold text-lg mb-1">{facilitator.name}</h3>
                     <p className="text-sm text-muted-foreground mb-1">{facilitator.title}</p>
-                    {facilitator.company && (
-                      <p className="text-sm font-semibold text-foreground">{facilitator.company}</p>
-                    )}
+                    {facilitator.company && <p className="text-sm font-semibold text-foreground">{facilitator.company}</p>}
                   </div>
-                  {facilitator.linkedin !== "#" && (
-                    <a
-                      href={facilitator.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-primary hover:text-primary/80 transition-colors flex-shrink-0"
-                      aria-label={`Visit ${facilitator.name}'s LinkedIn profile`}
-                    >
+                  {facilitator.linkedin !== "#" && <a href={facilitator.linkedin} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 transition-colors flex-shrink-0" aria-label={`Visit ${facilitator.name}'s LinkedIn profile`}>
                       <ExternalLink className="w-5 h-5" />
-                    </a>
-                  )}
+                    </a>}
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {facilitator.bio}
                 </p>
               </CardContent>
-            </Card>
-          ))}
+            </Card>)}
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
 export default SocialProof;
