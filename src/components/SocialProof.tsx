@@ -49,8 +49,8 @@ const SocialProof = () => {
     image: RenataR
   }, {
     name: "Danny Setiawan",
-    title: "Founder",
-    company: "CoCreate Consulting",
+    title: "Founder, Instructor",
+    company: "CoCreate | Ex. The Economist, Yahoo!",
     bio: "Leader in UX strategy for global media and startup growth. Former: Yahoo!, The Economist.",
     linkedin: "https://www.linkedin.com/in/dnystwn/",
     image: DannyS
