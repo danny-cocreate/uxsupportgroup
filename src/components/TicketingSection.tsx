@@ -148,9 +148,7 @@ const TicketingSection = () => {
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
             
-            {isEarlyBird && <p className="text-center text-xs text-muted-foreground mt-4">
-                🔥 Act fast! Price increases to $199 after early bird tickets sell out
-              </p>}
+            {isEarlyBird}
           </Card>
         </div>
         
