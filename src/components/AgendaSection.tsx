@@ -47,7 +47,7 @@ const AgendaSection = () => {
                 >
                   <AccordionTrigger className="px-6 py-4 hover:no-underline">
                     <div className="flex items-center gap-4 text-left">
-                      <span className="text-primary font-bold text-lg shrink-0">
+                      <span className="text-foreground font-bold text-lg shrink-0">
                         {session.time}
                       </span>
                       <div className="flex-1">
