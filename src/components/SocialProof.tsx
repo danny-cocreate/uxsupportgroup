@@ -14,7 +14,7 @@ import YatongW from "@/assets/YatongW-2.jpeg";
 const SocialProof = () => {
   const facilitators = [{
     name: "Suyen Stevenson",
-    title: "Founder, Instructor",
+    title: "Facilitator, Details TBA",
     company: null,
     bio: "Specialist in UX design and conference moderation.",
     linkedin: "https://www.linkedin.com/in/suyenlyn/",
