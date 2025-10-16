@@ -43,7 +43,7 @@ const Hero = () => {
           
           <h1 className="text-6xl font-bold text-foreground leading-tight mb-6 md:text-7xl">AI<span className="text-gradient">x</span>UX Virtual Summit</h1>
           
-          <h2 className="text-3xl font-bold text-foreground mb-8 leading-tight md:text-4xl">
+          <h2 className="text-3xl text-foreground mb-8 leading-tight md:text-3xl font-semibold">
             Unlock your UX super powers with AI
           </h2>
           
