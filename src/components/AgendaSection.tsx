@@ -7,20 +7,20 @@ import {
 
 const AgendaSection = () => {
   const sessions = [
-    { time: "9:00 AM", title: "Welcome & AI-Profile Creation", facilitator: "Suyen", desc: "Attendees build profiles (LinkedIn import/guided Q&A); submit goals/questions" },
-    { time: "9:30 AM", title: "Keynote: The Future of AI & UX", facilitator: "Danny/Ian", desc: "Inspirational opening, live poll on AI priorities" },
-    { time: "10:00 AM", title: "Express Yourself with AI", facilitator: "Silvia", desc: "Hands-on: Create a song with Suno; add artifact to profile" },
+    { time: "9:00 AM", title: "Welcome & AI-Profile Creation", facilitator: "Suyen Stevenson", desc: "Attendees build profiles (LinkedIn import/guided Q&A); submit goals/questions" },
+    { time: "9:30 AM", title: "Keynote: The Future of AI & UX", facilitator: "Danny Setiawan", desc: "Inspirational opening, live poll on AI priorities" },
+    { time: "10:00 AM", title: "Express Yourself with AI", facilitator: "Silvia Balu", desc: "Hands-on: Create a song with Suno; add artifact to profile" },
     { time: "10:45 AM", title: "Live Design Challenge: AI in Action", facilitator: "3–5 designers", desc: "Designers tackle surprise prompt live using AI tools; audience Q&A and voting" },
     { time: "11:30 AM", title: "Why Executives Don't Care About Your Design Work (And How to Fix It)", facilitator: "Alexis Brochu", desc: "Your design is excellent. Your stakeholders are confused. Learn the \"So What?\" Chain—a questioning technique that reveals whether your work truly connects to business outcomes or just stops at user satisfaction. Through hands-on practice, you'll learn to answer the question every executive is silently asking: \"Why should I fund this?\"" },
     { time: "12:15 PM", title: "Lunch & Community Gallery Tour", facilitator: "Open/Self-Guided", desc: "45-min lunch + gallery walk exploring attendee artifacts" },
-    { time: "1:00 PM", title: "Agentic UX—Build Your Own Agent", facilitator: "Danny", desc: "Step-by-step creation of a personal AI agent" },
-    { time: "1:45 PM", title: "Learning to Learn with AI", facilitator: "Volkan", desc: "Skill-building: AI research and learning strategies" },
-    { time: "2:30 PM", title: "Community AMA: Solve the Wall", facilitator: "Suyen", desc: "Apply new research/action skills; collaborative Q&A" },
-    { time: "3:15 PM", title: "Teach-Back Challenge: Learn & Share", facilitator: "Suyen", desc: "Attendees teach back what they've learned using AI tools" },
-    { time: "4:00 PM", title: "Break the AI—Chaos Challenge", facilitator: "Mirrie", desc: "Teams compete to create wild/absurd AI outputs; audience voting" },
-    { time: "4:45 PM", title: "AI Learning & Development Roadmap", facilitator: "Renata", desc: "Reflective: Build a 6-month personal L&D/action plan with AI" },
-    { time: "5:30 PM", title: "AI-Powered Networking Finale", facilitator: "Suyen", desc: "Matchmaking based on artifacts, interests, questions" },
-    { time: "6:00 PM", title: "Closing & Next Steps", facilitator: "Suyen", desc: "Recap, announce winners, community wrap-up, future plans" },
+    { time: "1:00 PM", title: "Agentic UX—Build Your Own Agent", facilitator: "Danny Setiawan", desc: "Step-by-step creation of a personal AI agent" },
+    { time: "1:45 PM", title: "Learning to Learn with AI", facilitator: "Volkan Unsal", desc: "Skill-building: AI research and learning strategies" },
+    { time: "2:30 PM", title: "Community AMA: Solve the Wall", facilitator: "Suyen Stevenson", desc: "Apply new research/action skills; collaborative Q&A" },
+    { time: "3:15 PM", title: "Teach-Back Challenge: Learn & Share", facilitator: "Suyen Stevenson", desc: "Attendees teach back what they've learned using AI tools" },
+    { time: "4:00 PM", title: "Break the AI—Chaos Challenge", facilitator: "TBD", desc: "Teams compete to create wild/absurd AI outputs; audience voting" },
+    { time: "4:45 PM", title: "AI Learning & Development Roadmap", facilitator: "Renata Rocha", desc: "Reflective: Build a 6-month personal L&D/action plan with AI" },
+    { time: "5:30 PM", title: "AI-Powered Networking Finale", facilitator: "Suyen Stevenson", desc: "Matchmaking based on artifacts, interests, questions" },
+    { time: "6:00 PM", title: "Closing & Next Steps", facilitator: "Suyen Stevenson", desc: "Recap, announce winners, community wrap-up, future plans" },
   ];
 
   return (
