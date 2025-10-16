@@ -31,7 +31,7 @@ const HomeHero = () => {
 
           <div className="grid grid-cols-3 gap-6 max-w-2xl">
             <div className="text-center">
-              <div className="text-2xl md:text-3xl font-bold text-muted-foreground mb-1">8,700+</div>
+              <div className="text-2xl md:text-3xl font-bold text-muted-foreground mb-1">8,800+</div>
               <p className="text-muted-foreground text-xs">Members</p>
             </div>
             <div className="text-center">
