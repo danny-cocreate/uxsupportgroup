@@ -13,7 +13,7 @@ const HomeHero = () => {
       <div className="container relative z-10 mx-auto px-4 py-20">
         <div className="max-w-4xl">
           <h1 className="text-6xl font-bold text-foreground leading-tight mb-6 md:text-7xl">
-            The Best UX Community to Stay Relevant in <span className="text-gradient">AI Age</span>
+            The Best UX Community to <span className="text-gradient">Stay Relevant</span> in AI Age
           </h1>
           
           <p className="text-2xl text-foreground/70 mb-10 max-w-2xl">
