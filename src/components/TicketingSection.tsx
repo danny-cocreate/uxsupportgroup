@@ -5,8 +5,9 @@ import { Progress } from "@/components/ui/progress";
 import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-const EARLY_BIRD_PRICE_ID = "price_1SGlggEt4aAP5ylPfhAvGpJW";
-const REGULAR_PRICE_ID = "price_1SGlhNEt4aAP5ylPGONodFHs";
+
+const EARLY_BIRD_PAYMENT_LINK = "https://buy.stripe.com/3cI9AT0gxf6y5tt3r4es002";
+const GENERAL_ADMISSION_PAYMENT_LINK = "https://buy.stripe.com/cNi00j2oFbUm2hhaTwes003";
 const TicketingSection = () => {
   const [isEarlyBird, setIsEarlyBird] = useState(true);
   const [earlyBirdRemaining, setEarlyBirdRemaining] = useState(15);
@@ -53,36 +54,10 @@ const TicketingSection = () => {
       setIsCheckingAvailability(false);
     }
   };
-  const handlePurchase = async () => {
-    setIsLoading(true);
-    try {
-      const priceId = isEarlyBird ? EARLY_BIRD_PRICE_ID : REGULAR_PRICE_ID;
-      const {
-        data,
-        error
-      } = await supabase.functions.invoke('create-checkout', {
-        body: {
-          priceId
-        }
-      });
-      if (error) {
-        console.error('Checkout error:', error);
-        toast.error(`Checkout failed: ${error.message || 'Please try again'}`);
-        return;
-      }
-      if (data?.url) {
-        window.open(data.url, '_blank');
-        toast.success('Checkout opened in new tab');
-      } else {
-        console.error('No checkout URL received:', data);
-        toast.error('No checkout URL received. Please try again.');
-      }
-    } catch (error) {
-      console.error('Error creating checkout:', error);
-      toast.error('Unable to start checkout. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
+  const handlePurchase = () => {
+    const paymentLink = isEarlyBird ? EARLY_BIRD_PAYMENT_LINK : GENERAL_ADMISSION_PAYMENT_LINK;
+    window.open(paymentLink, '_blank');
+    toast.success('Checkout opened in new tab');
   };
   return <section id="ticketing" className="py-24 relative overflow-hidden bg-foreground text-background">
       <div className="absolute inset-0 gradient-hero opacity-10" />
@@ -143,8 +118,8 @@ const TicketingSection = () => {
             
             
             
-            <Button className="w-full h-14 text-lg font-bold bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group" size="lg" onClick={handlePurchase} disabled={isLoading || isCheckingAvailability}>
-              {isLoading ? "Processing..." : isEarlyBird ? "Claim Early Bird Ticket" : "Get Your Ticket"}
+            <Button className="w-full h-14 text-lg font-bold bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group" size="lg" onClick={handlePurchase} disabled={isCheckingAvailability}>
+              {isEarlyBird ? "Claim Early Bird Ticket" : "Get Your Ticket"}
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
             
