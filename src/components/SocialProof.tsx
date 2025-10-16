@@ -59,28 +59,28 @@ const SocialProof = () => {
     title: "Director, UX/CAD",
     company: "FULLBEAUTY Brands",
     bio: "Expert in digital transformation and consumer brand experience design.",
-    linkedin: "#",
+    linkedin: "https://www.linkedin.com/in/hayley-dahle/",
     image: HayleyD
   }, {
     name: "Farooq Khayyat",
     title: "Senior Software Engineer UI/UX",
     company: "ibex. Pakistan",
     bio: "Specialist in enterprise UI/UX for global platforms. Former: UI/UX Designer, YPO Project.",
-    linkedin: "#",
+    linkedin: "https://www.linkedin.com/in/farooqkhayyat/",
     image: FarooqK
   }, {
     name: "Farah Khan",
     title: "Product",
     company: "Paytient",
     bio: "Product strategy for fintech and enterprise technology. Former: Stripe, Dell EMC.",
-    linkedin: "#",
+    linkedin: "https://www.linkedin.com/in/fkhan/",
     image: FarahK
   }, {
     name: "Yatong Wang",
     title: "User Experience Designer",
     company: "Lenovo",
     bio: "Specialist in UX/Product design for technology and nonprofits. Former: Spatial Front Inc.",
-    linkedin: "#",
+    linkedin: "https://www.linkedin.com/in/yatong-wang/",
     image: YatongW
   }];
   return <section className="py-24 bg-card">
