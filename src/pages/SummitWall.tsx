@@ -788,7 +788,7 @@ const SummitWall = () => {
 
                   {/* Right Column - Info */}
                   <div className="flex-1 min-w-0 space-y-2">
-                    <h2 className="text-xl font-bold text-black">{selectedProfile.name}</h2>
+                    <h2 className="font-bold text-black text-3xl">{selectedProfile.name}</h2>
                     
                     {(selectedProfile.job_title || selectedProfile.company_name) && <p className="text-sm text-black">
                         {selectedProfile.job_title}
