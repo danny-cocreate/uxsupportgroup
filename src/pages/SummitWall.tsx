@@ -253,8 +253,76 @@ const SummitWall = () => {
       toast.error("Failed to delete item");
     }
   };
-  const handleChangePhoto = () => {
-    toast.info("Photo upload feature coming soon!");
+  const handleChangePhoto = async () => {
+    if (!selectedProfile) return;
+
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    
+    input.onchange = async (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (!file) return;
+
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("File size must be less than 5MB");
+        return;
+      }
+
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        toast.error("Please upload an image file");
+        return;
+      }
+
+      setIsSaving(true);
+      try {
+        // Create a unique filename
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${selectedProfile.id}-${Date.now()}.${fileExt}`;
+        const filePath = fileName;
+
+        // Upload to Supabase Storage
+        const { error: uploadError } = await supabase.storage
+          .from('profile-photos')
+          .upload(filePath, file, {
+            upsert: true,
+            contentType: file.type
+          });
+
+        if (uploadError) throw uploadError;
+
+        // Get public URL
+        const { data: { publicUrl } } = supabase.storage
+          .from('profile-photos')
+          .getPublicUrl(filePath);
+
+        // Update profile with new photo URL
+        const { error: updateError } = await supabase
+          .from('user_profiles')
+          .update({ profile_photo_url: publicUrl })
+          .eq('id', selectedProfile.id);
+
+        if (updateError) throw updateError;
+
+        // Update local state
+        setSelectedProfile({
+          ...selectedProfile,
+          profile_photo_url: publicUrl
+        });
+
+        toast.success("Photo updated successfully!");
+        loadProfiles();
+      } catch (error) {
+        console.error('Error uploading photo:', error);
+        toast.error("Failed to upload photo. Please try again.");
+      } finally {
+        setIsSaving(false);
+      }
+    };
+
+    input.click();
   };
   const handleShare = () => {
     if (selectedProfile) {
