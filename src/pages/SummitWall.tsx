@@ -517,9 +517,13 @@ const SummitWall = () => {
                   <div className="flex-1 min-w-0 space-y-2">
                     <h2 className="text-xl font-bold text-[#1F2937]">{selectedProfile.name}</h2>
                     
-                    {selectedProfile.job_title && <p className="text-base font-semibold text-[#8B5CF6]">{selectedProfile.job_title}</p>}
-                    
-                    {selectedProfile.company_name && <p className="text-sm text-[#6B7280]">{selectedProfile.company_name}</p>}
+                    {(selectedProfile.job_title || selectedProfile.company_name) && (
+                      <p className="text-base font-semibold text-[#8B5CF6]">
+                        {selectedProfile.job_title}
+                        {selectedProfile.job_title && selectedProfile.company_name && " at "}
+                        {selectedProfile.company_name}
+                      </p>
+                    )}
                     
                     {selectedProfile.linkedin_url && <a href={selectedProfile.linkedin_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm text-[#8B5CF6] hover:text-[#7C3AED] transition-colors">
                         View LinkedIn
