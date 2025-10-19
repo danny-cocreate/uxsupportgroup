@@ -56,11 +56,11 @@ serve(async (req) => {
       const { data: emailData, error: emailError } = await resend.emails.send({
         from: EMAIL_FROM,
         to: [email],
-        subject: 'Your Magic Link to Access Admin Panel',
+        subject: 'Magic Link to Create/Edit your profile',
         html: `
-          <h2>Access Your Admin Panel</h2>
-          <p>Click the link below to securely log in:</p>
-          <p><a href="${magicLink}" style="display: inline-block; padding: 12px 24px; background-color: #0070f3; color: white; text-decoration: none; border-radius: 5px;">Log In</a></p>
+          <h2>Create or Edit Your Profile</h2>
+          <p>Click the link below to create or edit your profile:</p>
+          <p><a href="${magicLink}" style="display: inline-block; padding: 12px 24px; background-color: #0070f3; color: white; text-decoration: none; border-radius: 5px;">Create/Edit Profile</a></p>
           <p>Or copy and paste this link into your browser:</p>
           <p>${magicLink}</p>
           <p>This link will expire in 24 hours.</p>
