@@ -909,7 +909,7 @@ const SummitWall = () => {
                       </p>}
                     
                     {selectedProfile.linkedin_url && <a href={selectedProfile.linkedin_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm text-[#8B5CF6] hover:text-[#7C3AED] transition-colors">
-                        View LinkedIn
+                        LinkedIn Profile
                         <ExternalLink className="w-3 h-3" />
                       </a>}
                   </div>
