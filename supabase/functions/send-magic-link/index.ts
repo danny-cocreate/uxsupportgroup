@@ -27,7 +27,7 @@ serve(async (req) => {
       .from('user_profiles')
       .select('id')
       .eq('email', email)
-      .single();
+      .maybeSingle();
 
     // Store magic link token
     await supabase.from('magic_link_tokens').insert({
@@ -38,7 +38,8 @@ serve(async (req) => {
     });
 
     // For now, return the token (in production, send via email)
-    const magicLink = `${req.headers.get('origin')}/summit-profiles/verify?token=${token}`;
+    const origin = req.headers.get('origin') || req.headers.get('referer')?.split('/').slice(0, 3).join('/') || 'https://uxsupportgroup.com';
+    const magicLink = `${origin}/summit-profiles/verify?token=${token}`;
     
     console.log('Magic link generated:', magicLink);
 

@@ -54,7 +54,7 @@ serve(async (req) => {
       .from('user_profiles')
       .select('*')
       .eq('email', tokenData.email)
-      .single();
+      .maybeSingle();
 
     return new Response(
       JSON.stringify({ 
