@@ -548,11 +548,11 @@ const SummitWall = () => {
     }
   };
   if (isLoading) {
-    return <div className="h-screen flex items-center justify-center bg-[#F9FAFB]">
+    return <div className="h-screen flex items-center justify-center bg-[#E5E7EB]">
         <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-[#8B5CF6]"></div>
       </div>;
   }
-  return <div className="h-screen bg-[#F9FAFB] overflow-hidden relative">
+  return <div className="h-screen bg-[#E5E7EB] overflow-hidden relative">
       {/* Auth Status and Buttons - Bottom Right */}
       <div className="fixed bottom-8 right-8 z-10 flex items-center gap-4">
         {currentUserId ? <>
