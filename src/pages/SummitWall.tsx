@@ -642,7 +642,7 @@ const SummitWall = () => {
                     </div>}
                 </div>
                 
-                <h3 className="text-sm font-semibold text-black text-center line-clamp-1">
+                <h3 className="font-semibold text-black text-center line-clamp-1 text-base">
                   {profile.name}
                 </h3>
                 
