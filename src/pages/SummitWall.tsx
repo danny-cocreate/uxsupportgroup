@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { Minus, Plus, Maximize2, UserPlus } from "lucide-react";
 import logo from "@/assets/uxsg-logo-dark-bg.png";
@@ -265,13 +265,12 @@ const SummitWall = () => {
             <DialogTitle className="text-center text-2xl">
               Create Your Profile Card
             </DialogTitle>
+            <DialogDescription className="text-center text-[#6B7280] text-sm">
+              Welcome to the AI x UX Virtual Summit! Let's create your unique profile card.
+            </DialogDescription>
           </DialogHeader>
 
           <form onSubmit={handleFormSubmit} className="space-y-4">
-            <p className="text-center text-[#6B7280] text-sm mb-4">
-              Welcome to the AI x UX Virtual Summit! Let's create your unique profile card.
-            </p>
-
             <div>
               <Label htmlFor="name">Full Name *</Label>
               <Input
