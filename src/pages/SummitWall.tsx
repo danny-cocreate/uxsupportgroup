@@ -65,6 +65,22 @@ const SummitWall = () => {
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [editFromWall, setEditFromWall] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+
+  // Generate deterministic animation properties based on profile ID
+  const getFloatAnimation = (profileId: string) => {
+    // Use profile ID to generate consistent random values
+    const hash = profileId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const animationType = (hash % 3) + 1; // 1, 2, or 3
+    const duration = 12 + (hash % 8); // 12-19 seconds
+    const delay = (hash % 10); // 0-9 seconds
+    
+    return {
+      animation: `float-${animationType}`,
+      duration: `${duration}s`,
+      delay: `${delay}s`,
+    };
+  };
+
   useEffect(() => {
     loadProfiles();
     checkAuthStatus();
@@ -567,11 +583,21 @@ const SummitWall = () => {
             </h2>
           </div>
 
-          {profiles.map(profile => <div key={profile.id} className="absolute bg-white rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer p-4" style={{
-          left: `${profile.wall_position_x || 0}px`,
-          top: `${profile.wall_position_y || 0}px`,
-          width: '200px'
-        }} onClick={() => handleCardClick(profile)}>
+          {profiles.map(profile => {
+            const floatAnimation = getFloatAnimation(profile.id);
+            return (
+              <div 
+                key={profile.id} 
+                className={`absolute bg-white rounded-xl shadow-md hover:shadow-xl transition-all cursor-pointer p-4 animate-${floatAnimation.animation}`}
+                style={{
+                  left: `${profile.wall_position_x || 0}px`,
+                  top: `${profile.wall_position_y || 0}px`,
+                  width: '200px',
+                  animationDuration: floatAnimation.duration,
+                  animationDelay: floatAnimation.delay,
+                }} 
+                onClick={() => handleCardClick(profile)}
+              >
               <div className="flex flex-col items-center gap-3">
                 <div className="w-16 h-16 rounded-full bg-[#E5E7EB] overflow-hidden flex-shrink-0">
                   {profile.profile_photo_url ? <img src={profile.profile_photo_url} alt={profile.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[#9CA3AF] text-xs">
@@ -593,9 +619,11 @@ const SummitWall = () => {
                 
                 {profile.bio && <p className="text-xs text-black text-center line-clamp-2 mt-1">
                     {profile.bio}
-                  </p>}
+                   </p>}
               </div>
-            </div>)}
+            </div>
+          );
+        })}
 
           {profiles.length === 0 && <div className="absolute inset-0 flex items-center justify-center">
               <p className="text-black text-lg">No profiles yet</p>
