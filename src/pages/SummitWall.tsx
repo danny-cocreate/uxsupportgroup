@@ -121,7 +121,7 @@ const SummitWall = () => {
       toast.success("Profile created successfully!");
       setShowCreateModal(false);
       loadProfiles();
-      navigate('/summit-profiles/edit');
+      navigate('/summit-profiles');
 
     } catch (error) {
       console.error('Error creating profile:', error);
