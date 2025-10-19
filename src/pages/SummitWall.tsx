@@ -129,8 +129,46 @@ const SummitWall = () => {
     });
   };
 
-  const handleEditProfile = () => {
-    navigate('/summit-profiles/edit');
+  const handleEditProfile = async () => {
+    const userId = sessionStorage.getItem('summit_user_id');
+    if (!userId) return;
+
+    try {
+      // Load the user's profile
+      const { data: profile, error: profileError } = await supabase
+        .from('user_profiles')
+        .select('*')
+        .eq('id', userId)
+        .single();
+
+      if (profileError) throw profileError;
+
+      // Set as selected profile and load enrichments
+      setSelectedProfile(profile);
+      setEditFormData({
+        jobTitle: profile.job_title || '',
+        companyName: profile.company_name || '',
+        bio: profile.bio || '',
+        linkedinUrl: profile.linkedin_url || ''
+      });
+
+      // Load enrichments
+      const { data: enrichmentsData, error: enrichmentsError } = await supabase
+        .from('enrichments')
+        .select('*')
+        .eq('user_id', userId)
+        .order('display_order', { ascending: true });
+
+      if (enrichmentsError) throw enrichmentsError;
+      setEnrichments((enrichmentsData || []) as Enrichment[]);
+
+      // Open modal in edit mode
+      setIsEditMode(true);
+      setShowDetailModal(true);
+    } catch (error) {
+      console.error('Error loading profile for editing:', error);
+      toast.error("Failed to load profile");
+    }
   };
 
   const handleLogout = () => {
