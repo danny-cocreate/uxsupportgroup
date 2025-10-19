@@ -30,6 +30,14 @@ const SummitWall = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [selectedProfile, setSelectedProfile] = useState<ProfileCard | null>(null);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [editFormData, setEditFormData] = useState({
+    jobTitle: '',
+    companyName: '',
+    bio: '',
+    linkedinUrl: ''
+  });
+  const [isSaving, setIsSaving] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -137,14 +145,61 @@ const SummitWall = () => {
 
   const handleCardClick = (profile: ProfileCard) => {
     setSelectedProfile(profile);
+    setIsEditMode(false);
     setShowDetailModal(true);
   };
 
   const handleEdit = () => {
     if (selectedProfile) {
-      sessionStorage.setItem('summit_user_id', selectedProfile.id);
-      navigate('/summit-profiles/edit');
+      setEditFormData({
+        jobTitle: selectedProfile.job_title || '',
+        companyName: selectedProfile.company_name || '',
+        bio: selectedProfile.bio || '',
+        linkedinUrl: selectedProfile.linkedin_url || ''
+      });
+      setIsEditMode(true);
     }
+  };
+
+  const handleSaveEdit = async () => {
+    if (!selectedProfile) return;
+
+    setIsSaving(true);
+    try {
+      const { error } = await supabase
+        .from('user_profiles')
+        .update({
+          job_title: editFormData.jobTitle.trim() || null,
+          company_name: editFormData.companyName.trim() || null,
+          bio: editFormData.bio.trim() || null,
+          linkedin_url: editFormData.linkedinUrl.trim() || null,
+        })
+        .eq('id', selectedProfile.id);
+
+      if (error) throw error;
+
+      toast.success("Profile updated successfully!");
+      setIsEditMode(false);
+      loadProfiles();
+      
+      // Update selected profile to show new data
+      setSelectedProfile({
+        ...selectedProfile,
+        job_title: editFormData.jobTitle.trim() || null,
+        company_name: editFormData.companyName.trim() || null,
+        bio: editFormData.bio.trim() || null,
+        linkedin_url: editFormData.linkedinUrl.trim() || null,
+      });
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      toast.error("Failed to update profile. Please try again.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditMode(false);
   };
 
   const handleShare = () => {
@@ -365,11 +420,93 @@ const SummitWall = () => {
           {selectedProfile && (
             <>
               <DialogHeader>
-                <DialogTitle className="text-center text-2xl">Profile</DialogTitle>
-                <DialogDescription className="sr-only">View profile details</DialogDescription>
+                <DialogTitle className="text-center text-2xl">
+                  {isEditMode ? 'Edit Profile' : 'Profile'}
+                </DialogTitle>
+                <DialogDescription className="sr-only">
+                  {isEditMode ? 'Edit profile details' : 'View profile details'}
+                </DialogDescription>
               </DialogHeader>
 
-              <div className="space-y-6">
+              {isEditMode ? (
+                /* Edit Mode */
+                <div className="space-y-4">
+                  <div>
+                    <Label htmlFor="edit-jobTitle">Job Title</Label>
+                    <Input
+                      id="edit-jobTitle"
+                      type="text"
+                      placeholder="Senior Product Designer"
+                      value={editFormData.jobTitle}
+                      onChange={(e) => setEditFormData({ ...editFormData, jobTitle: e.target.value })}
+                      className="mt-2"
+                      disabled={isSaving}
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="edit-companyName">Company Name</Label>
+                    <Input
+                      id="edit-companyName"
+                      type="text"
+                      placeholder="TechCorp"
+                      value={editFormData.companyName}
+                      onChange={(e) => setEditFormData({ ...editFormData, companyName: e.target.value })}
+                      className="mt-2"
+                      disabled={isSaving}
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="edit-linkedinUrl">LinkedIn Profile URL</Label>
+                    <Input
+                      id="edit-linkedinUrl"
+                      type="url"
+                      placeholder="https://www.linkedin.com/in/yourprofile"
+                      value={editFormData.linkedinUrl}
+                      onChange={(e) => setEditFormData({ ...editFormData, linkedinUrl: e.target.value })}
+                      className="mt-2"
+                      disabled={isSaving}
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="edit-bio">Bio</Label>
+                    <textarea
+                      id="edit-bio"
+                      placeholder="Tell us about yourself..."
+                      value={editFormData.bio}
+                      onChange={(e) => setEditFormData({ ...editFormData, bio: e.target.value })}
+                      className="mt-2 w-full min-h-[100px] px-3 py-2 text-sm rounded-md border border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      disabled={isSaving}
+                      maxLength={280}
+                    />
+                    <p className="text-xs text-[#9CA3AF] mt-1">
+                      {editFormData.bio.length}/280 characters
+                    </p>
+                  </div>
+
+                  <div className="flex gap-3 pt-4">
+                    <Button
+                      onClick={handleCancelEdit}
+                      variant="outline"
+                      className="flex-1"
+                      disabled={isSaving}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={handleSaveEdit}
+                      className="flex-1 bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:opacity-90"
+                      disabled={isSaving}
+                    >
+                      {isSaving ? "Saving..." : "Save"}
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                /* View Mode */
+                <div className="space-y-6">
                 {/* Profile Photo */}
                 <div className="flex justify-center">
                   <div className="w-32 h-32 rounded-full bg-[#E5E7EB] overflow-hidden">
@@ -447,6 +584,7 @@ const SummitWall = () => {
                   </Button>
                 </div>
               </div>
+              )}
             </>
           )}
         </DialogContent>
