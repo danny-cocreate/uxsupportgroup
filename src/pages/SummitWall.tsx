@@ -772,7 +772,7 @@ const SummitWall = () => {
                 </div>) : (/* View Mode */
           <div className="space-y-6">
                 {/* Two Column Layout: Photo Left, Info Right */}
-                <div className="flex gap-4">
+                <div className="flex gap-4 pt-6">
                   {/* Left Column - Photo */}
                   <div className="flex-shrink-0">
                     <div className="w-24 h-24 rounded-full bg-[#E5E7EB] overflow-hidden">
