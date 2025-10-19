@@ -33,7 +33,7 @@ const AuthModal = ({ open, onOpenChange }: AuthModalProps) => {
 
       if (error) throw error;
 
-      toast.success(data.message || "Magic link sent! Check your email.");
+      toast.success("Magic link sent! Check your email (and spam folder if needed).");
       onOpenChange(false);
     } catch (error) {
       console.error('Error sending magic link:', error);

@@ -1,11 +1,16 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
-import { Resend } from 'https://esm.sh/resend@2.0.0';
+import { Resend } from 'https://esm.sh/resend@4.0.0';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
+
+const EMAIL_FROM = Deno.env.get('EMAIL_FROM') || 'UX Support Group <info@uxsupportgroup.com>';
+const PUBLIC_SITE_URL = Deno.env.get('PUBLIC_SITE_URL') || 'https://uxsupportgroup.com';
+
+const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -39,16 +44,17 @@ serve(async (req) => {
     });
 
     // Send email via Resend
-    const origin = req.headers.get('origin') || req.headers.get('referer')?.split('/').slice(0, 3).join('/') || 'https://uxsupportgroup.com';
-    const magicLink = `${origin}/summit-profiles/verify?token=${token}`;
+    const magicLink = `${PUBLIC_SITE_URL}/summit-profiles/verify?token=${token}`;
     
-    console.log('Magic link generated:', magicLink);
-
-    const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
+    console.log('[SEND-MAGIC-LINK] Preparing to send email', { 
+      to: email, 
+      from: EMAIL_FROM,
+      magicLink 
+    });
     
     try {
-      await resend.emails.send({
-        from: 'UX Support Group <onboarding@resend.dev>',
+      const { data: emailData, error: emailError } = await resend.emails.send({
+        from: EMAIL_FROM,
         to: [email],
         subject: 'Your Magic Link to Access Admin Panel',
         html: `
@@ -60,6 +66,16 @@ serve(async (req) => {
           <p>This link will expire in 24 hours.</p>
           <p>If you didn't request this, please ignore this email.</p>
         `,
+      });
+
+      if (emailError) {
+        console.error('[SEND-MAGIC-LINK] Resend API error:', emailError);
+        throw emailError;
+      }
+
+      console.log('[SEND-MAGIC-LINK] Email sent successfully', { 
+        id: emailData?.id,
+        to: email 
       });
 
       return new Response(

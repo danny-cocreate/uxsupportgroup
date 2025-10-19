@@ -6,6 +6,8 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+const ADMIN_EMAILS = (Deno.env.get('ADMIN_EMAILS') || '').split(',').map(e => e.trim()).filter(Boolean);
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -24,7 +26,7 @@ serve(async (req) => {
       .select('*')
       .eq('token', token)
       .is('used_at', null)
-      .single();
+      .maybeSingle();
 
     if (tokenError || !tokenData) {
       return new Response(
@@ -68,24 +70,29 @@ serve(async (req) => {
         .single();
 
       if (profileError) {
-        console.error('Error creating profile:', profileError);
+        console.error('[VERIFY-MAGIC-LINK] Error creating profile:', profileError);
       } else {
         existingProfile = newProfile;
-        
-        // Grant admin role to specified emails
-        const adminEmails = ['your-email@example.com']; // Replace with actual admin emails
-        if (adminEmails.includes(tokenData.email)) {
+        console.log('[VERIFY-MAGIC-LINK] Profile created successfully', { 
+          userId: newProfile.id,
+          email: tokenData.email 
+        });
+
+        // Grant admin role if email is in ADMIN_EMAILS list
+        if (ADMIN_EMAILS.includes(tokenData.email)) {
+          console.log('[VERIFY-MAGIC-LINK] Assigning admin role to:', tokenData.email);
+
           const { error: roleError } = await supabase
             .from('user_roles')
             .insert({
               user_id: newProfile.id,
               role: 'admin'
             });
-          
+
           if (roleError) {
-            console.error('Error assigning admin role:', roleError);
+            console.error('[VERIFY-MAGIC-LINK] Error assigning admin role:', roleError);
           } else {
-            console.log('Admin role assigned to:', tokenData.email);
+            console.log('[VERIFY-MAGIC-LINK] Admin role assigned successfully');
           }
         }
       }
