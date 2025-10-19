@@ -31,7 +31,7 @@ serve(async (req) => {
       .select('role')
       .eq('user_id', userId)
       .eq('role', 'admin')
-      .single();
+      .maybeSingle();
 
     if (error) {
       console.error('Error checking admin status:', error);
