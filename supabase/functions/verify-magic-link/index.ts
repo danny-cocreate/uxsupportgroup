@@ -50,11 +50,46 @@ serve(async (req) => {
       .eq('token', token);
 
     // Check if user exists
-    const { data: existingProfile } = await supabase
+    let { data: existingProfile } = await supabase
       .from('user_profiles')
       .select('*')
       .eq('email', tokenData.email)
       .maybeSingle();
+
+    // If no profile exists, create one
+    if (!existingProfile) {
+      const { data: newProfile, error: profileError } = await supabase
+        .from('user_profiles')
+        .insert({
+          email: tokenData.email,
+          name: tokenData.email.split('@')[0] // Default name from email
+        })
+        .select()
+        .single();
+
+      if (profileError) {
+        console.error('Error creating profile:', profileError);
+      } else {
+        existingProfile = newProfile;
+        
+        // Grant admin role to specified emails
+        const adminEmails = ['your-email@example.com']; // Replace with actual admin emails
+        if (adminEmails.includes(tokenData.email)) {
+          const { error: roleError } = await supabase
+            .from('user_roles')
+            .insert({
+              user_id: newProfile.id,
+              role: 'admin'
+            });
+          
+          if (roleError) {
+            console.error('Error assigning admin role:', roleError);
+          } else {
+            console.log('Admin role assigned to:', tokenData.email);
+          }
+        }
+      }
+    }
 
     return new Response(
       JSON.stringify({ 

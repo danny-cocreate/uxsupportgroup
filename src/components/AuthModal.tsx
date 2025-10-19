@@ -33,14 +33,8 @@ const AuthModal = ({ open, onOpenChange }: AuthModalProps) => {
 
       if (error) throw error;
 
-      // In development, show the magic link
-      if (data.magicLink) {
-        setMagicLink(data.magicLink);
-        toast.success("Magic link generated! (Development mode)");
-      } else {
-        toast.success("Magic link sent! Check your email.");
-        onOpenChange(false);
-      }
+      toast.success(data.message || "Magic link sent! Check your email.");
+      onOpenChange(false);
     } catch (error) {
       console.error('Error sending magic link:', error);
       toast.error("Failed to send magic link. Please try again.");

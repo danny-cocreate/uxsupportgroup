@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
+import { Resend } from 'https://esm.sh/resend@2.0.0';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -37,21 +38,47 @@ serve(async (req) => {
       expires_at: expiresAt.toISOString(),
     });
 
-    // For now, return the token (in production, send via email)
+    // Send email via Resend
     const origin = req.headers.get('origin') || req.headers.get('referer')?.split('/').slice(0, 3).join('/') || 'https://uxsupportgroup.com';
     const magicLink = `${origin}/summit-profiles/verify?token=${token}`;
     
     console.log('Magic link generated:', magicLink);
 
-    return new Response(
-      JSON.stringify({ 
-        success: true,
-        message: 'Magic link sent! Check console for link (email integration pending)',
-        // In development, return the link
-        magicLink: magicLink
-      }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
+    
+    try {
+      await resend.emails.send({
+        from: 'UX Support Group <onboarding@resend.dev>',
+        to: [email],
+        subject: 'Your Magic Link to Access Admin Panel',
+        html: `
+          <h2>Access Your Admin Panel</h2>
+          <p>Click the link below to securely log in:</p>
+          <p><a href="${magicLink}" style="display: inline-block; padding: 12px 24px; background-color: #0070f3; color: white; text-decoration: none; border-radius: 5px;">Log In</a></p>
+          <p>Or copy and paste this link into your browser:</p>
+          <p>${magicLink}</p>
+          <p>This link will expire in 24 hours.</p>
+          <p>If you didn't request this, please ignore this email.</p>
+        `,
+      });
+
+      return new Response(
+        JSON.stringify({ 
+          success: true,
+          message: 'Magic link sent! Check your email to log in.'
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    } catch (emailError) {
+      console.error('Error sending email:', emailError);
+      return new Response(
+        JSON.stringify({ error: 'Failed to send email. Please try again.' }),
+        { 
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        }
+      );
+    }
   } catch (error) {
     console.error('Error sending magic link:', error);
     return new Response(
