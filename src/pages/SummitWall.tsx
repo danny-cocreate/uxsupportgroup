@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,6 +31,7 @@ interface Enrichment {
 }
 const SummitWall = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [profiles, setProfiles] = useState<ProfileCard[]>([]);
   const [zoom, setZoom] = useState(100);
   const [isLoading, setIsLoading] = useState(true);
@@ -62,6 +63,16 @@ const SummitWall = () => {
   useEffect(() => {
     loadProfiles();
     checkAuthStatus();
+    
+    // Check if we should open the create profile modal
+    if (searchParams.get('createProfile') === 'true') {
+      const email = sessionStorage.getItem('summit_user_email');
+      if (email) {
+        setShowCreateModal(true);
+        // Remove the query param
+        setSearchParams({});
+      }
+    }
   }, []);
 
   const checkAuthStatus = async () => {

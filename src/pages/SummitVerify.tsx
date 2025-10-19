@@ -34,12 +34,20 @@ const SummitVerify = () => {
         // Store user information in sessionStorage
         sessionStorage.setItem('summit_user_email', data.email);
         
+        let needsProfile = true;
+        
         if (data.userId) {
-          // Existing user - store ID
           sessionStorage.setItem('summit_user_id', data.userId);
-          toast.success('Successfully logged in!');
+          
+          // Check if profile has name (is complete)
+          if (data.profile?.name) {
+            needsProfile = false;
+            toast.success('Successfully logged in!');
+          } else {
+            toast.success('Welcome! Please complete your profile.');
+          }
         } else {
-          // New user - just store email for profile creation
+          // New user - needs to create profile
           toast.success('Welcome! Please complete your profile.');
         }
         
@@ -47,7 +55,11 @@ const SummitVerify = () => {
         
         // Redirect after a short delay
         setTimeout(() => {
-          navigate('/summit-profiles');
+          if (needsProfile) {
+            navigate('/summit-profiles?createProfile=true');
+          } else {
+            navigate('/summit-profiles');
+          }
         }, 1500);
       } else {
         setStatus('error');
