@@ -87,12 +87,15 @@ const AdminPanel = () => {
     if (!deleteProfileId) return;
 
     try {
-      const { error } = await supabase
-        .from('user_profiles')
-        .delete()
-        .eq('id', deleteProfileId);
+      const userId = sessionStorage.getItem('summit_user_id');
+      const { data, error } = await supabase.functions.invoke('delete-profile', {
+        body: { userId, profileId: deleteProfileId }
+      });
 
       if (error) throw error;
+      if (!data?.success) {
+        throw new Error(data?.message || 'Delete failed');
+      }
 
       toast.success("Profile deleted successfully");
       setProfiles(profiles.filter(p => p.id !== deleteProfileId));
