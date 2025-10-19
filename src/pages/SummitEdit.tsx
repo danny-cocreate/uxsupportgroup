@@ -75,6 +75,19 @@ const SummitEdit = () => {
   };
 
   const handleFieldBlur = async (field: 'name' | 'jobTitle' | 'companyName') => {
+    // Validate required fields
+    if (field === 'name' && !formData.name.trim()) {
+      toast.error("Full Name is required and cannot be empty");
+      loadProfile(); // Reload to restore previous value
+      return;
+    }
+    
+    if (field === 'jobTitle' && !formData.jobTitle.trim()) {
+      toast.error("Job Title is required and cannot be empty");
+      loadProfile(); // Reload to restore previous value
+      return;
+    }
+
     try {
       const updateData: any = {};
       
@@ -200,7 +213,7 @@ const SummitEdit = () => {
                 <div className="space-y-4">
                   <div>
                     <Label htmlFor="name" className="text-sm font-medium text-[#1F2937] mb-2 block">
-                      Full Name
+                      Full Name *
                     </Label>
                     <Input
                       id="name"
@@ -214,7 +227,7 @@ const SummitEdit = () => {
 
                   <div>
                     <Label htmlFor="jobTitle" className="text-sm font-medium text-[#1F2937] mb-2 block">
-                      Job Title
+                      Job Title *
                     </Label>
                     <Input
                       id="jobTitle"
@@ -228,7 +241,7 @@ const SummitEdit = () => {
 
                   <div>
                     <Label htmlFor="companyName" className="text-sm font-medium text-[#1F2937] mb-2 block">
-                      Company Name (Optional)
+                      Company Name
                     </Label>
                     <Input
                       id="companyName"

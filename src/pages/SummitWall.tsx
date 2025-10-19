@@ -700,7 +700,7 @@ const SummitWall = () => {
             </div>
 
             <div>
-              <Label htmlFor="companyName">Company Name (Optional)</Label>
+              <Label htmlFor="companyName">Company Name</Label>
               <Input id="companyName" type="text" placeholder="TechCorp" value={formData.companyName} onChange={e => setFormData({
               ...formData,
               companyName: e.target.value
@@ -769,15 +769,15 @@ const SummitWall = () => {
                   </div>
 
                   <div>
-                    <Label htmlFor="edit-jobTitle">Job Title</Label>
+                    <Label htmlFor="edit-jobTitle">Job Title *</Label>
                     <Input id="edit-jobTitle" type="text" placeholder="Senior Product Designer" value={editFormData.jobTitle} onChange={e => setEditFormData({
                 ...editFormData,
                 jobTitle: e.target.value
-              })} className="mt-2" disabled={isSaving} />
+              })} className="mt-2" disabled={isSaving} required />
                   </div>
 
                   <div>
-                    <Label htmlFor="edit-companyName">Company Name (Optional)</Label>
+                    <Label htmlFor="edit-companyName">Company Name</Label>
                     <Input id="edit-companyName" type="text" placeholder="TechCorp" value={editFormData.companyName} onChange={e => setEditFormData({
                 ...editFormData,
                 companyName: e.target.value
