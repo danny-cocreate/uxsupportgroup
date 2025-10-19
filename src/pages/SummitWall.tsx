@@ -646,7 +646,7 @@ const SummitWall = () => {
                   {profile.name}
                 </h3>
                 
-                {profile.job_title && <p className="text-xs font-medium text-black text-center line-clamp-1 mt-1 my-0">
+                {profile.job_title && <p className="text-xs font-medium text-black text-center line-clamp-1 mt-0.5 my-0">
                     {profile.job_title}
                   </p>}
                 
