@@ -32,7 +32,11 @@ interface Enrichment {
 }
 const SummitWall = () => {
   const navigate = useNavigate();
-  const { slug } = useParams<{ slug: string }>();
+  const {
+    slug
+  } = useParams<{
+    slug: string;
+  }>();
   const [searchParams, setSearchParams] = useSearchParams();
   const [profiles, setProfiles] = useState<ProfileCard[]>([]);
   const [zoom, setZoom] = useState(100);
@@ -61,11 +65,10 @@ const SummitWall = () => {
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [editFromWall, setEditFromWall] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-
   useEffect(() => {
     loadProfiles();
     checkAuthStatus();
-    
+
     // Check if we should open the create profile modal
     if (searchParams.get('createProfile') === 'true') {
       const email = sessionStorage.getItem('summit_user_email');
@@ -84,23 +87,27 @@ const SummitWall = () => {
       if (profile) {
         handleCardClick(profile);
         // Update URL to remove slug after opening modal
-        navigate('/summit-profiles', { replace: true });
+        navigate('/summit-profiles', {
+          replace: true
+        });
       }
     }
   }, [slug, profiles]);
-
   const checkAuthStatus = async () => {
     const userId = sessionStorage.getItem('summit_user_id');
     const email = sessionStorage.getItem('summit_user_email');
-    
     if (userId && email) {
       setCurrentUserId(userId);
       setUserEmail(email);
-      
+
       // Check if user is admin
       try {
-        const { data: adminData } = await supabase.functions.invoke('check-admin', {
-          body: { userId }
+        const {
+          data: adminData
+        } = await supabase.functions.invoke('check-admin', {
+          body: {
+            userId
+          }
         });
         setIsAdmin(adminData?.isAdmin || false);
       } catch (error) {
@@ -109,12 +116,9 @@ const SummitWall = () => {
     } else if (userId) {
       // Fetch email from database if we have userId but not email
       try {
-        const { data } = await supabase
-          .from('user_profiles')
-          .select('email')
-          .eq('id', userId)
-          .single();
-        
+        const {
+          data
+        } = await supabase.from('user_profiles').select('email').eq('id', userId).single();
         if (data?.email) {
           setUserEmail(data.email);
           sessionStorage.setItem('summit_user_email', data.email);
@@ -149,13 +153,12 @@ const SummitWall = () => {
   };
   const handleCreateProfile = () => {
     const email = sessionStorage.getItem('summit_user_email');
-    
     if (!email) {
       // User not authenticated, show auth modal
       setShowAuthModal(true);
       return;
     }
-    
+
     // User is authenticated, show profile creation modal
     setShowCreateModal(true);
     setFormData({
@@ -165,19 +168,15 @@ const SummitWall = () => {
       linkedinUrl: ''
     });
   };
-
   const handleEditProfile = async () => {
     const userId = sessionStorage.getItem('summit_user_id');
     if (!userId) return;
-
     try {
       // Load the user's profile
-      const { data: profile, error: profileError } = await supabase
-        .from('user_profiles')
-        .select('*')
-        .eq('id', userId)
-        .single();
-
+      const {
+        data: profile,
+        error: profileError
+      } = await supabase.from('user_profiles').select('*').eq('id', userId).single();
       if (profileError) throw profileError;
 
       // Set as selected profile and load enrichments
@@ -190,12 +189,12 @@ const SummitWall = () => {
       });
 
       // Load enrichments
-      const { data: enrichmentsData, error: enrichmentsError } = await supabase
-        .from('enrichments')
-        .select('*')
-        .eq('user_id', userId)
-        .order('display_order', { ascending: true });
-
+      const {
+        data: enrichmentsData,
+        error: enrichmentsError
+      } = await supabase.from('enrichments').select('*').eq('user_id', userId).order('display_order', {
+        ascending: true
+      });
       if (enrichmentsError) throw enrichmentsError;
       setEnrichments((enrichmentsData || []) as Enrichment[]);
 
@@ -208,7 +207,6 @@ const SummitWall = () => {
       toast.error("Failed to load profile");
     }
   };
-
   const handleLogout = () => {
     sessionStorage.removeItem('summit_user_id');
     sessionStorage.removeItem('summit_user_email');
@@ -218,7 +216,6 @@ const SummitWall = () => {
   };
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     const email = sessionStorage.getItem('summit_user_email');
     if (!email) {
       toast.error("Please log in first");
@@ -226,7 +223,6 @@ const SummitWall = () => {
       setShowAuthModal(true);
       return;
     }
-
     if (!formData.name.trim()) {
       toast.error("Please enter your name");
       return;
@@ -239,7 +235,6 @@ const SummitWall = () => {
       toast.error("Please enter a valid LinkedIn profile URL");
       return;
     }
-    
     setIsProcessing(true);
     try {
       // Create slug from name
@@ -257,9 +252,7 @@ const SummitWall = () => {
         linkedin_url: formData.linkedinUrl.trim() || null,
         slug
       }).select().single();
-      
       if (profileError) throw profileError;
-      
       sessionStorage.setItem('summit_user_id', profile.id);
       setCurrentUserId(profile.id);
       toast.success("Profile created successfully!");
@@ -309,7 +302,6 @@ const SummitWall = () => {
       toast.error("You can only edit your own profile");
       return;
     }
-
     setEditFormData({
       jobTitle: selectedProfile.job_title || '',
       companyName: selectedProfile.company_name || '',
@@ -330,7 +322,7 @@ const SummitWall = () => {
     } catch (error) {
       console.error('Error loading enrichments:', error);
     }
-    
+
     // Mark as edit from card view (not from wall)
     setEditFromWall(false);
     setIsEditMode(true);
@@ -432,12 +424,10 @@ const SummitWall = () => {
   };
   const handleChangePhoto = async () => {
     if (!selectedProfile) return;
-
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
-    
-    input.onchange = async (e) => {
+    input.onchange = async e => {
       const file = (e.target as HTMLInputElement).files?.[0];
       if (!file) return;
 
@@ -452,7 +442,6 @@ const SummitWall = () => {
         toast.error("Please upload an image file");
         return;
       }
-
       setIsSaving(true);
       try {
         // Create a unique filename
@@ -461,26 +450,27 @@ const SummitWall = () => {
         const filePath = fileName;
 
         // Upload to Supabase Storage
-        const { error: uploadError } = await supabase.storage
-          .from('profile-photos')
-          .upload(filePath, file, {
-            upsert: true,
-            contentType: file.type
-          });
-
+        const {
+          error: uploadError
+        } = await supabase.storage.from('profile-photos').upload(filePath, file, {
+          upsert: true,
+          contentType: file.type
+        });
         if (uploadError) throw uploadError;
 
         // Get public URL
-        const { data: { publicUrl } } = supabase.storage
-          .from('profile-photos')
-          .getPublicUrl(filePath);
+        const {
+          data: {
+            publicUrl
+          }
+        } = supabase.storage.from('profile-photos').getPublicUrl(filePath);
 
         // Update profile with new photo URL
-        const { error: updateError } = await supabase
-          .from('user_profiles')
-          .update({ profile_photo_url: publicUrl })
-          .eq('id', selectedProfile.id);
-
+        const {
+          error: updateError
+        } = await supabase.from('user_profiles').update({
+          profile_photo_url: publicUrl
+        }).eq('id', selectedProfile.id);
         if (updateError) throw updateError;
 
         // Update local state
@@ -488,7 +478,6 @@ const SummitWall = () => {
           ...selectedProfile,
           profile_photo_url: publicUrl
         });
-
         toast.success("Photo updated successfully!");
         loadProfiles();
       } catch (error) {
@@ -498,7 +487,6 @@ const SummitWall = () => {
         setIsSaving(false);
       }
     };
-
     input.click();
   };
   const handleShare = () => {
@@ -516,52 +504,31 @@ const SummitWall = () => {
   return <div className="h-screen bg-[#F9FAFB] overflow-hidden relative">
       {/* Auth Status and Buttons - Bottom Right */}
       <div className="fixed bottom-8 right-8 z-10 flex items-center gap-4">
-        {currentUserId ? (
-          <>
+        {currentUserId ? <>
             <div className="bg-white rounded-lg shadow-md px-4 py-2 flex items-center gap-2">
               <span className="text-sm text-black">Logged in as</span>
               <span className="text-sm font-medium text-black">{userEmail}</span>
-              <button
-                onClick={handleLogout}
-                className="text-sm text-[#8B5CF6] hover:text-[#7C3AED] ml-2"
-              >
+              <button onClick={handleLogout} className="text-sm text-[#8B5CF6] hover:text-[#7C3AED] ml-2">
                 <LogOut className="w-4 h-4" />
               </button>
             </div>
-            <Button 
-              onClick={handleEditProfile} 
-              className="bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:opacity-90 shadow-lg h-14 px-6" 
-              size="lg"
-            >
+            <Button onClick={handleEditProfile} className="bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:opacity-90 shadow-lg h-14 px-6" size="lg">
               <Edit className="w-5 h-5 mr-2" />
               Edit Profile
             </Button>
-          </>
-        ) : (
-          <Button 
-            onClick={() => setShowAuthModal(true)} 
-            className="bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:opacity-90 shadow-lg h-14 px-6" 
-            size="lg"
-          >
+          </> : <Button onClick={() => setShowAuthModal(true)} className="bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:opacity-90 shadow-lg h-14 px-6" size="lg">
             <UserPlus className="w-5 h-5 mr-2" />
             Create Profile / Log In
-          </Button>
-        )}
+          </Button>}
       </div>
 
       {/* Admin Link - Top Right */}
-      {isAdmin && (
-        <div className="fixed top-4 left-4 z-10">
-          <Button
-            onClick={() => navigate('/admin')}
-            variant="outline"
-            className="bg-white shadow-md"
-          >
+      {isAdmin && <div className="fixed top-4 left-4 z-10">
+          <Button onClick={() => navigate('/admin')} variant="outline" className="bg-white shadow-md">
             <Shield className="w-4 h-4 mr-2" />
             Admin Panel
           </Button>
-        </div>
-      )}
+        </div>}
 
       <AuthModal open={showAuthModal} onOpenChange={setShowAuthModal} />
 
@@ -699,7 +666,7 @@ const SummitWall = () => {
               <DialogHeader>
                 <div className="flex flex-col items-start gap-2 mb-8 pb-6 border-b border-gray-200">
                   <img src={uxsgLogo} alt="UXSG" className="h-11 w-auto" />
-                  <h3 className="text-4xl font-semibold text-black">
+                  <h3 className="text-4xl font-semibold text-black my-[15px]">
                     AI<span className="text-gradient">x</span>UX Summit 2025
                   </h3>
                 </div>
@@ -819,13 +786,11 @@ const SummitWall = () => {
                   <div className="flex-1 min-w-0 space-y-2">
                     <h2 className="text-xl font-bold text-black">{selectedProfile.name}</h2>
                     
-                    {(selectedProfile.job_title || selectedProfile.company_name) && (
-                      <p className="text-sm text-black">
+                    {(selectedProfile.job_title || selectedProfile.company_name) && <p className="text-sm text-black">
                         {selectedProfile.job_title}
                         {selectedProfile.job_title && selectedProfile.company_name && " at "}
                         {selectedProfile.company_name}
-                      </p>
-                    )}
+                      </p>}
                     
                     {selectedProfile.linkedin_url && <a href={selectedProfile.linkedin_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm text-[#8B5CF6] hover:text-[#7C3AED] transition-colors">
                         View LinkedIn
@@ -861,12 +826,10 @@ const SummitWall = () => {
 
                 {/* Action Buttons */}
                 <div className="flex gap-3 pt-4">
-                  {currentUserId === selectedProfile.id && (
-                    <Button onClick={handleEdit} variant="outline" className="flex-1 border-[#8B5CF6] text-[#8B5CF6] hover:bg-[#8B5CF6] hover:text-white">
+                  {currentUserId === selectedProfile.id && <Button onClick={handleEdit} variant="outline" className="flex-1 border-[#8B5CF6] text-[#8B5CF6] hover:bg-[#8B5CF6] hover:text-white">
                       <Edit className="w-4 h-4 mr-2" />
                       Edit Profile
-                    </Button>
-                  )}
+                    </Button>}
                   <Button onClick={handleShare} className={`${currentUserId === selectedProfile.id ? 'flex-1' : 'w-full'} bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:opacity-90`}>
                     <Share2 className="w-4 h-4 mr-2" />
                     Share
