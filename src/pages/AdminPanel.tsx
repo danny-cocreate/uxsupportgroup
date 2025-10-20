@@ -12,7 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Trash2, ArrowLeft, Shield } from "lucide-react";
+import { Trash2, ArrowLeft, Shield, RefreshCw } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -38,6 +38,7 @@ const AdminPanel = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [profiles, setProfiles] = useState<UserProfile[]>([]);
   const [deleteProfileId, setDeleteProfileId] = useState<string | null>(null);
+  const [isSyncing, setIsSyncing] = useState(false);
 
   useEffect(() => {
     checkAdminAndLoadProfiles();
@@ -107,6 +108,24 @@ const AdminPanel = () => {
     }
   };
 
+  const handleSyncEvents = async () => {
+    setIsSyncing(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('sync-events', {
+        body: {}
+      });
+
+      if (error) throw error;
+
+      toast.success(`Successfully synced ${data?.events?.length || 0} events from Google Sheets`);
+    } catch (error) {
+      console.error('Error syncing events:', error);
+      toast.error("Failed to sync events from Google Sheets");
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#F9FAFB]">
@@ -137,6 +156,14 @@ const AdminPanel = () => {
               <h1 className="text-3xl font-bold text-[#1F2937]">Admin Panel</h1>
             </div>
           </div>
+          <Button
+            onClick={handleSyncEvents}
+            disabled={isSyncing}
+            className="bg-[#8B5CF6] hover:bg-[#7C3AED]"
+          >
+            <RefreshCw className={`w-4 h-4 mr-2 ${isSyncing ? 'animate-spin' : ''}`} />
+            {isSyncing ? 'Syncing...' : 'Sync Events'}
+          </Button>
         </div>
 
         {/* Stats */}
