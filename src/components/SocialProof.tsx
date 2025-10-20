@@ -14,9 +14,9 @@ import YatongW from "@/assets/YatongW-2.jpeg";
 const SocialProof = () => {
   const facilitators = [{
     name: "Danny Setiawan",
-    title: "Founder, Instructor",
-    company: "CoCreate | Ex. The Economist, Yahoo!",
-    bio: "Leader in UX strategy for global media and startup growth. Former: Yahoo!, The Economist.",
+    title: "Founder, CoCreate | Ex-Yahoo!, The Economist",
+    company: null,
+    bio: "UX leader and AI educator with a track record delivering product innovation for global brands including Yahoo!, The Economist, Disney, Sony, and Men's Warehouse, as well as growing the community of UX professionals with over 8800 members from all over the world.",
     linkedin: "https://www.linkedin.com/in/dnystwn/",
     image: DannyS
   }, {
