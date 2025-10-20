@@ -1,7 +1,7 @@
 const HomeStats = () => {
   const stats = [
     { value: "8,700+", label: "Members" },
-    { value: "50+", label: "Events Per Year" },
+    { value: "250+", label: "Events Per Year" },
     { value: "8+ Years", label: "Strong" },
     { value: "100%", label: "Free to Join" },
   ];
