@@ -12,6 +12,10 @@ serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
+  // Handle HEAD requests (some crawlers send HEAD first)
+  if (req.method === 'HEAD') {
+    return new Response(null, { headers: corsHeaders });
+  }
 
   try {
     const url = new URL(req.url);
@@ -74,7 +78,8 @@ serve(async (req) => {
 
     // Determine the best image to use (prioritize card screenshot)
     const ogImage = profile.card_screenshot_url || profile.profile_photo_url || 'https://uxsupportgroup.com/uxsg-logo.png';
-    const profileUrl = `https://uxsupportgroup.com/summit-profiles/${slug}`;
+    const profileParam = profile.slug || profile.id;
+    const profileUrl = `https://uxsupportgroup.com/summit-profiles/${profileParam}`;
     const title = `${profile.name || 'Profile'} | AIxUX Summit 2025`;
     const description = profile.job_title && profile.company_name 
       ? `${profile.job_title} at ${profile.company_name} | Join us at the AIxUX Summit`
@@ -97,10 +102,13 @@ serve(async (req) => {
           <meta property="og:title" content="${title}">
           <meta property="og:description" content="${description}">
           <meta property="og:image" content="${ogImage}">
+          <meta property="og:image:secure_url" content="${ogImage}">
           <meta property="og:image:width" content="1200">
           <meta property="og:image:height" content="630">
           <meta property="og:image:type" content="image/png">
           <meta property="og:site_name" content="AIxUX Summit">
+          <link rel="canonical" href="${profileUrl}">
+          <meta name="description" content="${description}">
           
           <!-- Twitter -->
           <meta name="twitter:card" content="summary_large_image">
