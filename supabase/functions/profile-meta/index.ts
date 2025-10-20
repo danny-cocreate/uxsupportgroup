@@ -12,15 +12,18 @@ serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
-  // Handle HEAD requests (some crawlers send HEAD first)
-  if (req.method === 'HEAD') {
-    return new Response(null, { headers: corsHeaders });
-  }
 
   try {
     const url = new URL(req.url);
     const pathParts = url.pathname.split('/');
-    const slug = pathParts[pathParts.length - 1];
+    const pathSlug = pathParts[pathParts.length - 1];
+    const querySlug = url.searchParams.get('profile');
+    const slug = pathSlug && pathSlug !== 'profile-meta' ? pathSlug : querySlug;
+
+    if (!slug) {
+      console.error('[PROFILE-META] No slug provided');
+      return new Response('Profile identifier required', { status: 400, headers: corsHeaders });
+    }
 
     console.log(`[PROFILE-META] Processing request for slug: ${slug}`);
 
@@ -136,17 +139,27 @@ serve(async (req) => {
       </html>
     `;
 
+    const responseHeaders = {
+      ...corsHeaders,
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'public, max-age=604800, s-maxage=604800',
+      'Vary': 'User-Agent',
+      'X-Profile-Meta': 'generated',
+      'X-Slug': slug,
+      'X-Is-Crawler': 'true'
+    };
+
+    // Handle HEAD requests by returning same headers without body
+    if (req.method === 'HEAD') {
+      return new Response(null, {
+        status: 200,
+        headers: responseHeaders,
+      });
+    }
+
     return new Response(html, {
       status: 200,
-      headers: {
-        ...corsHeaders,
-        'Content-Type': 'text/html; charset=utf-8',
-        'Cache-Control': 'public, max-age=604800, s-maxage=604800',
-        'Vary': 'User-Agent',
-        'X-Profile-Meta': 'generated',
-        'X-Slug': slug,
-        'X-Is-Crawler': 'true'
-      },
+      headers: responseHeaders,
     });
 
   } catch (error) {

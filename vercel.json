@@ -1,6 +1,12 @@
+{
   "rewrites": [
     {
       "source": "/summit-profiles/:slug",
       "destination": "https://hxsykzhergwulxsayckj.supabase.co/functions/v1/profile-meta/:slug"
+    },
+    {
+      "source": "/summit-profiles",
+      "destination": "https://hxsykzhergwulxsayckj.supabase.co/functions/v1/profile-meta"
     }
   ]
+}
