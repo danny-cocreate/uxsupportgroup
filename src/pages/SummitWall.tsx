@@ -824,7 +824,7 @@ const SummitWall = () => {
             animation: `${floatAnimation.animationName} ${floatAnimation.duration} ease-in-out infinite`,
             animationDelay: floatAnimation.delay
           }} onClick={() => handleCardClick(profile)}>
-              <div className="flex flex-col items-center gap-3">
+              <div className="flex flex-col items-center gap-2">
                 <div className="w-16 h-16 rounded-full bg-[#E5E7EB] overflow-hidden flex-shrink-0">
                   {profile.profile_photo_url ? <img src={profile.profile_photo_url} alt={profile.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[#9CA3AF] text-xs">
                       No photo
@@ -835,11 +835,11 @@ const SummitWall = () => {
                   {profile.name}
                 </h3>
                 
-                {profile.job_title && <p className="text-xs font-medium text-black text-center line-clamp-1 mt-0.5 my-0">
+                {profile.job_title && <p className="text-xs font-medium text-black text-center line-clamp-1">
                     {profile.job_title}
                   </p>}
                 
-                {profile.company_name && <p className="text-xs text-black text-center line-clamp-1 mt-1">
+                {profile.company_name && <p className="text-xs text-black text-center line-clamp-1">
                     {profile.company_name}
                   </p>}
                 
