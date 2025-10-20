@@ -84,7 +84,6 @@ export type Database = {
           created_at: string | null
           date: string
           description: string | null
-          event_type: string | null
           id: string
           location: string | null
           meetup_link: string | null
@@ -96,7 +95,6 @@ export type Database = {
           created_at?: string | null
           date: string
           description?: string | null
-          event_type?: string | null
           id?: string
           location?: string | null
           meetup_link?: string | null
@@ -108,7 +106,6 @@ export type Database = {
           created_at?: string | null
           date?: string
           description?: string | null
-          event_type?: string | null
           id?: string
           location?: string | null
           meetup_link?: string | null

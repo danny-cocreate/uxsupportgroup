@@ -10,11 +10,13 @@ const UpcomingEvents = () => {
   const { data: events, isLoading, error } = useQuery({
     queryKey: ['upcoming-events'],
     queryFn: async () => {
+      const today = new Date().toISOString().split('T')[0];
       const { data, error } = await supabase
         .from('events')
         .select('*')
-        .eq('event_type', 'upcoming')
-        .order('date', { ascending: true });
+        .gte('date', today)
+        .order('date', { ascending: true })
+        .limit(5);
       
       if (error) throw error;
       return data;

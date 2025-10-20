@@ -10,10 +10,11 @@ const PastEvents = () => {
   const { data: events, isLoading, error } = useQuery({
     queryKey: ['past-events'],
     queryFn: async () => {
+      const today = new Date().toISOString().split('T')[0];
       const { data, error } = await supabase
         .from('events')
         .select('*')
-        .eq('event_type', 'past')
+        .lt('date', today)
         .order('date', { ascending: false });
       
       if (error) throw error;

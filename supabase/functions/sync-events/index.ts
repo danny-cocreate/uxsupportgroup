@@ -71,14 +71,9 @@ serve(async (req) => {
         event[header] = values[index] || null;
       });
 
-      // Determine event type based on date
-      const eventDate = new Date(event.date);
-      event.event_type = eventDate >= today ? 'upcoming' : 'past';
-
       console.log('[SYNC-EVENTS] Processing event:', {
         title: event.title,
-        date: event.date,
-        event_type: event.event_type
+        date: event.date
       });
 
       events.push({
@@ -87,8 +82,7 @@ serve(async (req) => {
         start_time: event.start_time,
         location: event.location,
         description: event.description,
-        meetup_link: event.meetup_link,
-        event_type: event.event_type
+        meetup_link: event.meetup_link
       });
     }
 
