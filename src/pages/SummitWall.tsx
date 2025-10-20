@@ -730,10 +730,7 @@ const SummitWall = () => {
       }
       
       await navigator.clipboard.writeText(shareUrl);
-      toast.success(
-        "Link copied! Paste in LinkedIn Post Inspector if preview doesn't update: https://www.linkedin.com/post-inspector/",
-        { duration: 8000 }
-      );
+      toast.success("Profile link copied to clipboard!", { duration: 3000 });
     } catch (err) {
       console.error('Error copying to clipboard:', err);
       toast.error("Failed to copy link");
