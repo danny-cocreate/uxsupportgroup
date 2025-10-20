@@ -118,11 +118,14 @@ const UpcomingEvents = () => {
               </div>
               
               <div className="text-center">
-                <Button size="lg" asChild>
-                  <a href="https://www.meetup.com/ux-support-group/" target="_blank" rel="noopener noreferrer">
-                    View All Events on Meetup.com →
-                  </a>
-                </Button>
+                <a 
+                  href="https://www.meetup.com/ux-support-group/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline font-medium"
+                >
+                  View All Events on Meetup.com →
+                </a>
               </div>
             </>
           ) : (
