@@ -1,9 +1,7 @@
 import { Button } from "@/components/ui/button";
 import heroBg from "@/assets/liquid-data-bust.png";
-
 const HomeHero = () => {
-  return (
-    <section className="relative min-h-[80vh] flex items-center overflow-hidden">
+  return <section className="relative min-h-[80vh] flex items-center overflow-hidden">
       <img src={heroBg} alt="Diverse group of UX professionals networking at community event" className="absolute inset-0 w-full h-full object-cover" />
       <div className="absolute inset-0 bg-gradient-to-br from-white/95 via-white/90 to-white/85" />
       
@@ -20,14 +18,7 @@ const HomeHero = () => {
             Connect, learn, and grow with fellow UX practitioners through events, networking, and career support
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <Button size="lg" className="text-lg px-8 py-6 bg-foreground text-background hover:bg-foreground/90">
-              Become a Member
-            </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8 py-6">
-              Explore Events
-            </Button>
-          </div>
+          
 
           <div className="grid grid-cols-3 gap-6 max-w-2xl">
             <div className="text-center">
@@ -45,8 +36,6 @@ const HomeHero = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HomeHero;
