@@ -79,6 +79,45 @@ export type Database = {
           },
         ]
       }
+      events: {
+        Row: {
+          created_at: string | null
+          date: string
+          description: string | null
+          event_type: string | null
+          id: string
+          location: string | null
+          meetup_link: string | null
+          start_time: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          date: string
+          description?: string | null
+          event_type?: string | null
+          id?: string
+          location?: string | null
+          meetup_link?: string | null
+          start_time?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          date?: string
+          description?: string | null
+          event_type?: string | null
+          id?: string
+          location?: string | null
+          meetup_link?: string | null
+          start_time?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       magic_link_tokens: {
         Row: {
           created_at: string

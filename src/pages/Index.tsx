@@ -4,6 +4,7 @@ import HomeHero from "@/components/HomeHero";
 import HomeStats from "@/components/HomeStats";
 import WhatWeOffer from "@/components/WhatWeOffer";
 import UpcomingEvents from "@/components/UpcomingEvents";
+import PastEvents from "@/components/PastEvents";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -16,6 +17,7 @@ const Index = () => {
         <HomeStats />
         <WhatWeOffer />
         <UpcomingEvents />
+        <PastEvents />
       </main>
       <Footer />
     </div>

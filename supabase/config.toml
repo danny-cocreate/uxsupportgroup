@@ -17,3 +17,6 @@ verify_jwt = false
 
 [functions.profile-meta]
 verify_jwt = false
+
+[functions.sync-events]
+verify_jwt = false
