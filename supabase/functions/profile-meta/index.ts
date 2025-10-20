@@ -116,15 +116,8 @@ serve(async (req) => {
           <meta name="twitter:title" content="${title}">
           <meta name="twitter:description" content="${description}">
           <meta name="twitter:image" content="${ogImage}">
-          
-          <!-- Redirect to actual page after crawlers read meta tags -->
-          <meta http-equiv="refresh" content="0;url=${profileUrl}">
         </head>
         <body>
-          <script>window.location.href = "${profileUrl}";</script>
-          <noscript>
-            <p>Redirecting to <a href="${profileUrl}">${profile.name}'s profile</a>...</p>
-          </noscript>
         </body>
       </html>
     `;
@@ -134,7 +127,7 @@ serve(async (req) => {
       headers: {
         ...corsHeaders,
         'Content-Type': 'text/html; charset=utf-8',
-        'Cache-Control': 'public, max-age=3600', // Cache for 1 hour
+        'Cache-Control': 'no-store, max-age=0, s-maxage=0, must-revalidate',
       },
     });
 
