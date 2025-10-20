@@ -51,52 +51,18 @@ serve(async (req) => {
       .update({ used_at: new Date().toISOString() })
       .eq('token', token);
 
-    // Check if user exists
-    let { data: existingProfile } = await supabase
+    // Check if profile exists for this email
+    const { data: existingProfile } = await supabase
       .from('user_profiles')
-      .select('*')
+      .select('id, email, name, slug')
       .eq('email', tokenData.email)
       .maybeSingle();
 
-    // If no profile exists, create one
-    if (!existingProfile) {
-      const { data: newProfile, error: profileError } = await supabase
-        .from('user_profiles')
-        .insert({
-          email: tokenData.email,
-          name: tokenData.email.split('@')[0] // Default name from email
-        })
-        .select()
-        .single();
-
-      if (profileError) {
-        console.error('[VERIFY-MAGIC-LINK] Error creating profile:', profileError);
-      } else {
-        existingProfile = newProfile;
-        console.log('[VERIFY-MAGIC-LINK] Profile created successfully', { 
-          userId: newProfile.id,
-          email: tokenData.email 
-        });
-
-        // Grant admin role if email is in ADMIN_EMAILS list
-        if (ADMIN_EMAILS.includes(tokenData.email)) {
-          console.log('[VERIFY-MAGIC-LINK] Assigning admin role to:', tokenData.email);
-
-          const { error: roleError } = await supabase
-            .from('user_roles')
-            .insert({
-              user_id: newProfile.id,
-              role: 'admin'
-            });
-
-          if (roleError) {
-            console.error('[VERIFY-MAGIC-LINK] Error assigning admin role:', roleError);
-          } else {
-            console.log('[VERIFY-MAGIC-LINK] Admin role assigned successfully');
-          }
-        }
-      }
-    }
+    console.log('[VERIFY-MAGIC-LINK] Profile lookup', { 
+      email: tokenData.email,
+      hasProfile: !!existingProfile,
+      profileId: existingProfile?.id || null
+    });
 
     return new Response(
       JSON.stringify({ 
@@ -104,7 +70,8 @@ serve(async (req) => {
         email: tokenData.email,
         userId: existingProfile?.id || null,
         hasProfile: !!existingProfile,
-        profile: existingProfile
+        profile: existingProfile,
+        isNewUser: !existingProfile
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

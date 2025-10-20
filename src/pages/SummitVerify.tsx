@@ -32,36 +32,21 @@ const SummitVerify = () => {
       if (error) throw error;
 
       if (data.valid) {
-        // Store user information in sessionStorage
+        // Store email in sessionStorage
         sessionStorage.setItem('summit_user_email', data.email);
         
-        let needsProfile = true;
-        
-        if (data.userId) {
+        // If user has existing profile, store userId and redirect to wall
+        if (data.hasProfile && data.userId) {
           sessionStorage.setItem('summit_user_id', data.userId);
-          
-          // Check if profile has name (is complete)
-          if (data.profile?.name) {
-            needsProfile = false;
-            toast.success('Successfully logged in!');
-          } else {
-            toast.success('Welcome! Please complete your profile.');
-          }
+          toast.success('Successfully logged in!');
+          setStatus('success');
+          setTimeout(() => navigate('/summit-profiles'), 1500);
         } else {
-          // New user - needs to create profile
-          toast.success('Welcome! Please complete your profile.');
+          // New user - redirect to create profile
+          toast.success('Welcome! Please create your profile.');
+          setStatus('success');
+          setTimeout(() => navigate('/summit-profiles?createProfile=true'), 1500);
         }
-        
-        setStatus('success');
-        
-        // Redirect after a short delay
-        setTimeout(() => {
-          if (needsProfile) {
-            navigate('/summit-profiles?createProfile=true');
-          } else {
-            navigate('/summit-profiles');
-          }
-        }, 1500);
       } else {
         setStatus('error');
         if (data.reason === 'expired') {

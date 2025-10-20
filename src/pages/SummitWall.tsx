@@ -329,8 +329,19 @@ const SummitWall = () => {
         slug
       }).select().single();
       if (profileError) throw profileError;
+      
+      // Store userId in sessionStorage
       sessionStorage.setItem('summit_user_id', profile.id);
       setCurrentUserId(profile.id);
+      
+      // Assign admin role if applicable
+      try {
+        await supabase.functions.invoke('assign-admin-role', {
+          body: { userId: profile.id, email: email }
+        });
+      } catch (error) {
+        console.error('Error assigning admin role:', error);
+      }
       
       // Auto-generate screenshot
       setSelectedProfile(profile);
