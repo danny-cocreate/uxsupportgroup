@@ -54,7 +54,7 @@ const UpcomingEvents = () => {
             <>
               <div className="space-y-4 mb-12">
                 {events.map((event) => {
-                  const eventDate = new Date(event.date);
+                  const eventDate = new Date(event.date + 'T00:00:00');
                   return (
                     <Card key={event.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                       <div className="flex flex-col sm:flex-row items-stretch">

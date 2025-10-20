@@ -62,7 +62,7 @@ const PastEvents = () => {
                   <Play className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-1" />
                 </div>
                 <p className="text-muted-foreground mb-1">
-                  {format(new Date(event.date), 'MMMM d, yyyy')}
+                  {format(new Date(event.date + 'T00:00:00'), 'MMMM d, yyyy')}
                 </p>
                 {event.start_time && (
                   <p className="text-sm text-muted-foreground mb-1">{event.start_time}</p>
