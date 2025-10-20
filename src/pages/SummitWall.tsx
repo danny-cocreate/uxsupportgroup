@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate, useSearchParams, useParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -6,10 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { toast } from "sonner";
-import { Minus, Plus, Maximize2, UserPlus, ExternalLink, Share2, Edit, Link as LinkIcon, Trash2, LogOut, Shield, Globe } from "lucide-react";
+import { Minus, Plus, Maximize2, UserPlus, ExternalLink, Share2, Edit, Link as LinkIcon, Trash2, LogOut, Shield, Globe, Camera } from "lucide-react";
 import logo from "@/assets/uxsg-logo-dark-bg.png";
 import uxsgLogo from "@/assets/uxsg-logo.svg";
 import AuthModal from "@/components/AuthModal";
+import html2canvas from 'html2canvas';
 interface ProfileCard {
   id: string;
   name: string;
@@ -33,6 +34,7 @@ interface Enrichment {
 }
 const SummitWall = () => {
   const navigate = useNavigate();
+  const profileCardRef = useRef<HTMLDivElement>(null);
   const {
     slug
   } = useParams<{
@@ -68,6 +70,7 @@ const SummitWall = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [showAddLinkDialog, setShowAddLinkDialog] = useState(false);
   const [newLinkData, setNewLinkData] = useState({ url: '', title: '' });
+  const [isGeneratingScreenshot, setIsGeneratingScreenshot] = useState(false);
 
   // Generate deterministic animation properties based on profile ID
   const getFloatAnimation = (profileId: string) => {
@@ -462,6 +465,67 @@ const SummitWall = () => {
       setIsEditMode(false);
     }
   };
+
+  const generateScreenshot = async () => {
+    if (!profileCardRef.current || !selectedProfile) return;
+    
+    setIsGeneratingScreenshot(true);
+    toast.info("Generating LinkedIn preview image...");
+    
+    try {
+      // Capture the card element
+      const canvas = await html2canvas(profileCardRef.current, {
+        scale: 2,
+        backgroundColor: '#FFFFFF',
+        logging: false,
+        width: 1200,
+        height: 630
+      });
+      
+      // Convert to blob
+      const blob = await new Promise<Blob>((resolve) => {
+        canvas.toBlob((blob) => resolve(blob!), 'image/png', 0.85);
+      });
+      
+      // Upload to Supabase Storage
+      const fileName = `${selectedProfile.id}-${Date.now()}.png`;
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('profile-screenshots')
+        .upload(fileName, blob, {
+          contentType: 'image/png',
+          upsert: true
+        });
+      
+      if (uploadError) throw uploadError;
+      
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('profile-screenshots')
+        .getPublicUrl(fileName);
+      
+      // Update profile with screenshot URL
+      const { error: updateError } = await supabase
+        .from('user_profiles')
+        .update({
+          card_screenshot_url: publicUrl,
+          screenshot_generated_at: new Date().toISOString()
+        })
+        .eq('id', selectedProfile.id);
+      
+      if (updateError) throw updateError;
+      
+      // Update local state
+      setSelectedProfile({ ...selectedProfile, card_screenshot_url: publicUrl });
+      loadProfiles();
+      
+      toast.success("LinkedIn preview image generated!");
+    } catch (error) {
+      console.error('Screenshot generation error:', error);
+      toast.error("Failed to generate preview image.");
+    } finally {
+      setIsGeneratingScreenshot(false);
+    }
+  };
   const handleAddLink = () => {
     if (!selectedProfile) return;
     if (enrichments.length >= 10) {
@@ -853,6 +917,56 @@ const SummitWall = () => {
                 ...editFormData,
                 linkedinUrl: e.target.value
               })} className="mt-2" disabled={isSaving} />
+                  </div>
+
+                  {/* LinkedIn Preview Generation - Hidden capture area */}
+                  <div ref={profileCardRef} className="absolute -left-[9999px] w-[1200px] h-[630px] bg-white p-12">
+                    <div className="flex items-start gap-8 h-full">
+                      <div className="w-64 h-64 rounded-2xl bg-gray-100 overflow-hidden flex-shrink-0">
+                        {selectedProfile.profile_photo_url ? (
+                          <img src={selectedProfile.profile_photo_url} alt={selectedProfile.name} className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-gray-400">No photo</div>
+                        )}
+                      </div>
+                      <div className="flex-1 flex flex-col justify-center">
+                        <h2 className="text-6xl font-bold text-gray-900 mb-4">{editFormData.name}</h2>
+                        <p className="text-3xl text-gray-700 mb-2">{editFormData.jobTitle}</p>
+                        {editFormData.companyName && (
+                          <p className="text-2xl text-gray-600">{editFormData.companyName}</p>
+                        )}
+                        <div className="mt-8 text-xl text-gray-500">AIxUX Summit 2025</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Screenshot Generation Section */}
+                  <div className="border-t pt-4">
+                    <div className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-lg p-4">
+                      <div className="flex items-start gap-3">
+                        <Camera className="w-5 h-5 text-purple-600 mt-0.5 flex-shrink-0" />
+                        <div className="flex-1">
+                          <h4 className="text-sm font-semibold text-gray-900 mb-1">LinkedIn Preview</h4>
+                          <p className="text-xs text-gray-600 mb-3">
+                            Generate a preview image for better sharing on social media
+                          </p>
+                          {selectedProfile.card_screenshot_url && (
+                            <p className="text-xs text-green-600 mb-2">
+                              ✓ Preview image generated
+                            </p>
+                          )}
+                          <Button
+                            onClick={generateScreenshot}
+                            disabled={isGeneratingScreenshot || isSaving}
+                            size="sm"
+                            className="bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:opacity-90"
+                          >
+                            <Camera className="w-3 h-3 mr-1.5" />
+                            {isGeneratingScreenshot ? 'Generating...' : selectedProfile.card_screenshot_url ? 'Regenerate' : 'Generate'}
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
                   {/* Enrichments Section */}
