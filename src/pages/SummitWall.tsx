@@ -21,6 +21,7 @@ interface ProfileCard {
   wall_position_y: number;
   slug: string | null;
   linkedin_url: string | null;
+  card_screenshot_url: string | null;
 }
 interface Enrichment {
   id: string;
@@ -195,7 +196,7 @@ const SummitWall = () => {
       const {
         data,
         error
-      } = await supabase.from('user_profiles').select('id, name, job_title, company_name, bio, profile_photo_url, wall_position_x, wall_position_y, slug, linkedin_url').not('name', 'is', null);
+      } = await supabase.from('user_profiles').select('id, name, job_title, company_name, bio, profile_photo_url, wall_position_x, wall_position_y, slug, linkedin_url, card_screenshot_url').not('name', 'is', null);
       
       if (error) {
         console.error('Error loading profiles:', error);

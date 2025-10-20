@@ -10,7 +10,6 @@ import Membership from "./pages/Membership";
 import Sponsor from "./pages/Sponsor";
 import Partner from "./pages/Partner";
 import MediaKit from "./pages/MediaKit";
-import SummitEdit from "./pages/SummitEdit";
 import SummitWall from "./pages/SummitWall";
 import SummitVerify from "./pages/SummitVerify";
 import AdminPanel from "./pages/AdminPanel";
@@ -34,7 +33,6 @@ const App = () => (
           <Route path="/media-kit" element={<MediaKit />} />
           <Route path="/summit-profiles" element={<SummitWall />} />
           <Route path="/summit-profiles/verify" element={<SummitVerify />} />
-          <Route path="/summit-profiles/edit" element={<SummitEdit />} />
           <Route path="/summit-profiles/:slug" element={<SummitWall />} />
           <Route path="/admin" element={<AdminPanel />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
