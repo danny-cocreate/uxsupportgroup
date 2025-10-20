@@ -24,7 +24,6 @@ interface ProfileCard {
   slug: string | null;
   linkedin_url: string | null;
   card_screenshot_url: string | null;
-  screenshot_version: number;
 }
 interface Enrichment {
   id: string;
@@ -71,7 +70,10 @@ const SummitWall = () => {
   const [editFromWall, setEditFromWall] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [showAddLinkDialog, setShowAddLinkDialog] = useState(false);
-  const [newLinkData, setNewLinkData] = useState({ url: '', title: '' });
+  const [newLinkData, setNewLinkData] = useState({
+    url: '',
+    title: ''
+  });
   const [isGeneratingScreenshot, setIsGeneratingScreenshot] = useState(false);
 
   // Generate deterministic animation properties based on profile ID
@@ -152,12 +154,16 @@ const SummitWall = () => {
       } else {
         // Profile not found
         toast.error("This profile no longer exists or the link is invalid.");
-        navigate('/summit-profiles', { replace: true });
+        navigate('/summit-profiles', {
+          replace: true
+        });
       }
     } else if (slug && !isLoading && profiles.length === 0) {
       // Profiles loaded but empty
       toast.error("Unable to find this profile.");
-      navigate('/summit-profiles', { replace: true });
+      navigate('/summit-profiles', {
+        replace: true
+      });
     }
   }, [slug, profiles, isLoading, navigate]);
   const checkAuthStatus = async () => {
@@ -202,14 +208,12 @@ const SummitWall = () => {
         data,
         error
       } = await supabase.from('user_profiles').select('id, name, job_title, company_name, bio, profile_photo_url, wall_position_x, wall_position_y, slug, linkedin_url, card_screenshot_url').not('name', 'is', null);
-      
       if (error) {
         console.error('Error loading profiles:', error);
         toast.error("Unable to load profiles. Please refresh the page.");
         setProfiles([]);
         return;
       }
-      
       setProfiles(data || []);
     } catch (error) {
       console.error('Critical error loading profiles:', error);
@@ -330,20 +334,23 @@ const SummitWall = () => {
         slug
       }).select().single();
       if (profileError) throw profileError;
-      
+
       // Store userId in sessionStorage
       sessionStorage.setItem('summit_user_id', profile.id);
       setCurrentUserId(profile.id);
-      
+
       // Assign admin role if applicable
       try {
         await supabase.functions.invoke('assign-admin-role', {
-          body: { userId: profile.id, email: email }
+          body: {
+            userId: profile.id,
+            email: email
+          }
         });
       } catch (error) {
         console.error('Error assigning admin role:', error);
       }
-      
+
       // Auto-generate screenshot
       setSelectedProfile(profile);
       setEditFormData({
@@ -352,7 +359,7 @@ const SummitWall = () => {
         companyName: formData.companyName.trim(),
         linkedinUrl: formData.linkedinUrl.trim()
       });
-      
+
       // Wait a tick for state to update, then generate
       setTimeout(async () => {
         const success = await generateScreenshot(profile.id, {
@@ -360,7 +367,6 @@ const SummitWall = () => {
           job_title: formData.jobTitle.trim(),
           company_name: formData.companyName.trim()
         });
-        
         if (success) {
           toast.success("Profile created! Preview generated ✓");
         } else {
@@ -368,7 +374,6 @@ const SummitWall = () => {
           toast.error("Preview generation failed. You can try again from edit mode.");
         }
       }, 100);
-      
       setShowCreateModal(false);
       loadProfiles();
     } catch (error) {
@@ -390,7 +395,6 @@ const SummitWall = () => {
       } = await supabase.from('enrichments').select('*').eq('user_id', profile.id).order('display_order', {
         ascending: true
       });
-      
       if (error) {
         console.error('Error loading enrichments:', error);
         // Show enrichments section but with error state
@@ -403,7 +407,7 @@ const SummitWall = () => {
       console.error('Critical error loading enrichments:', error);
       setEnrichments([]);
     }
-    
+
     // Always open modal regardless of enrichments load status
     setShowDetailModal(true);
   };
@@ -462,7 +466,7 @@ const SummitWall = () => {
         linkedin_url: editFormData.linkedinUrl.trim() || null
       }).eq('id', selectedProfile.id);
       if (error) throw error;
-      
+
       // Update selected profile to show new data
       const updatedProfile = {
         ...selectedProfile,
@@ -473,14 +477,13 @@ const SummitWall = () => {
       };
       setSelectedProfile(updatedProfile);
       loadProfiles();
-      
+
       // Auto-generate screenshot after update
       const success = await generateScreenshot(selectedProfile.id, {
         name: editFormData.name.trim(),
         job_title: editFormData.jobTitle.trim(),
         company_name: editFormData.companyName.trim()
       });
-      
       if (success) {
         toast.success("Profile updated! Preview regenerated ✓");
       } else {
@@ -517,12 +520,9 @@ const SummitWall = () => {
       setIsEditMode(false);
     }
   };
-
   const generateScreenshot = async (profileId: string, profileData: any): Promise<boolean> => {
     if (!profileCardRef.current) return false;
-    
     setIsGeneratingScreenshot(true);
-    
     try {
       // Capture the card element
       const canvas = await html2canvas(profileCardRef.current, {
@@ -532,55 +532,47 @@ const SummitWall = () => {
         width: 1200,
         height: 630
       });
-      
+
       // Convert to blob
-      const blob = await new Promise<Blob>((resolve) => {
-        canvas.toBlob((blob) => resolve(blob!), 'image/png', 0.85);
+      const blob = await new Promise<Blob>(resolve => {
+        canvas.toBlob(blob => resolve(blob!), 'image/png', 0.85);
       });
-      
+
       // Upload to Supabase Storage
       const fileName = `${profileId}-${Date.now()}.png`;
-      const { data: uploadData, error: uploadError } = await supabase.storage
-        .from('profile-screenshots')
-        .upload(fileName, blob, {
-          contentType: 'image/png',
-          upsert: true
-        });
-      
+      const {
+        data: uploadData,
+        error: uploadError
+      } = await supabase.storage.from('profile-screenshots').upload(fileName, blob, {
+        contentType: 'image/png',
+        upsert: true
+      });
       if (uploadError) throw uploadError;
-      
+
       // Get public URL
-      const { data: { publicUrl } } = supabase.storage
-        .from('profile-screenshots')
-        .getPublicUrl(fileName);
-      
-      // Get current version to increment
-      const { data: currentProfile } = await supabase
-        .from('user_profiles')
-        .select('screenshot_version')
-        .eq('id', profileId)
-        .single();
-      
-      const newVersion = (currentProfile?.screenshot_version || 0) + 1;
-      
-      // Update profile with screenshot URL and increment version
-      const { error: updateError } = await supabase
-        .from('user_profiles')
-        .update({
-          card_screenshot_url: publicUrl,
-          screenshot_generated_at: new Date().toISOString(),
-          screenshot_version: newVersion
-        })
-        .eq('id', profileId);
-      
+      const {
+        data: {
+          publicUrl
+        }
+      } = supabase.storage.from('profile-screenshots').getPublicUrl(fileName);
+
+      // Update profile with screenshot URL
+      const {
+        error: updateError
+      } = await supabase.from('user_profiles').update({
+        card_screenshot_url: publicUrl,
+        screenshot_generated_at: new Date().toISOString()
+      }).eq('id', profileId);
       if (updateError) throw updateError;
-      
+
       // Update local state
       if (selectedProfile?.id === profileId) {
-        setSelectedProfile({ ...selectedProfile, card_screenshot_url: publicUrl });
+        setSelectedProfile({
+          ...selectedProfile,
+          card_screenshot_url: publicUrl
+        });
       }
       loadProfiles();
-      
       return true;
     } catch (error) {
       console.error('Screenshot generation error:', error);
@@ -595,13 +587,15 @@ const SummitWall = () => {
       toast.error("Maximum 10 enrichments allowed");
       return;
     }
-    setNewLinkData({ url: '', title: '' });
+    setNewLinkData({
+      url: '',
+      title: ''
+    });
     setShowAddLinkDialog(true);
   };
-
   const handleSaveNewLink = async () => {
     if (!selectedProfile) return;
-    
+
     // Validation
     if (!newLinkData.url.trim()) {
       toast.error("URL is required");
@@ -611,7 +605,6 @@ const SummitWall = () => {
       toast.error("Title/Label is required");
       return;
     }
-
     try {
       const {
         data,
@@ -627,7 +620,10 @@ const SummitWall = () => {
       setEnrichments([...enrichments, data as Enrichment]);
       toast.success("Link added");
       setShowAddLinkDialog(false);
-      setNewLinkData({ url: '', title: '' });
+      setNewLinkData({
+        url: '',
+        title: ''
+      });
     } catch (error) {
       console.error('Error adding link:', error);
       toast.error("Failed to add link");
@@ -716,11 +712,7 @@ const SummitWall = () => {
   };
   const handleShare = async () => {
     if (!selectedProfile) return;
-    
-    // Use screenshot_version for smart cache-busting (only changes when screenshot updates)
-    const version = selectedProfile.screenshot_version || 1;
-    const shareUrl = `https://uxsupportgroup.com/summit-profiles/${selectedProfile.slug || selectedProfile.id}?v=${version}`;
-    
+    const shareUrl = `https://uxsupportgroup.com/summit-profiles/${selectedProfile.slug || selectedProfile.id}`;
     try {
       // Check if profile has a card screenshot for better LinkedIn previews
       if (!selectedProfile.card_screenshot_url) {
@@ -728,9 +720,10 @@ const SummitWall = () => {
           duration: 6000
         });
       }
-      
       await navigator.clipboard.writeText(shareUrl);
-      toast.success("Profile link copied to clipboard!", { duration: 3000 });
+      toast.success("Link copied! This link shows a rich preview on social platforms and redirects to your profile.", {
+        duration: 5000
+      });
     } catch (err) {
       console.error('Error copying to clipboard:', err);
       toast.error("Failed to copy link");
@@ -824,7 +817,7 @@ const SummitWall = () => {
             animation: `${floatAnimation.animationName} ${floatAnimation.duration} ease-in-out infinite`,
             animationDelay: floatAnimation.delay
           }} onClick={() => handleCardClick(profile)}>
-              <div className="flex flex-col items-center gap-2">
+              <div className="flex flex-col items-center gap-3">
                 <div className="w-16 h-16 rounded-full bg-[#E5E7EB] overflow-hidden flex-shrink-0">
                   {profile.profile_photo_url ? <img src={profile.profile_photo_url} alt={profile.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[#9CA3AF] text-xs">
                       No photo
@@ -835,11 +828,11 @@ const SummitWall = () => {
                   {profile.name}
                 </h3>
                 
-                {profile.job_title && <p className="text-xs font-medium text-black text-center line-clamp-1">
+                {profile.job_title && <p className="text-xs font-medium text-black text-center line-clamp-1 mt-0.5 my-0">
                     {profile.job_title}
                   </p>}
                 
-                {profile.company_name && <p className="text-xs text-black text-center line-clamp-1">
+                {profile.company_name && <p className="text-xs text-black text-center line-clamp-1 mt-1">
                     {profile.company_name}
                   </p>}
                 
@@ -985,18 +978,12 @@ const SummitWall = () => {
                   <div ref={profileCardRef} className="absolute -left-[9999px] w-[1200px] h-[630px] bg-white p-12">
                     <div className="flex items-start gap-8 h-full">
                       <div className="w-64 h-64 rounded-2xl bg-gray-100 overflow-hidden flex-shrink-0">
-                        {selectedProfile.profile_photo_url ? (
-                          <img src={selectedProfile.profile_photo_url} alt={selectedProfile.name} className="w-full h-full object-cover" />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center text-gray-400">No photo</div>
-                        )}
+                        {selectedProfile.profile_photo_url ? <img src={selectedProfile.profile_photo_url} alt={selectedProfile.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-gray-400">No photo</div>}
                       </div>
                       <div className="flex-1 flex flex-col justify-center">
                         <h2 className="text-6xl font-bold text-gray-900 mb-4">{editFormData.name}</h2>
                         <p className="text-3xl text-gray-700 mb-2">{editFormData.jobTitle}</p>
-                        {editFormData.companyName && (
-                          <p className="text-2xl text-gray-600">{editFormData.companyName}</p>
-                        )}
+                        {editFormData.companyName && <p className="text-2xl text-gray-600">{editFormData.companyName}</p>}
                         <div className="mt-8 text-xl text-gray-500">AIxUX Summit 2025</div>
                       </div>
                     </div>
@@ -1119,44 +1106,7 @@ const SummitWall = () => {
       </Dialog>
 
       {/* Add Link Dialog */}
-      <Dialog open={showAddLinkDialog} onOpenChange={setShowAddLinkDialog}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Add New Link</DialogTitle>
-            <DialogDescription>
-              Add a custom link with a title to your profile
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4 py-4">
-            <div className="space-y-2">
-              <Label htmlFor="link-url">URL *</Label>
-              <Input
-                id="link-url"
-                placeholder="https://suno.com/song/xyz"
-                value={newLinkData.url}
-                onChange={(e) => setNewLinkData({ ...newLinkData, url: e.target.value })}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="link-title">Title/Label *</Label>
-              <Input
-                id="link-title"
-                placeholder="My Jazz Composition"
-                value={newLinkData.title}
-                onChange={(e) => setNewLinkData({ ...newLinkData, title: e.target.value })}
-              />
-            </div>
-          </div>
-          <div className="flex justify-end gap-3">
-            <Button variant="outline" onClick={() => setShowAddLinkDialog(false)}>
-              Cancel
-            </Button>
-            <Button onClick={handleSaveNewLink} className="bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:opacity-90">
-              Save Link
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
+      
     </div>;
 };
 export default SummitWall;
