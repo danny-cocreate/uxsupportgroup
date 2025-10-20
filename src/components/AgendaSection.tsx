@@ -18,7 +18,7 @@ const AgendaSection = () => {
     { time: "3:30 PM", title: "AI Learning & Development Roadmap", facilitator: "Renata Rocha", desc: "Reflective: Build a 6-month personal L&D/action plan with AI" },
     { time: "4:30 PM", title: "AI-Powered Networking Finale", facilitator: "Suyen Stevenson", desc: "Matchmaking based on artifacts, interests, questions" },
     { time: "5:00 PM", title: "Break the AI—Chaos Challenge", facilitator: "TBD", desc: "Teams compete to create wild/absurd AI outputs; audience voting" },
-    { time: "5:30 PM", title: "Closing & Next Steps", facilitator: "Suyen Stevenson", desc: "Recap, announce winners, community wrap-up, future plans" },
+    { time: "5:45 PM", title: "Closing & Next Steps", facilitator: "Suyen Stevenson", desc: "Recap, announce winners, community wrap-up, future plans" },
   ];
 
   return (
