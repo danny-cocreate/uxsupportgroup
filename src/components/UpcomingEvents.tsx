@@ -104,7 +104,7 @@ const UpcomingEvents = () => {
                         {/* CTA Button - Right */}
                         <div className="flex items-center justify-center p-6 sm:border-l border-border bg-muted/30">
                           {event.meetup_link && (
-                            <Button size="lg" className="whitespace-nowrap" asChild>
+                            <Button size="lg" className="bg-foreground text-background hover:bg-foreground/90 whitespace-nowrap" asChild>
                               <a href={event.meetup_link} target="_blank" rel="noopener noreferrer">
                                 RSVP Now
                               </a>
