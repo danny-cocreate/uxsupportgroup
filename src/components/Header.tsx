@@ -1,10 +1,8 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import uxsgLogo from "@/assets/uxsg-logo.svg";
-
 const Header = () => {
-  return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+  return <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
           <img src={uxsgLogo} alt="UXSG" className="h-12 w-auto" />
@@ -14,9 +12,7 @@ const Header = () => {
           <Link to="/summit" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
             AI Summit 2025
           </Link>
-          <Link to="/summit" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
-            Events
-          </Link>
+          
           <Link to="/membership" className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors">
             Membership
           </Link>
@@ -31,8 +27,6 @@ const Header = () => {
           </Button>
         </div>
       </div>
-    </header>
-  );
+    </header>;
 };
-
 export default Header;
