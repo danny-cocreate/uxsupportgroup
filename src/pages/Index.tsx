@@ -6,22 +6,18 @@ import WhatWeOffer from "@/components/WhatWeOffer";
 import UpcomingEvents from "@/components/UpcomingEvents";
 import PastEvents from "@/components/PastEvents";
 import Footer from "@/components/Footer";
-
 const Index = () => {
-  return (
-    <div className="min-h-screen">
+  return <div className="min-h-screen">
       <SummitBanner />
       <Header />
       <main>
         <HomeHero />
         <HomeStats />
-        <WhatWeOffer />
+        
         <UpcomingEvents />
         <PastEvents />
       </main>
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
