@@ -6,8 +6,9 @@ const HomeStats = () => {
   ];
 
   return (
-    <section className="py-16 gradient-stats">
-      <div className="container mx-auto px-4">
+    <section className="py-16 gradient-stats relative">
+      <div className="absolute inset-0 bg-black/40"></div>
+      <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-3 gap-8 max-w-5xl mx-auto">
           {stats.map((stat, index) => (
             <div key={index} className="text-center p-6 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20">
