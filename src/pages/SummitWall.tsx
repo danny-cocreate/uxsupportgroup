@@ -331,7 +331,32 @@ const SummitWall = () => {
       if (profileError) throw profileError;
       sessionStorage.setItem('summit_user_id', profile.id);
       setCurrentUserId(profile.id);
-      toast.success("Profile created successfully!");
+      
+      // Auto-generate screenshot
+      setSelectedProfile(profile);
+      setEditFormData({
+        name: formData.name.trim(),
+        jobTitle: formData.jobTitle.trim(),
+        companyName: formData.companyName.trim(),
+        linkedinUrl: formData.linkedinUrl.trim()
+      });
+      
+      // Wait a tick for state to update, then generate
+      setTimeout(async () => {
+        const success = await generateScreenshot(profile.id, {
+          name: formData.name.trim(),
+          job_title: formData.jobTitle.trim(),
+          company_name: formData.companyName.trim()
+        });
+        
+        if (success) {
+          toast.success("Profile created! Preview generated ✓");
+        } else {
+          toast.success("Profile created successfully!");
+          toast.error("Preview generation failed. You can try again from edit mode.");
+        }
+      }, 100);
+      
       setShowCreateModal(false);
       loadProfiles();
     } catch (error) {
@@ -425,17 +450,31 @@ const SummitWall = () => {
         linkedin_url: editFormData.linkedinUrl.trim() || null
       }).eq('id', selectedProfile.id);
       if (error) throw error;
-      toast.success("Profile updated successfully!");
-      loadProfiles();
-
+      
       // Update selected profile to show new data
-      setSelectedProfile({
+      const updatedProfile = {
         ...selectedProfile,
         name: editFormData.name.trim() || selectedProfile.name,
         job_title: editFormData.jobTitle.trim() || null,
         company_name: editFormData.companyName.trim() || null,
         linkedin_url: editFormData.linkedinUrl.trim() || null
+      };
+      setSelectedProfile(updatedProfile);
+      loadProfiles();
+      
+      // Auto-generate screenshot after update
+      const success = await generateScreenshot(selectedProfile.id, {
+        name: editFormData.name.trim(),
+        job_title: editFormData.jobTitle.trim(),
+        company_name: editFormData.companyName.trim()
       });
+      
+      if (success) {
+        toast.success("Profile updated! Preview regenerated ✓");
+      } else {
+        toast.success("Profile updated successfully!");
+        toast.error("Preview regeneration failed.");
+      }
 
       // Check if edit was from wall or card view
       if (editFromWall) {
@@ -467,11 +506,10 @@ const SummitWall = () => {
     }
   };
 
-  const generateScreenshot = async () => {
-    if (!profileCardRef.current || !selectedProfile) return;
+  const generateScreenshot = async (profileId: string, profileData: any): Promise<boolean> => {
+    if (!profileCardRef.current) return false;
     
     setIsGeneratingScreenshot(true);
-    toast.info("Generating LinkedIn preview image...");
     
     try {
       // Capture the card element
@@ -489,7 +527,7 @@ const SummitWall = () => {
       });
       
       // Upload to Supabase Storage
-      const fileName = `${selectedProfile.id}-${Date.now()}.png`;
+      const fileName = `${profileId}-${Date.now()}.png`;
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from('profile-screenshots')
         .upload(fileName, blob, {
@@ -511,18 +549,20 @@ const SummitWall = () => {
           card_screenshot_url: publicUrl,
           screenshot_generated_at: new Date().toISOString()
         })
-        .eq('id', selectedProfile.id);
+        .eq('id', profileId);
       
       if (updateError) throw updateError;
       
       // Update local state
-      setSelectedProfile({ ...selectedProfile, card_screenshot_url: publicUrl });
+      if (selectedProfile?.id === profileId) {
+        setSelectedProfile({ ...selectedProfile, card_screenshot_url: publicUrl });
+      }
       loadProfiles();
       
-      toast.success("LinkedIn preview image generated!");
+      return true;
     } catch (error) {
       console.error('Screenshot generation error:', error);
-      toast.error("Failed to generate preview image.");
+      return false;
     } finally {
       setIsGeneratingScreenshot(false);
     }
@@ -941,34 +981,6 @@ const SummitWall = () => {
                     </div>
                   </div>
 
-                  {/* Screenshot Generation Section */}
-                  <div className="border-t pt-4">
-                    <div className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-lg p-4">
-                      <div className="flex items-start gap-3">
-                        <Camera className="w-5 h-5 text-purple-600 mt-0.5 flex-shrink-0" />
-                        <div className="flex-1">
-                          <h4 className="text-sm font-semibold text-gray-900 mb-1">LinkedIn Preview</h4>
-                          <p className="text-xs text-gray-600 mb-3">
-                            Generate a preview image for better sharing on social media
-                          </p>
-                          {selectedProfile.card_screenshot_url && (
-                            <p className="text-xs text-green-600 mb-2">
-                              ✓ Preview image generated
-                            </p>
-                          )}
-                          <Button
-                            onClick={generateScreenshot}
-                            disabled={isGeneratingScreenshot || isSaving}
-                            size="sm"
-                            className="bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:opacity-90"
-                          >
-                            <Camera className="w-3 h-3 mr-1.5" />
-                            {isGeneratingScreenshot ? 'Generating...' : selectedProfile.card_screenshot_url ? 'Regenerate' : 'Generate'}
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
 
                   {/* Enrichments Section */}
                   <div className="border-t pt-4">
