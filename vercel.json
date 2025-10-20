@@ -1,26 +1,6 @@
-{
   "rewrites": [
     {
       "source": "/summit-profiles/:slug",
-      "destination": "https://hxsykzhergwulxsayckj.supabase.co/functions/v1/profile-meta/:slug",
-      "has": [
-        {
-          "type": "header",
-          "key": "user-agent",
-          "value": ".*(bot|crawler|spider|facebookexternalhit|LinkedInBot|Twitterbot|Slackbot|WhatsApp).*"
-        }
-      ]
-    }
-  ],
-  "headers": [
-    {
-      "source": "/summit-profiles/:slug",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600, s-maxage=3600"
-        }
-      ]
+      "destination": "https://hxsykzhergwulxsayckj.supabase.co/functions/v1/profile-meta/:slug"
     }
   ]
-}

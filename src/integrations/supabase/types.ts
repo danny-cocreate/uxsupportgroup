@@ -127,6 +127,7 @@ export type Database = {
           name: string | null
           profile_photo_url: string | null
           screenshot_generated_at: string | null
+          screenshot_version: number | null
           slug: string | null
           updated_at: string
           wall_position_x: number | null
@@ -144,6 +145,7 @@ export type Database = {
           name?: string | null
           profile_photo_url?: string | null
           screenshot_generated_at?: string | null
+          screenshot_version?: number | null
           slug?: string | null
           updated_at?: string
           wall_position_x?: number | null
@@ -161,6 +163,7 @@ export type Database = {
           name?: string | null
           profile_photo_url?: string | null
           screenshot_generated_at?: string | null
+          screenshot_version?: number | null
           slug?: string | null
           updated_at?: string
           wall_position_x?: number | null

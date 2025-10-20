@@ -24,17 +24,31 @@ serve(async (req) => {
 
     console.log(`[PROFILE-META] Processing request for slug: ${slug}`);
 
-    // Detect crawlers
-    const userAgent = req.headers.get('user-agent') || '';
-    const isCrawler = /linkedinbot|facebookexternalhit|twitterbot|slackbot|whatsapp|bot|crawler|spider/i.test(userAgent);
+    // Detect crawlers - simplified and more reliable regex
+    const userAgent = req.headers.get('user-agent')?.toLowerCase() || '';
+    const isCrawler = 
+      userAgent.includes('bot') ||
+      userAgent.includes('crawler') ||
+      userAgent.includes('spider') ||
+      userAgent.includes('facebook') ||
+      userAgent.includes('linkedin') ||
+      userAgent.includes('twitter') ||
+      userAgent.includes('slack') ||
+      userAgent.includes('whatsapp') ||
+      userAgent.includes('discord') ||
+      userAgent.includes('pinterest');
 
-    console.log(`[PROFILE-META] User-Agent: ${userAgent}, isCrawler: ${isCrawler}`);
+    console.log(`[PROFILE-META] Request for ${slug}: ${isCrawler ? 'CRAWLER' : 'USER'} - UA: ${userAgent}`);
 
-    // If not a crawler, return empty response (let React app handle it)
+    // If not a crawler, redirect to SPA
     if (!isCrawler) {
+      console.log(`[PROFILE-META] Redirecting user to SPA`);
       return new Response(null, {
-        status: 200,
-        headers: corsHeaders
+        status: 302,
+        headers: {
+          ...corsHeaders,
+          'Location': `https://uxsupportgroup.com/summit-profiles?profile=${slug}`
+        }
       });
     }
 
@@ -127,7 +141,11 @@ serve(async (req) => {
       headers: {
         ...corsHeaders,
         'Content-Type': 'text/html; charset=utf-8',
-        'Cache-Control': 'no-store, max-age=0, s-maxage=0, must-revalidate',
+        'Cache-Control': 'public, max-age=604800, s-maxage=604800',
+        'Vary': 'User-Agent',
+        'X-Profile-Meta': 'generated',
+        'X-Slug': slug,
+        'X-Is-Crawler': 'true'
       },
     });
 

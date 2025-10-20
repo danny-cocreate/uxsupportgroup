@@ -24,6 +24,7 @@ interface ProfileCard {
   slug: string | null;
   linkedin_url: string | null;
   card_screenshot_url: string | null;
+  screenshot_version: number;
 }
 interface Enrichment {
   id: string;
@@ -553,12 +554,22 @@ const SummitWall = () => {
         .from('profile-screenshots')
         .getPublicUrl(fileName);
       
-      // Update profile with screenshot URL
+      // Get current version to increment
+      const { data: currentProfile } = await supabase
+        .from('user_profiles')
+        .select('screenshot_version')
+        .eq('id', profileId)
+        .single();
+      
+      const newVersion = (currentProfile?.screenshot_version || 0) + 1;
+      
+      // Update profile with screenshot URL and increment version
       const { error: updateError } = await supabase
         .from('user_profiles')
         .update({
           card_screenshot_url: publicUrl,
-          screenshot_generated_at: new Date().toISOString()
+          screenshot_generated_at: new Date().toISOString(),
+          screenshot_version: newVersion
         })
         .eq('id', profileId);
       
@@ -706,7 +717,9 @@ const SummitWall = () => {
   const handleShare = async () => {
     if (!selectedProfile) return;
     
-    const shareUrl = `https://uxsupportgroup.com/summit-profiles/${selectedProfile.slug || selectedProfile.id}`;
+    // Use screenshot_version for smart cache-busting (only changes when screenshot updates)
+    const version = selectedProfile.screenshot_version || 1;
+    const shareUrl = `https://uxsupportgroup.com/summit-profiles/${selectedProfile.slug || selectedProfile.id}?v=${version}`;
     
     try {
       // Check if profile has a card screenshot for better LinkedIn previews
@@ -718,8 +731,8 @@ const SummitWall = () => {
       
       await navigator.clipboard.writeText(shareUrl);
       toast.success(
-        "Link copied! This link shows a rich preview on social platforms and redirects to your profile.",
-        { duration: 5000 }
+        "Link copied! Paste in LinkedIn Post Inspector if preview doesn't update: https://www.linkedin.com/post-inspector/",
+        { duration: 8000 }
       );
     } catch (err) {
       console.error('Error copying to clipboard:', err);
