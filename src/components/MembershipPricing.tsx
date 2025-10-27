@@ -9,9 +9,9 @@ const MembershipPricing = () => {
 
   const monthlyBenefits = [
     "50% off all paid events",
-    "Weekly technical workshops ($10)",
-    "Weekly coaching sessions ($5)",
-    "Monthly mini-hackathons ($10)",
+    "Weekly technical workshops",
+    "Weekly coaching sessions",
+    "Monthly mini-hackathons",
     "Unlimited workshop recordings",
     "Members-only Slack channel",
     "Access to 260+ events/year"
