@@ -45,6 +45,9 @@ const SummitWall = () => {
   const [profiles, setProfiles] = useState<ProfileCard[]>([]);
   const [zoom, setZoom] = useState(100);
   const [isLoading, setIsLoading] = useState(true);
+  const [draggedProfile, setDraggedProfile] = useState<string | null>(null);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [tempPositions, setTempPositions] = useState<Record<string, { x: number; y: number }>>({});
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [selectedProfile, setSelectedProfile] = useState<ProfileCard | null>(null);
@@ -129,6 +132,16 @@ const SummitWall = () => {
   useEffect(() => {
     loadProfiles();
     checkAuthStatus();
+    
+    // Load temporary positions from sessionStorage
+    const savedPositions = sessionStorage.getItem('summit_card_positions');
+    if (savedPositions) {
+      try {
+        setTempPositions(JSON.parse(savedPositions));
+      } catch (e) {
+        console.error('Failed to parse saved positions:', e);
+      }
+    }
 
     // Check if we should open the create profile modal
     if (searchParams.get('createProfile') === 'true') {
@@ -214,7 +227,10 @@ const SummitWall = () => {
         setProfiles([]);
         return;
       }
-      setProfiles(data || []);
+      
+      // Apply collision detection to prevent overlapping
+      const adjustedProfiles = preventOverlapping(data || []);
+      setProfiles(adjustedProfiles);
     } catch (error) {
       console.error('Critical error loading profiles:', error);
       toast.error("Something went wrong. Please try again later.");
@@ -222,6 +238,43 @@ const SummitWall = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Collision detection to ensure cards don't overlap too much
+  const preventOverlapping = (profiles: ProfileCard[]) => {
+    const cardWidth = 200;
+    const cardHeight = 250;
+    const minSpacing = 20; // Minimum space between cards
+    
+    const adjusted = profiles.map((profile, index) => {
+      let x = profile.wall_position_x || (100 + (index % 8) * 250);
+      let y = profile.wall_position_y || (100 + Math.floor(index / 8) * 300);
+      
+      // Check for collisions with other cards
+      for (let i = 0; i < index; i++) {
+        const other = adjusted[i];
+        const dx = x - other.wall_position_x;
+        const dy = y - other.wall_position_y;
+        
+        // Check if cards overlap
+        if (Math.abs(dx) < cardWidth + minSpacing && Math.abs(dy) < cardHeight + minSpacing) {
+          // Move card to avoid collision
+          if (Math.abs(dx) >= Math.abs(dy)) {
+            x = other.wall_position_x + (dx > 0 ? cardWidth + minSpacing : -(cardWidth + minSpacing));
+          } else {
+            y = other.wall_position_y + (dy > 0 ? cardHeight + minSpacing : -(cardHeight + minSpacing));
+          }
+        }
+      }
+      
+      return {
+        ...profile,
+        wall_position_x: x,
+        wall_position_y: y
+      };
+    });
+    
+    return adjusted;
   };
   const handleZoomIn = () => {
     setZoom(prev => Math.min(200, prev + 25));
@@ -729,6 +782,60 @@ const SummitWall = () => {
       toast.error("Failed to copy link");
     }
   };
+
+  // Drag handlers
+  const handleMouseDown = (e: React.MouseEvent, profileId: string) => {
+    // Prevent drag if clicking on the card content (allow modal to open)
+    if ((e.target as HTMLElement).closest('.card-content')) return;
+    
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const profile = profiles.find(p => p.id === profileId);
+    if (!profile) return;
+    
+    const currentX = tempPositions[profileId]?.x ?? profile.wall_position_x;
+    const currentY = tempPositions[profileId]?.y ?? profile.wall_position_y;
+    
+    setDraggedProfile(profileId);
+    setDragOffset({
+      x: e.clientX / (zoom / 100) - currentX,
+      y: e.clientY / (zoom / 100) - currentY
+    });
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!draggedProfile) return;
+    
+    const newX = e.clientX / (zoom / 100) - dragOffset.x;
+    const newY = e.clientY / (zoom / 100) - dragOffset.y;
+    
+    // Clamp within canvas bounds
+    const clampedX = Math.max(0, Math.min(1800, newX));
+    const clampedY = Math.max(0, Math.min(1250, newY));
+    
+    const newPositions = {
+      ...tempPositions,
+      [draggedProfile]: { x: clampedX, y: clampedY }
+    };
+    
+    setTempPositions(newPositions);
+    sessionStorage.setItem('summit_card_positions', JSON.stringify(newPositions));
+  };
+
+  const handleMouseUp = () => {
+    if (draggedProfile) {
+      toast.success("Card position saved for this session");
+      setDraggedProfile(null);
+    }
+  };
+
+  const getCardPosition = (profile: ProfileCard) => {
+    return tempPositions[profile.id] || {
+      x: profile.wall_position_x || 0,
+      y: profile.wall_position_y || 0
+    };
+  };
   if (isLoading) {
     return <div className="h-screen flex items-center justify-center bg-[#E5E7EB]">
         <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-[#8B5CF6]"></div>
@@ -783,10 +890,16 @@ const SummitWall = () => {
       </div>
 
       {/* Canvas */}
-      <div className="w-full h-full overflow-auto p-8" style={{
-      cursor: 'grab',
-      transform: `scale(${zoom / 100})`
-    }}>
+      <div 
+        className="w-full h-full overflow-auto p-8" 
+        style={{
+          cursor: draggedProfile ? 'grabbing' : 'grab',
+          transform: `scale(${zoom / 100})`
+        }}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+      >
         <div className="relative" style={{
         width: '2000px',
         height: '1500px'
@@ -810,14 +923,25 @@ const SummitWall = () => {
 
           {profiles.map(profile => {
           const floatAnimation = getFloatAnimation(profile.id);
-          return <div key={profile.id} className="absolute bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow cursor-pointer p-4" style={{
-            left: `${profile.wall_position_x || 0}px`,
-            top: `${profile.wall_position_y || 0}px`,
-            width: '200px',
-            animation: `${floatAnimation.animationName} ${floatAnimation.duration} ease-in-out infinite`,
-            animationDelay: floatAnimation.delay
-          }} onClick={() => handleCardClick(profile)}>
-              <div className="flex flex-col items-center gap-3">
+          const position = getCardPosition(profile);
+          const isDragging = draggedProfile === profile.id;
+          
+          return <div 
+            key={profile.id} 
+            className="absolute bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow p-4" 
+            style={{
+              left: `${position.x}px`,
+              top: `${position.y}px`,
+              width: '200px',
+              cursor: isDragging ? 'grabbing' : 'grab',
+              animation: isDragging ? 'none' : `${floatAnimation.animationName} ${floatAnimation.duration} ease-in-out infinite`,
+              animationDelay: floatAnimation.delay,
+              zIndex: isDragging ? 1000 : 1,
+              userSelect: 'none'
+            }} 
+            onMouseDown={(e) => handleMouseDown(e, profile.id)}
+          >
+              <div className="card-content flex flex-col items-center gap-3" onClick={() => !isDragging && handleCardClick(profile)}>
                 <div className="w-16 h-16 rounded-full bg-[#E5E7EB] overflow-hidden flex-shrink-0">
                   {profile.profile_photo_url ? <img src={profile.profile_photo_url} alt={profile.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[#9CA3AF] text-xs">
                       No photo
