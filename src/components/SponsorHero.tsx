@@ -34,7 +34,7 @@ const SponsorHero = () => {
             </div>
             <div className="text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-foreground/10">
               <div className="text-5xl font-bold text-foreground mb-2">1000+</div>
-              <p className="text-foreground/70 text-sm uppercase tracking-wide">Countries</p>
+              <p className="text-foreground/70 text-sm uppercase tracking-wide">Events to date</p>
             </div>
             <div className="text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-foreground/10">
               <div className="text-5xl font-bold text-foreground mb-2">20+</div>
