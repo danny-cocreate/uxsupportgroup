@@ -13,7 +13,7 @@ const MembershipPricing = () => {
     "Weekly coaching sessions",
     "Monthly mini-hackathons",
     "Unlimited workshop recordings",
-    "Members-only Slack channel",
+    "Members-only private Slack channel",
     "Access to 260+ events/year"
   ];
 
