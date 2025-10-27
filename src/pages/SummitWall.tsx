@@ -246,12 +246,14 @@ const SummitWall = () => {
     const cardHeight = 250;
     const minSpacing = 20; // Minimum space between cards
     
-    const adjusted = profiles.map((profile, index) => {
+    const adjusted: ProfileCard[] = [];
+    
+    profiles.forEach((profile, index) => {
       let x = profile.wall_position_x || (100 + (index % 8) * 250);
       let y = profile.wall_position_y || (100 + Math.floor(index / 8) * 300);
       
-      // Check for collisions with other cards
-      for (let i = 0; i < index; i++) {
+      // Check for collisions with already processed cards
+      for (let i = 0; i < adjusted.length; i++) {
         const other = adjusted[i];
         const dx = x - other.wall_position_x;
         const dy = y - other.wall_position_y;
@@ -267,11 +269,11 @@ const SummitWall = () => {
         }
       }
       
-      return {
+      adjusted.push({
         ...profile,
         wall_position_x: x,
         wall_position_y: y
-      };
+      });
     });
     
     return adjusted;
