@@ -123,7 +123,7 @@ const MembershipPricing = () => {
         </Tabs>
 
         <p className="text-center mt-12 text-background/70">
-          Questions? Email us at <a href="mailto:hello@uxsupportgroup.com" className="underline hover:text-background">hello@uxsupportgroup.com</a>
+          Questions? Email us at <a href="mailto:info@uxsupportgroup.com" className="underline hover:text-background">info@uxsupportgroup.com</a>
         </p>
       </div>
     </section>
