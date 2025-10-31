@@ -54,7 +54,7 @@ const SocialProof = () => {
   }, {
     name: "Silvia Balu",
     title: "UX/UI Designer | International UX & AI Community Lead",
-    company: "Team Gesundheit GmbH",
+    company: null,
     bio: "Recognized for innovation in design research and for bridging psychology, user experience, and AI to inspire more emotionally intelligent digital products.",
     linkedin: "https://www.linkedin.com/in/silviabalu/",
     image: SilviaB
