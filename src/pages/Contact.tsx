@@ -89,7 +89,97 @@ const Contact = () => {
 
         {/* Contact Form & Info Section */}
         <section className="py-24">
-          
+          <div className="container mx-auto px-4">
+            <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+              {/* Contact Form */}
+              <Card className="p-8 md:p-12 shadow-xl">
+                <h2 className="text-3xl font-bold mb-6">Send us a Message</h2>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="name" className="text-sm font-bold uppercase">
+                      Name *
+                    </Label>
+                    <Input id="name" type="text" required value={formData.name} onChange={e => setFormData({
+                    ...formData,
+                    name: e.target.value
+                  })} className="border-2" placeholder="Your name" />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-sm font-bold uppercase">
+                      Email *
+                    </Label>
+                    <Input id="email" type="email" required value={formData.email} onChange={e => setFormData({
+                    ...formData,
+                    email: e.target.value
+                  })} className="border-2" placeholder="your@email.com" />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="message" className="text-sm font-bold uppercase">
+                      Message *
+                    </Label>
+                    <Textarea id="message" required rows={6} placeholder="Tell us what's on your mind..." value={formData.message} onChange={e => setFormData({
+                    ...formData,
+                    message: e.target.value
+                  })} className="border-2 resize-none" />
+                    
+                  </div>
+
+                  <Button type="submit" disabled={isSubmitting} className="w-full h-14 text-lg font-bold shadow-lg hover:shadow-xl transition-all group uppercase">
+                    {isSubmitting ? <>
+                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                        Sending...
+                      </> : <>
+                        Send Message
+                        <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                      </>}
+                  </Button>
+                </form>
+              </Card>
+
+              {/* Contact Info */}
+              <div className="space-y-8">
+                <div>
+                  <h2 className="text-3xl font-bold mb-6">Contact Information</h2>
+                  <p className="text-muted-foreground mb-8">
+                    We're here to help and answer any questions you might have. Reach out to us and we'll respond as soon as we can.
+                  </p>
+                </div>
+
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 rounded-lg bg-primary/10">
+                      <Mail className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold mb-1">Email</h3>
+                      <a href="mailto:info@uxsupportgroup.com" className="text-muted-foreground hover:text-primary transition-colors">
+                        info@uxsupportgroup.com
+                      </a>
+                    </div>
+                  </div>
+
+                  
+                </div>
+
+                <Card className="p-6 bg-primary/5 border-primary/20">
+                  <h3 className="font-bold mb-3">Looking for Sponsorship or Partnership?</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    If you're interested in sponsorship opportunities or partnerships, please visit our dedicated pages:
+                  </p>
+                  <div className="space-y-2">
+                    <a href="/sponsor" className="block text-sm font-semibold text-primary hover:underline">
+                      → Sponsorship Opportunities
+                    </a>
+                    <a href="/partner" className="block text-sm font-semibold text-primary hover:underline">
+                      → Partnership Inquiries
+                    </a>
+                  </div>
+                </Card>
+              </div>
+            </div>
+          </div>
         </section>
       </main>
 
