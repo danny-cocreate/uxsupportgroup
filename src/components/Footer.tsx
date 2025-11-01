@@ -10,27 +10,33 @@ import { supabase } from "@/integrations/supabase/client";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
-
 const emailSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
+  email: z.string().email("Please enter a valid email address")
 });
 const Footer = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const { register, handleSubmit, formState: { errors }, reset } = useForm({
-    resolver: zodResolver(emailSchema),
+  const {
+    register,
+    handleSubmit,
+    formState: {
+      errors
+    },
+    reset
+  } = useForm({
+    resolver: zodResolver(emailSchema)
   });
-
   const onSubmit = async (data: z.infer<typeof emailSchema>) => {
     try {
-      const { error } = await supabase
-        .from('email_subscriptions')
-        .insert([{ email: data.email }]);
-
+      const {
+        error
+      } = await supabase.from('email_subscriptions').insert([{
+        email: data.email
+      }]);
       if (error) {
         if (error.code === '23505') {
           toast({
             title: "Already subscribed",
-            description: "This email is already subscribed to our updates.",
+            description: "This email is already subscribed to our updates."
           });
         } else {
           throw error;
@@ -43,16 +49,15 @@ const Footer = () => {
       toast({
         title: "Error",
         description: "Failed to subscribe. Please try again.",
-        variant: "destructive",
+        variant: "destructive"
       });
     }
   };
-
   return <footer className="bg-foreground text-background py-16">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 mb-12">
           <div>
-            <h4 className="text-xl font-bold mb-4">Partners</h4>
+            
             <ul className="space-y-2 text-background/80">
               <li><a href="/sponsor" className="hover:text-primary transition-colors">Become a Sponsor</a></li>
               <li><a href="/partner" className="hover:text-primary transition-colors">Partner Inquiry</a></li>
@@ -67,15 +72,8 @@ const Footer = () => {
             </p>
             <form onSubmit={handleSubmit(onSubmit)} className="flex gap-2">
               <div className="flex-1">
-                <Input 
-                  type="email" 
-                  placeholder="Your email" 
-                  {...register("email")}
-                  className="bg-background/10 border-background/20 text-background placeholder:text-background/60" 
-                />
-                {!!errors.email && (
-                  <p className="text-red-400 text-xs mt-1">{errors.email.message as string}</p>
-                )}
+                <Input type="email" placeholder="Your email" {...register("email")} className="bg-background/10 border-background/20 text-background placeholder:text-background/60" />
+                {!!errors.email && <p className="text-red-400 text-xs mt-1">{errors.email.message as string}</p>}
               </div>
               <Button type="submit" variant="ghost" className="shrink-0 border border-white hover:border-white/80">
                 <Mail className="w-4 h-4" />
