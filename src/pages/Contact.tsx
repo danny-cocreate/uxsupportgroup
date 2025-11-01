@@ -9,7 +9,6 @@ import { ArrowRight, Loader2, Mail, Phone, MapPin } from "lucide-react";
 import { useState, FormEvent } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -17,7 +16,6 @@ const Contact = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -38,19 +36,19 @@ const Contact = () => {
       });
       return;
     }
-
     setIsSubmitting(true);
     try {
-      const { data, error } = await supabase.functions.invoke('send-contact-inquiry', {
+      const {
+        data,
+        error
+      } = await supabase.functions.invoke('send-contact-inquiry', {
         body: {
           name: formData.name,
           email: formData.email,
           message: formData.message
         }
       });
-
       if (error) throw error;
-
       toast({
         title: "Message Sent!",
         description: "Thank you! We've received your message and will get back to you soon."
@@ -73,9 +71,7 @@ const Contact = () => {
       setIsSubmitting(false);
     }
   };
-
-  return (
-    <div className="min-h-screen flex flex-col">
+  return <div className="min-h-screen flex flex-col">
       <Header />
       
       <main className="flex-1">
@@ -103,66 +99,43 @@ const Contact = () => {
                     <Label htmlFor="name" className="text-sm font-bold uppercase">
                       Name *
                     </Label>
-                    <Input
-                      id="name"
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="border-2"
-                      placeholder="Your name"
-                    />
+                    <Input id="name" type="text" required value={formData.name} onChange={e => setFormData({
+                    ...formData,
+                    name: e.target.value
+                  })} className="border-2" placeholder="Your name" />
                   </div>
                   
                   <div className="space-y-2">
                     <Label htmlFor="email" className="text-sm font-bold uppercase">
                       Email *
                     </Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="border-2"
-                      placeholder="your@email.com"
-                    />
+                    <Input id="email" type="email" required value={formData.email} onChange={e => setFormData({
+                    ...formData,
+                    email: e.target.value
+                  })} className="border-2" placeholder="your@email.com" />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="message" className="text-sm font-bold uppercase">
                       Message *
                     </Label>
-                    <Textarea
-                      id="message"
-                      required
-                      rows={6}
-                      placeholder="Tell us what's on your mind..."
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="border-2 resize-none"
-                    />
+                    <Textarea id="message" required rows={6} placeholder="Tell us what's on your mind..." value={formData.message} onChange={e => setFormData({
+                    ...formData,
+                    message: e.target.value
+                  })} className="border-2 resize-none" />
                     <p className="text-xs text-muted-foreground">
                       {formData.message.length}/2000 characters
                     </p>
                   </div>
 
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full h-14 text-lg font-bold shadow-lg hover:shadow-xl transition-all group uppercase"
-                  >
-                    {isSubmitting ? (
-                      <>
+                  <Button type="submit" disabled={isSubmitting} className="w-full h-14 text-lg font-bold shadow-lg hover:shadow-xl transition-all group uppercase">
+                    {isSubmitting ? <>
                         <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                         Sending...
-                      </>
-                    ) : (
-                      <>
+                      </> : <>
                         Send Message
                         <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                      </>
-                    )}
+                      </>}
                   </Button>
                 </form>
               </Card>
@@ -183,26 +156,13 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-bold mb-1">Email</h3>
-                      <a 
-                        href="mailto:info@uxsupportgroup.com" 
-                        className="text-muted-foreground hover:text-primary transition-colors"
-                      >
+                      <a href="mailto:info@uxsupportgroup.com" className="text-muted-foreground hover:text-primary transition-colors">
                         info@uxsupportgroup.com
                       </a>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-lg bg-primary/10">
-                      <MapPin className="w-6 h-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold mb-1">Location</h3>
-                      <p className="text-muted-foreground">
-                        Virtual & Global Community
-                      </p>
-                    </div>
-                  </div>
+                  
                 </div>
 
                 <Card className="p-6 bg-primary/5 border-primary/20">
@@ -211,16 +171,10 @@ const Contact = () => {
                     If you're interested in sponsorship opportunities or partnerships, please visit our dedicated pages:
                   </p>
                   <div className="space-y-2">
-                    <a 
-                      href="/sponsor" 
-                      className="block text-sm font-semibold text-primary hover:underline"
-                    >
+                    <a href="/sponsor" className="block text-sm font-semibold text-primary hover:underline">
                       → Sponsorship Opportunities
                     </a>
-                    <a 
-                      href="/partner" 
-                      className="block text-sm font-semibold text-primary hover:underline"
-                    >
+                    <a href="/partner" className="block text-sm font-semibold text-primary hover:underline">
                       → Partnership Inquiries
                     </a>
                   </div>
@@ -232,8 +186,6 @@ const Contact = () => {
       </main>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Contact;
