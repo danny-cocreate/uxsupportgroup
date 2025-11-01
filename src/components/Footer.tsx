@@ -50,18 +50,7 @@ const Footer = () => {
 
   return <footer className="bg-foreground text-background py-16">
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12">
-          <div>
-            <h4 className="text-xl font-bold mb-4">Quick Links</h4>
-            <ul className="space-y-2 text-background/80">
-              <li><a href="#" className="hover:text-primary transition-colors">About</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Agenda</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Tickets</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">FAQ</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Contact</a></li>
-            </ul>
-          </div>
-          
+        <div className="grid md:grid-cols-2 gap-12 mb-12">
           <div>
             <h4 className="text-xl font-bold mb-4">Partners</h4>
             <ul className="space-y-2 text-background/80">
