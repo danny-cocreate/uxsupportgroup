@@ -1319,6 +1319,60 @@ const SummitWall = () => {
       </Dialog>
 
       {/* Add Link Dialog */}
+      <Dialog open={showAddLinkDialog} onOpenChange={setShowAddLinkDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Add New Link</DialogTitle>
+            <DialogDescription>
+              Add a link to your work, portfolio, or social media
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="link-url">URL *</Label>
+              <Input
+                id="link-url"
+                type="url"
+                placeholder="https://..."
+                value={newLinkData.url}
+                onChange={e => setNewLinkData({...newLinkData, url: e.target.value})}
+                disabled={isSaving}
+              />
+            </div>
+            
+            <div>
+              <Label htmlFor="link-title">Title/Label *</Label>
+              <Input
+                id="link-title"
+                type="text"
+                placeholder="My Portfolio"
+                value={newLinkData.title}
+                onChange={e => setNewLinkData({...newLinkData, title: e.target.value})}
+                disabled={isSaving}
+              />
+            </div>
+            
+            <div className="flex gap-3 pt-4">
+              <Button
+                onClick={() => setShowAddLinkDialog(false)}
+                variant="outline"
+                className="flex-1"
+                disabled={isSaving}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleSaveNewLink}
+                className="flex-1 bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:opacity-90"
+                disabled={isSaving}
+              >
+                {isSaving ? "Saving..." : "Save"}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
       
     </div>;
 };
