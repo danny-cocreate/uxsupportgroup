@@ -127,7 +127,7 @@ const SummitSponsorshipSection = () => {
                 className="w-full h-12 text-sm font-bold bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group uppercase" 
                 onClick={() => scrollToContact('Virtual Booth Add-On - $400')}
               >
-                Upgrade to Virtual Booth
+                Add Virtual Booth
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Card>
