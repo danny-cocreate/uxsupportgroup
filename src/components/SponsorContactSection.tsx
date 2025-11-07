@@ -165,13 +165,13 @@ const SponsorContactSection = () => {
                       <SelectLabel className="uppercase font-bold">Community</SelectLabel>
                       <SelectItem value="Quarterly Partnership - $5,000">Quarterly Partnership - $5,000</SelectItem>
                       <SelectItem value="Annual Partnership - $17,000">Annual Partnership - $17,000</SelectItem>
-                      <SelectItem value="Custom Partnership">Custom Partnership</SelectItem>
+                      <SelectItem value="Custom Community Partnership">Custom Community Partnership</SelectItem>
                     </SelectGroup>
                     <SelectGroup>
                       <SelectLabel className="uppercase font-bold">Summit</SelectLabel>
-                      <SelectItem value="Summit Bronze - $2,500">Summit Bronze - $2,500</SelectItem>
-                      <SelectItem value="Summit Silver - $3,500">Summit Silver - $3,500</SelectItem>
-                      <SelectItem value="Summit Gold - $5,500">Summit Gold - $5,500</SelectItem>
+                      <SelectItem value="Standard (Free) Sponsor">Standard (Free) Sponsor</SelectItem>
+                      <SelectItem value="Virtual Booth Add-On - $400">Virtual Booth Add-On - $400</SelectItem>
+                      <SelectItem value="Custom Summit Partnership">Custom Summit Partnership</SelectItem>
                     </SelectGroup>
                     <SelectGroup>
                       <SelectLabel className="uppercase font-bold">Other</SelectLabel>

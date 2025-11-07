@@ -172,7 +172,7 @@ const SummitSponsorshipSection = () => {
               <Button 
                 variant="outline"
                 className="w-full h-12 text-sm font-bold uppercase group border-2" 
-                onClick={() => scrollToContact('Custom Partnership Package')}
+                onClick={() => scrollToContact('Custom Summit Partnership')}
               >
                 Contact for Custom Partnership
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
