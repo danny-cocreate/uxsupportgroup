@@ -29,7 +29,7 @@ const SponsorHero = () => {
           {/* Hero Stats */}
           <div className="max-w-3xl mx-auto grid md:grid-cols-3 gap-8 my-12">
             <div className="text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-foreground/10">
-              <div className="text-5xl font-bold text-foreground mb-2">8,891</div>
+              <div className="text-5xl font-bold text-foreground mb-2">8,900+</div>
               <p className="text-foreground/70 text-sm uppercase tracking-wide">Members</p>
             </div>
             <div className="text-center p-6 rounded-2xl bg-white/60 backdrop-blur-sm border-2 border-foreground/10">
