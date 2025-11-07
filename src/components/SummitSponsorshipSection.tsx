@@ -20,7 +20,7 @@ const SummitSponsorshipSection = () => {
     }));
   };
   const standardFeatures = ["Give away up to 100 free credits to engaged UX professionals", "Sponsor logo on summit page", "Logo on credits/offer landing page", "Featured in post-event attendee emails", "Basic claim metrics (redemptions & demographics)"];
-  const boothFeatures = ["Everything in Standard (Free) tier", "Dedicated 45-minute branded breakout room", "Live demo, walkthrough, or AMA during lunch/networking block", "Priority listing as 'Featured Sponsor' on summit site", "Lead/attendee opt-ins from your session", "Enhanced brand presence across all channels"];
+  const boothFeatures = ["Everything in Standard (Free) tier", "Dedicated 45-minute branded breakout room", "Live demo, walkthrough, or AMA during lunch/networking block", "Priority listing as 'Featured Sponsor' on summit page", "Lead/attendee opt-ins from your session", "Enhanced brand presence across all channels"];
   const comparisonData = [{
     feature: "Free Credit Giveaway",
     standard: "Up to 100",
