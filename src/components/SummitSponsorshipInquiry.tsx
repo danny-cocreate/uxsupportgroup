@@ -29,7 +29,7 @@ const SummitSponsorshipInquiry = () => {
               <img 
                 src={hubbleLogo} 
                 alt="Hubble" 
-                className="h-16 object-contain grayscale hover:grayscale-0 transition-all"
+                className="h-14 object-contain grayscale hover:grayscale-0 transition-all"
               />
               <img 
                 src={cocreateLogo} 
