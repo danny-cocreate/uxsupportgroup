@@ -34,7 +34,7 @@ const SummitSponsorshipInquiry = () => {
               <img 
                 src={cocreateLogo} 
                 alt="CoCreate" 
-                className="h-20 object-contain grayscale hover:grayscale-0 transition-all"
+                className="h-30 object-contain grayscale hover:grayscale-0 transition-all"
               />
             </div>
             
