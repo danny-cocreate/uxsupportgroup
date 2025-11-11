@@ -29,12 +29,12 @@ const SummitSponsorshipInquiry = () => {
               <img 
                 src={hubbleLogo} 
                 alt="Hubble" 
-                className="h-12 object-contain grayscale hover:grayscale-0 transition-all"
+                className="h-16 object-contain grayscale hover:grayscale-0 transition-all"
               />
               <img 
                 src={cocreateLogo} 
                 alt="CoCreate" 
-                className="h-24 object-contain grayscale hover:grayscale-0 transition-all"
+                className="h-32 object-contain grayscale hover:grayscale-0 transition-all"
               />
             </div>
             
