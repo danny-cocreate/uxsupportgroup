@@ -25,36 +25,42 @@ const SummitSponsorshipInquiry = () => {
           <h2 className="text-4xl md:text-5xl font-bold mb-12 text-foreground text-center">
             Sponsors
           </h2>
-          <div className="grid md:grid-cols-[70%_30%] gap-8 items-center">
-            {/* Left column - Logos */}
-            <div className="flex items-center justify-center gap-12 flex-wrap">
-              <img 
-                src={hubbleLogo} 
-                alt="Hubble" 
-                className="h-14 object-contain grayscale hover:grayscale-0 transition-all"
-              />
-              <img 
-                src={cocreateLogo} 
-                alt="CoCreate" 
-                className="h-32 object-contain grayscale hover:grayscale-0 transition-all"
-              />
-              <img 
-                src={kommodoLogo} 
-                alt="Kommodo" 
-                className="h-14 object-contain grayscale hover:grayscale-0 transition-all"
-              />
-              <img 
-                src={subframeLogo} 
-                alt="Subframe" 
-                className="h-14 object-contain grayscale hover:grayscale-0 transition-all"
-              />
-            </div>
-            
-            {/* Right column - Text and CTA */}
-            <div className="text-left">
-              <h3 className="text-xl md:text-2xl font-semibold mb-4 text-foreground">
+          
+          {/* Logos - Full Width */}
+          <div className="flex items-center justify-center gap-12 flex-wrap mb-16">
+            <img 
+              src={hubbleLogo} 
+              alt="Hubble" 
+              className="h-14 object-contain grayscale hover:grayscale-0 transition-all"
+            />
+            <img 
+              src={cocreateLogo} 
+              alt="CoCreate" 
+              className="h-32 object-contain grayscale hover:grayscale-0 transition-all"
+            />
+            <img 
+              src={kommodoLogo} 
+              alt="Kommodo" 
+              className="h-14 object-contain grayscale hover:grayscale-0 transition-all"
+            />
+            <img 
+              src={subframeLogo} 
+              alt="Subframe" 
+              className="h-14 object-contain grayscale hover:grayscale-0 transition-all"
+            />
+          </div>
+
+          {/* Interested in Sponsoring Section */}
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            {/* Left - Heading */}
+            <div>
+              <h3 className="text-xl md:text-2xl font-semibold text-foreground">
                 Interested in Sponsoring?
               </h3>
+            </div>
+            
+            {/* Right - Copy and CTA */}
+            <div>
               <p className="text-base text-foreground/70 mb-6">
                 Connect with senior UX professionals and decision-makers at our virtual summit.
               </p>
