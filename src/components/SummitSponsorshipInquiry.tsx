@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import hubbleLogo from "@/assets/hubble-logo.png";
 import cocreateLogo from "@/assets/cocreate-logo.png";
 import kommodoLogo from "@/assets/kommodo-logo.png";
+import subframeLogo from "@/assets/subframe-logo.png";
 
 const SummitSponsorshipInquiry = () => {
   const navigate = useNavigate();
@@ -40,6 +41,11 @@ const SummitSponsorshipInquiry = () => {
               <img 
                 src={kommodoLogo} 
                 alt="Kommodo" 
+                className="h-14 object-contain grayscale hover:grayscale-0 transition-all"
+              />
+              <img 
+                src={subframeLogo} 
+                alt="Subframe" 
                 className="h-14 object-contain grayscale hover:grayscale-0 transition-all"
               />
             </div>
