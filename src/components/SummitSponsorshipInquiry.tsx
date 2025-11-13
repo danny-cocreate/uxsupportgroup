@@ -35,7 +35,7 @@ const SummitSponsorshipInquiry = () => {
 
           {/* Interested in Sponsoring Section */}
           <div className="bg-gray-900/10 border border-border rounded-xl p-8 shadow-md overflow-hidden">
-            <div className="grid md:grid-cols-[70%_30%] gap-6 md:gap-8 items-center">
+            <div className="grid md:grid-cols-[2fr_1fr] gap-6 md:gap-8 items-center">
               {/* Left - Heading and Copy */}
               <div>
                 <h3 className="text-xl md:text-2xl font-semibold mb-4 text-foreground">
