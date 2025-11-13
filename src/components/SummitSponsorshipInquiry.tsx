@@ -45,8 +45,8 @@ const SummitSponsorshipInquiry = () => {
               </div>
               
               {/* Right - CTA */}
-              <div className="w-full">
-                <Button onClick={handleBecomeASponsor} className="h-12 px-6 text-base font-semibold shadow-lg hover:shadow-xl transition-all group w-full md:w-auto">
+              <div className="w-full flex justify-end">
+                <Button onClick={handleBecomeASponsor} className="h-12 px-6 text-base font-semibold shadow-lg hover:shadow-xl transition-all group w-full">
                   Become a Sponsor
                   <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
