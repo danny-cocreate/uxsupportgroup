@@ -54,26 +54,28 @@ const SummitSponsorshipInquiry = () => {
           <div className="border-t border-border/20 mb-12"></div>
 
           {/* Interested in Sponsoring Section */}
-          <div className="grid md:grid-cols-[70%_30%] gap-8 items-center">
-            {/* Left - Heading and Copy */}
-            <div>
-              <h3 className="text-xl md:text-2xl font-semibold mb-4 text-foreground">
-                Interested in Sponsoring?
-              </h3>
-              <p className="text-base text-foreground/70">
-                Connect with senior UX professionals and decision-makers at our virtual summit.
-              </p>
-            </div>
-            
-            {/* Right - CTA */}
-            <div>
-              <Button
-                onClick={handleBecomeASponsor}
-                className="h-12 px-6 text-base font-semibold shadow-lg hover:shadow-xl transition-all group"
-              >
-                Become a Sponsor
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
+          <div className="bg-muted/50 rounded-lg p-8">
+            <div className="grid md:grid-cols-[70%_30%] gap-8 items-center">
+              {/* Left - Heading and Copy */}
+              <div>
+                <h3 className="text-xl md:text-2xl font-semibold mb-4 text-foreground">
+                  Interested in Sponsoring?
+                </h3>
+                <p className="text-base text-foreground/70">
+                  Connect with senior UX professionals and decision-makers at our virtual summit.
+                </p>
+              </div>
+              
+              {/* Right - CTA */}
+              <div>
+                <Button
+                  onClick={handleBecomeASponsor}
+                  className="h-12 px-6 text-base font-semibold shadow-lg hover:shadow-xl transition-all group"
+                >
+                  Become a Sponsor
+                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </div>
             </div>
           </div>
         </div>
