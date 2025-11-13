@@ -51,7 +51,7 @@ const SummitSponsorshipInquiry = () => {
           </div>
 
           {/* Interested in Sponsoring Section */}
-          <div className="grid md:grid-cols-2 gap-8 items-center">
+          <div className="grid md:grid-cols-[70%_30%] gap-8 items-center">
             {/* Left - Heading and Copy */}
             <div>
               <h3 className="text-xl md:text-2xl font-semibold mb-4 text-foreground">
