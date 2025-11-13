@@ -52,18 +52,18 @@ const SummitSponsorshipInquiry = () => {
 
           {/* Interested in Sponsoring Section */}
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            {/* Left - Heading */}
+            {/* Left - Heading and Copy */}
             <div>
-              <h3 className="text-xl md:text-2xl font-semibold text-foreground">
+              <h3 className="text-xl md:text-2xl font-semibold mb-4 text-foreground">
                 Interested in Sponsoring?
               </h3>
-            </div>
-            
-            {/* Right - Copy and CTA */}
-            <div>
-              <p className="text-base text-foreground/70 mb-6">
+              <p className="text-base text-foreground/70">
                 Connect with senior UX professionals and decision-makers at our virtual summit.
               </p>
+            </div>
+            
+            {/* Right - CTA */}
+            <div>
               <Button
                 onClick={handleBecomeASponsor}
                 className="h-12 px-6 text-base font-semibold shadow-lg hover:shadow-xl transition-all group"
