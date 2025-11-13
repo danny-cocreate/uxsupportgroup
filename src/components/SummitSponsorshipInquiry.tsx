@@ -54,8 +54,8 @@ const SummitSponsorshipInquiry = () => {
           <div className="border-t border-border/20 mb-12"></div>
 
           {/* Interested in Sponsoring Section */}
-          <div className="bg-card border border-border rounded-xl p-8 shadow-md">
-            <div className="grid md:grid-cols-[70%_30%] gap-8 items-center">
+          <div className="bg-gray-900/20 border border-border rounded-xl p-6 md:p-8 shadow-md">
+            <div className="grid md:grid-cols-[70%_30%] gap-6 md:gap-8 items-center">
               {/* Left - Heading and Copy */}
               <div>
                 <h3 className="text-xl md:text-2xl font-semibold mb-4 text-foreground">
@@ -67,10 +67,10 @@ const SummitSponsorshipInquiry = () => {
               </div>
               
               {/* Right - CTA */}
-              <div>
+              <div className="w-full">
                 <Button
                   onClick={handleBecomeASponsor}
-                  className="h-12 px-6 text-base font-semibold shadow-lg hover:shadow-xl transition-all group"
+                  className="h-12 px-6 text-base font-semibold shadow-lg hover:shadow-xl transition-all group w-full md:w-auto"
                 >
                   Become a Sponsor
                   <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
