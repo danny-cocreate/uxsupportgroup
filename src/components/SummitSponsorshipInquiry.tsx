@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import hubbleLogo from "@/assets/hubble-logo.png";
 import cocreateLogo from "@/assets/cocreate-logo.png";
+import kommodoLogo from "@/assets/kommodo-logo.png";
 
 const SummitSponsorshipInquiry = () => {
   const navigate = useNavigate();
@@ -35,6 +36,11 @@ const SummitSponsorshipInquiry = () => {
                 src={cocreateLogo} 
                 alt="CoCreate" 
                 className="h-32 object-contain grayscale hover:grayscale-0 transition-all"
+              />
+              <img 
+                src={kommodoLogo} 
+                alt="Kommodo" 
+                className="h-14 object-contain grayscale hover:grayscale-0 transition-all"
               />
             </div>
             
