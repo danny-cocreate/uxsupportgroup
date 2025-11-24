@@ -111,7 +111,7 @@ const SocialProof = () => {
     name: "Esther Greenfield Jakar",
     title: "Product Experience Designer & PM",
     company: "Studio Lama",
-    bio: "Agile UX + design systems for B2B/SaaS. Expert in wireframes, usability testing, & team collaboration.",
+    bio: "AI-driven Product Designer for nonprofits, startups, and B2C/B2B/SaaS platforms. Skilled in agile UX, design systems, and cross-functional project leadership. Expertise in agile UX, design systems, wireframes, and usability testing, crafting intuitive experiences that meet both business goals and user needs.",
     linkedin: "https://www.linkedin.com/in/esther-g-j/",
     image: EstherJ
   }];
