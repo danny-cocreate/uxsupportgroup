@@ -292,547 +292,93 @@ const SummitWall = () => {
   const preventOverlapping = (profiles: ProfileCard[]) => {
     const cardWidth = 200;
     const cardHeight = 250;
-    const minSpacing = 20; // Minimum space between cards
-    
-    const adjusted: ProfileCard[] = [];
-    
-    profiles.forEach((profile, index) => {
-      let x = profile.wall_position_x || (100 + (index % 8) * 250);
-      let y = profile.wall_position_y || (100 + Math.floor(index / 8) * 300);
-      
-      // Check for collisions with already processed cards
+    const minSpacing = 45; // Increased to better account for floating animation
+
+    // Apply initial grid positions for any cards without coordinates
+    const withPositions = profiles.map((profile, index) => ({
+      ...profile,
+      wall_position_x:
+        profile.wall_position_x ??
+        (100 + (index % 8) * 250),
+      wall_position_y:
+        profile.wall_position_y ??
+        (100 + Math.floor(index / 8) * 300),
+      // Track original index so we can preserve ordering for rendering
+      __originalIndex: index,
+    })) as (ProfileCard & { __originalIndex: number })[];
+
+    // Sort by Y then X for more predictable collision resolution
+    const sorted = [...withPositions].sort((a, b) => {
+      const yA = a.wall_position_y ?? 0;
+      const yB = b.wall_position_y ?? 0;
+
+      if (Math.abs(yA - yB) < 50) {
+        const xA = a.wall_position_x ?? 0;
+        const xB = b.wall_position_x ?? 0;
+        return xA - xB;
+      }
+
+      return yA - yB;
+    });
+
+    const adjusted = sorted.map((profile) => ({ ...profile }));
+
+    const maxPasses = 5;
+
+    for (let pass = 0; pass < maxPasses; pass++) {
+      let hasCollision = false;
+
       for (let i = 0; i < adjusted.length; i++) {
-        const other = adjusted[i];
-        const dx = x - other.wall_position_x;
-        const dy = y - other.wall_position_y;
-        
-        // Check if cards overlap
-        if (Math.abs(dx) < cardWidth + minSpacing && Math.abs(dy) < cardHeight + minSpacing) {
-          // Move card to avoid collision
-          if (Math.abs(dx) >= Math.abs(dy)) {
-            x = other.wall_position_x + (dx > 0 ? cardWidth + minSpacing : -(cardWidth + minSpacing));
-          } else {
-            y = other.wall_position_y + (dy > 0 ? cardHeight + minSpacing : -(cardHeight + minSpacing));
+        const a = adjusted[i];
+        const ax = a.wall_position_x ?? 0;
+        const ay = a.wall_position_y ?? 0;
+
+        for (let j = i + 1; j < adjusted.length; j++) {
+          const b = adjusted[j];
+          const bx = b.wall_position_x ?? 0;
+          const by = b.wall_position_y ?? 0;
+
+          const dx = bx - ax;
+          const dy = by - ay;
+
+          // Check if cards overlap within the width/height + spacing
+          if (
+            Math.abs(dx) < cardWidth + minSpacing &&
+            Math.abs(dy) < cardHeight + minSpacing
+          ) {
+            hasCollision = true;
+
+            // Move the later card just enough to resolve collision
+            if (Math.abs(dx) >= Math.abs(dy)) {
+              const direction = dx >= 0 ? 1 : -1;
+              const overlap =
+                cardWidth + minSpacing - Math.abs(dx);
+              b.wall_position_x = bx + direction * (overlap + 10);
+            } else {
+              const direction = dy >= 0 ? 1 : -1;
+              const overlap =
+                cardHeight + minSpacing - Math.abs(dy);
+              b.wall_position_y = by + direction * (overlap + 10);
+            }
           }
         }
       }
-      
-      adjusted.push({
-        ...profile,
-        wall_position_x: x,
-        wall_position_y: y
-      });
-    });
-    
-    return adjusted;
-  };
-  const handleZoomIn = () => {
-    setZoom(prev => Math.min(200, prev + 25));
-  };
-  const handleZoomOut = () => {
-    setZoom(prev => Math.max(50, prev - 25));
-  };
-  const handleFitAll = () => {
-    setZoom(100);
-  };
-  const handleCreateProfile = () => {
-    const email = sessionStorage.getItem('summit_user_email');
-    if (!email) {
-      // User not authenticated, show auth modal
-      setShowAuthModal(true);
-      return;
-    }
 
-    // User is authenticated, show profile creation modal
-    setShowCreateModal(true);
-    setFormData({
-      name: '',
-      jobTitle: '',
-      companyName: '',
-      linkedinUrl: ''
-    });
-  };
-  const handleEditProfile = async () => {
-    const userId = sessionStorage.getItem('summit_user_id');
-    if (!userId) return;
-    try {
-      // Load the user's profile
-      const {
-        data: profile,
-        error: profileError
-      } = await supabase.from('user_profiles').select('*').eq('id', userId).single();
-      if (profileError) throw profileError;
-
-      // Set as selected profile and load enrichments
-      setSelectedProfile(profile);
-      setEditFormData({
-        name: profile.name || '',
-        jobTitle: profile.job_title || '',
-        companyName: profile.company_name || '',
-        linkedinUrl: profile.linkedin_url || ''
-      });
-
-      // Load enrichments
-      const {
-        data: enrichmentsData,
-        error: enrichmentsError
-      } = await supabase.from('enrichments').select('*').eq('user_id', userId).order('display_order', {
-        ascending: true
-      });
-      if (enrichmentsError) throw enrichmentsError;
-      setEnrichments((enrichmentsData || []) as Enrichment[]);
-
-      // Open modal in edit mode - mark as edit from wall
-      setEditFromWall(true);
-      setIsEditMode(true);
-      setShowDetailModal(true);
-    } catch (error) {
-      console.error('Error loading profile for editing:', error);
-      toast.error("Failed to load profile");
-    }
-  };
-  const handleLogout = () => {
-    sessionStorage.removeItem('summit_user_id');
-    sessionStorage.removeItem('summit_user_email');
-    setUserEmail(null);
-    setCurrentUserId(null);
-    toast.success('Logged out successfully');
-  };
-  const handleFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const email = sessionStorage.getItem('summit_user_email');
-    if (!email) {
-      toast.error("Please log in first");
-      setShowCreateModal(false);
-      setShowAuthModal(true);
-      return;
-    }
-    if (!formData.name.trim()) {
-      toast.error("Please enter your name");
-      return;
-    }
-    if (!formData.jobTitle.trim()) {
-      toast.error("Please enter your job title");
-      return;
-    }
-    if (formData.linkedinUrl && !formData.linkedinUrl.includes('linkedin.com/in/')) {
-      toast.error("Please enter a valid LinkedIn profile URL");
-      return;
-    }
-    setIsProcessing(true);
-    try {
-      // Create slug from name
-      const slug = formData.name.toLowerCase().replace(/\s+/g, '-') + '-' + Date.now();
-
-      // Create user profile
-      const {
-        data: profile,
-        error: profileError
-      } = await supabase.from('user_profiles').insert({
-        email: email,
-        name: formData.name.trim(),
-        job_title: formData.jobTitle.trim(),
-        company_name: formData.companyName.trim() || null,
-        linkedin_url: formData.linkedinUrl.trim() || null,
-        slug
-      }).select().single();
-      if (profileError) throw profileError;
-
-      // Store userId in sessionStorage
-      sessionStorage.setItem('summit_user_id', profile.id);
-      setCurrentUserId(profile.id);
-
-      // Assign admin role if applicable
-      try {
-        await supabase.functions.invoke('assign-admin-role', {
-          body: {
-            userId: profile.id,
-            email: email
-          }
-        });
-      } catch (error) {
-        console.error('Error assigning admin role:', error);
+      if (!hasCollision) {
+        break;
       }
-
-      // Auto-generate screenshot
-      setSelectedProfile(profile);
-      setEditFormData({
-        name: formData.name.trim(),
-        jobTitle: formData.jobTitle.trim(),
-        companyName: formData.companyName.trim(),
-        linkedinUrl: formData.linkedinUrl.trim()
-      });
-
-      // Wait a tick for state to update, then generate
-      setTimeout(async () => {
-        const success = await generateScreenshot(profile.id, {
-          name: formData.name.trim(),
-          job_title: formData.jobTitle.trim(),
-          company_name: formData.companyName.trim()
-        });
-        if (success) {
-          toast.success("Profile created! Preview generated ✓");
-        } else {
-          toast.success("Profile created successfully!");
-          toast.error("Preview generation failed. You can try again from edit mode.");
-        }
-      }, 100);
-      setShowCreateModal(false);
-      loadProfiles();
-    } catch (error) {
-      console.error('Error creating profile:', error);
-      toast.error("Failed to create profile. Please try again.");
-    } finally {
-      setIsProcessing(false);
     }
+
+    // Restore original ordering and strip helper field
+    const result = adjusted
+      .sort(
+        (a, b) =>
+          (a.__originalIndex ?? 0) - (b.__originalIndex ?? 0),
+      )
+      .map(({ __originalIndex, ...rest }) => rest as ProfileCard);
+
+    return result;
   };
-  const handleCardClick = async (profile: ProfileCard) => {
-    setSelectedProfile(profile);
-    setIsEditMode(false);
-
-    // Load enrichments for view mode
-    try {
-      const {
-        data: enrichmentsData,
-        error
-      } = await supabase.from('enrichments').select('*').eq('user_id', profile.id).order('display_order', {
-        ascending: true
-      });
-      if (error) {
-        console.error('Error loading enrichments:', error);
-        // Show enrichments section but with error state
-        setEnrichments([]);
-        toast.error("Unable to load profile links. The profile will still display.");
-      } else {
-        setEnrichments((enrichmentsData || []) as Enrichment[]);
-      }
-    } catch (error) {
-      console.error('Critical error loading enrichments:', error);
-      setEnrichments([]);
-    }
-
-    // Always open modal regardless of enrichments load status
-    setShowDetailModal(true);
-  };
-  const handleEdit = async () => {
-    if (!selectedProfile) return;
-
-    // Check if user is authenticated
-    const userId = sessionStorage.getItem('summit_user_id');
-    if (!userId) {
-      // Not authenticated - show auth modal
-      setShowDetailModal(false);
-      setShowAuthModal(true);
-      return;
-    }
-
-    // Check if this is their own profile
-    if (userId !== selectedProfile.id) {
-      toast.error("You can only edit your own profile");
-      return;
-    }
-    setEditFormData({
-      name: selectedProfile.name || '',
-      jobTitle: selectedProfile.job_title || '',
-      companyName: selectedProfile.company_name || '',
-      linkedinUrl: selectedProfile.linkedin_url || ''
-    });
-
-    // Load enrichments
-    try {
-      const {
-        data: enrichmentsData,
-        error
-      } = await supabase.from('enrichments').select('*').eq('user_id', selectedProfile.id).order('display_order', {
-        ascending: true
-      });
-      if (error) throw error;
-      setEnrichments((enrichmentsData || []) as Enrichment[]);
-    } catch (error) {
-      console.error('Error loading enrichments:', error);
-    }
-
-    // Mark as edit from card view (not from wall)
-    setEditFromWall(false);
-    setIsEditMode(true);
-  };
-  const handleSaveEdit = async () => {
-    if (!selectedProfile) return;
-    setIsSaving(true);
-    try {
-      const {
-        error
-      } = await supabase.from('user_profiles').update({
-        name: editFormData.name.trim() || null,
-        job_title: editFormData.jobTitle.trim() || null,
-        company_name: editFormData.companyName.trim() || null,
-        linkedin_url: editFormData.linkedinUrl.trim() || null
-      }).eq('id', selectedProfile.id);
-      if (error) throw error;
-
-      // Update selected profile to show new data
-      const updatedProfile = {
-        ...selectedProfile,
-        name: editFormData.name.trim() || selectedProfile.name,
-        job_title: editFormData.jobTitle.trim() || null,
-        company_name: editFormData.companyName.trim() || null,
-        linkedin_url: editFormData.linkedinUrl.trim() || null
-      };
-      setSelectedProfile(updatedProfile);
-      loadProfiles();
-
-      // Auto-generate screenshot after update
-      const success = await generateScreenshot(selectedProfile.id, {
-        name: editFormData.name.trim(),
-        job_title: editFormData.jobTitle.trim(),
-        company_name: editFormData.companyName.trim()
-      });
-      if (success) {
-        toast.success("Profile updated! Preview regenerated ✓");
-      } else {
-        toast.success("Profile updated successfully!");
-        toast.error("Preview regeneration failed.");
-      }
-
-      // Check if edit was from wall or card view
-      if (editFromWall) {
-        // Came from wall - close modal completely
-        setIsEditMode(false);
-        setShowDetailModal(false);
-        setEditFromWall(false);
-      } else {
-        // Came from card view - return to card view
-        setIsEditMode(false);
-      }
-    } catch (error) {
-      console.error('Error updating profile:', error);
-      toast.error("Failed to update profile. Please try again.");
-    } finally {
-      setIsSaving(false);
-    }
-  };
-  const handleCancelEdit = () => {
-    // Check if edit was from wall or card view
-    if (editFromWall) {
-      // Came from wall - close modal completely
-      setIsEditMode(false);
-      setShowDetailModal(false);
-      setEditFromWall(false);
-    } else {
-      // Came from card view - return to card view
-      setIsEditMode(false);
-    }
-  };
-  const generateScreenshot = async (profileId: string, profileData: any): Promise<boolean> => {
-    if (!profileCardRef.current) return false;
-    setIsGeneratingScreenshot(true);
-    try {
-      // Capture the card element
-      const canvas = await html2canvas(profileCardRef.current, {
-        scale: 2,
-        backgroundColor: '#FFFFFF',
-        logging: false,
-        width: 1200,
-        height: 630
-      });
-
-      // Convert to blob
-      const blob = await new Promise<Blob>(resolve => {
-        canvas.toBlob(blob => resolve(blob!), 'image/png', 0.85);
-      });
-
-      // Upload to Supabase Storage
-      const fileName = `${profileId}-${Date.now()}.png`;
-      const {
-        data: uploadData,
-        error: uploadError
-      } = await supabase.storage.from('profile-screenshots').upload(fileName, blob, {
-        contentType: 'image/png',
-        upsert: true
-      });
-      if (uploadError) throw uploadError;
-
-      // Get public URL
-      const {
-        data: {
-          publicUrl
-        }
-      } = supabase.storage.from('profile-screenshots').getPublicUrl(fileName);
-
-      // Update profile with screenshot URL
-      const {
-        error: updateError
-      } = await supabase.from('user_profiles').update({
-        card_screenshot_url: publicUrl,
-        screenshot_generated_at: new Date().toISOString()
-      }).eq('id', profileId);
-      if (updateError) throw updateError;
-
-      // Update local state
-      if (selectedProfile?.id === profileId) {
-        setSelectedProfile({
-          ...selectedProfile,
-          card_screenshot_url: publicUrl
-        });
-      }
-      loadProfiles();
-      return true;
-    } catch (error) {
-      console.error('Screenshot generation error:', error);
-      return false;
-    } finally {
-      setIsGeneratingScreenshot(false);
-    }
-  };
-  const handleAddLink = () => {
-    if (!selectedProfile) return;
-    if (enrichments.length >= 10) {
-      toast.error("Maximum 10 enrichments allowed");
-      return;
-    }
-    setNewLinkData({
-      url: '',
-      title: ''
-    });
-    setShowAddLinkDialog(true);
-  };
-  const handleSaveNewLink = async () => {
-    if (!selectedProfile) return;
-
-    // Validation
-    if (!newLinkData.url.trim()) {
-      toast.error("URL is required");
-      return;
-    }
-    if (!newLinkData.title.trim()) {
-      toast.error("Title/Label is required");
-      return;
-    }
-    try {
-      const {
-        data,
-        error
-      } = await supabase.from('enrichments').insert({
-        user_id: selectedProfile.id,
-        type: 'link',
-        url: newLinkData.url.trim(),
-        title: newLinkData.title.trim(),
-        display_order: enrichments.length
-      }).select().single();
-      if (error) throw error;
-      setEnrichments([...enrichments, data as Enrichment]);
-      toast.success("Link added");
-      setShowAddLinkDialog(false);
-      setNewLinkData({
-        url: '',
-        title: ''
-      });
-    } catch (error) {
-      console.error('Error adding link:', error);
-      toast.error("Failed to add link");
-    }
-  };
-  const handleDeleteEnrichment = async (id: string) => {
-    if (!confirm("Delete this item? This cannot be undone.")) return;
-    try {
-      const {
-        error
-      } = await supabase.from('enrichments').delete().eq('id', id);
-      if (error) throw error;
-      setEnrichments(enrichments.filter(e => e.id !== id));
-      toast.success("Item deleted");
-    } catch (error) {
-      console.error('Error deleting enrichment:', error);
-      toast.error("Failed to delete item");
-    }
-  };
-  const handleChangePhoto = async () => {
-    if (!selectedProfile) return;
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.onchange = async e => {
-      const file = (e.target as HTMLInputElement).files?.[0];
-      if (!file) return;
-
-      // Validate file size (max 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        toast.error("File size must be less than 5MB");
-        return;
-      }
-
-      // Validate file type
-      if (!file.type.startsWith('image/')) {
-        toast.error("Please upload an image file");
-        return;
-      }
-      setIsSaving(true);
-      try {
-        // Create a unique filename
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${selectedProfile.id}-${Date.now()}.${fileExt}`;
-        const filePath = fileName;
-
-        // Upload to Supabase Storage
-        const {
-          error: uploadError
-        } = await supabase.storage.from('profile-photos').upload(filePath, file, {
-          upsert: true,
-          contentType: file.type
-        });
-        if (uploadError) throw uploadError;
-
-        // Get public URL
-        const {
-          data: {
-            publicUrl
-          }
-        } = supabase.storage.from('profile-photos').getPublicUrl(filePath);
-
-        // Update profile with new photo URL
-        const {
-          error: updateError
-        } = await supabase.from('user_profiles').update({
-          profile_photo_url: publicUrl
-        }).eq('id', selectedProfile.id);
-        if (updateError) throw updateError;
-
-        // Update local state
-        setSelectedProfile({
-          ...selectedProfile,
-          profile_photo_url: publicUrl
-        });
-        toast.success("Photo updated successfully!");
-        loadProfiles();
-      } catch (error) {
-        console.error('Error uploading photo:', error);
-        toast.error("Failed to upload photo. Please try again.");
-      } finally {
-        setIsSaving(false);
-      }
-    };
-    input.click();
-  };
-  const handleShare = async () => {
-    if (!selectedProfile) return;
-    const shareUrl = `https://uxsupportgroup.com/summit-profiles/${selectedProfile.slug || selectedProfile.id}`;
-    try {
-      // Check if profile has a card screenshot for better LinkedIn previews
-      if (!selectedProfile.card_screenshot_url) {
-        toast.info("Tip: Generate a preview image in Edit mode for better LinkedIn previews!", {
-          duration: 6000
-        });
-      }
-      await navigator.clipboard.writeText(shareUrl);
-      toast.success("Link copied! This link shows a rich preview on social platforms and redirects to your profile.", {
-        duration: 5000
-      });
-    } catch (err) {
-      console.error('Error copying to clipboard:', err);
-      toast.error("Failed to copy link");
-    }
-  };
-
   // Drag handlers - using document listeners for better responsiveness
   const handleMouseDown = (e: React.MouseEvent, profileId: string) => {
     // Prevent drag if clicking on the card content (allow modal to open)
