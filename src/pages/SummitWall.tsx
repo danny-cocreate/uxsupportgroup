@@ -134,16 +134,6 @@ const SummitWall = () => {
   useEffect(() => {
     loadProfiles();
     checkAuthStatus();
-    
-    // Load temporary positions from sessionStorage
-    const savedPositions = sessionStorage.getItem('summit_card_positions');
-    if (savedPositions) {
-      try {
-        setTempPositions(JSON.parse(savedPositions));
-      } catch (e) {
-        console.error('Failed to parse saved positions:', e);
-      }
-    }
 
     // Check if we should open the create profile modal
     if (searchParams.get('createProfile') === 'true') {
@@ -265,6 +255,11 @@ const SummitWall = () => {
   const loadProfiles = async () => {
     try {
       setIsLoading(true);
+      
+      // Clear cached positions to allow fresh collision detection
+      sessionStorage.removeItem('summit_card_positions');
+      setTempPositions({});
+      
       const {
         data,
         error
