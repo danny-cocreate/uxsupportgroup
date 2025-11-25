@@ -288,41 +288,54 @@ const SummitWall = () => {
     }
   };
 
-  // Collision detection to ensure cards don't overlap too much
+  // Multi-pass collision detection to ensure cards don't overlap
   const preventOverlapping = (profiles: ProfileCard[]) => {
     const cardWidth = 200;
     const cardHeight = 250;
-    const minSpacing = 20; // Minimum space between cards
+    const minSpacing = 40; // Increased from 20 to account for floating animation (±18px)
+    const maxIterations = 10;
     
-    const adjusted: ProfileCard[] = [];
+    // Initialize positions
+    let adjusted = profiles.map((profile, index) => ({
+      ...profile,
+      wall_position_x: profile.wall_position_x || (100 + (index % 8) * 250),
+      wall_position_y: profile.wall_position_y || (100 + Math.floor(index / 8) * 300)
+    }));
     
-    profiles.forEach((profile, index) => {
-      let x = profile.wall_position_x || (100 + (index % 8) * 250);
-      let y = profile.wall_position_y || (100 + Math.floor(index / 8) * 300);
+    // Multi-pass collision resolution
+    for (let iteration = 0; iteration < maxIterations; iteration++) {
+      let hasCollision = false;
       
-      // Check for collisions with already processed cards
+      // Check all card pairs
       for (let i = 0; i < adjusted.length; i++) {
-        const other = adjusted[i];
-        const dx = x - other.wall_position_x;
-        const dy = y - other.wall_position_y;
-        
-        // Check if cards overlap
-        if (Math.abs(dx) < cardWidth + minSpacing && Math.abs(dy) < cardHeight + minSpacing) {
-          // Move card to avoid collision
-          if (Math.abs(dx) >= Math.abs(dy)) {
-            x = other.wall_position_x + (dx > 0 ? cardWidth + minSpacing : -(cardWidth + minSpacing));
-          } else {
-            y = other.wall_position_y + (dy > 0 ? cardHeight + minSpacing : -(cardHeight + minSpacing));
+        for (let j = i + 1; j < adjusted.length; j++) {
+          const dx = adjusted[j].wall_position_x - adjusted[i].wall_position_x;
+          const dy = adjusted[j].wall_position_y - adjusted[i].wall_position_y;
+          
+          // Check if cards overlap
+          if (Math.abs(dx) < cardWidth + minSpacing && Math.abs(dy) < cardHeight + minSpacing) {
+            hasCollision = true;
+            
+            // Push card j away from card i
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance > 0) {
+              const overlapX = (cardWidth + minSpacing) - Math.abs(dx);
+              const overlapY = (cardHeight + minSpacing) - Math.abs(dy);
+              
+              // Move in the direction of least resistance
+              if (overlapX < overlapY) {
+                adjusted[j].wall_position_x += dx > 0 ? overlapX : -overlapX;
+              } else {
+                adjusted[j].wall_position_y += dy > 0 ? overlapY : -overlapY;
+              }
+            }
           }
         }
       }
       
-      adjusted.push({
-        ...profile,
-        wall_position_x: x,
-        wall_position_y: y
-      });
-    });
+      // If no collisions detected, we're done
+      if (!hasCollision) break;
+    }
     
     return adjusted;
   };
