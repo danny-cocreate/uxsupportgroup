@@ -294,6 +294,9 @@ const SummitWall = () => {
     const cardHeight = 250;
     const minSpacing = 40; // Increased from 20 to account for floating animation (±18px)
     const maxIterations = 10;
+    const padding = 50; // Padding from canvas edges
+    const minX = padding;
+    const minY = padding;
     
     // Initialize positions
     let adjusted = profiles.map((profile, index) => ({
@@ -333,11 +336,44 @@ const SummitWall = () => {
         }
       }
       
+      // Ensure all cards are within bounds (positive coordinates with padding)
+      adjusted = adjusted.map(card => ({
+        ...card,
+        wall_position_x: Math.max(minX, card.wall_position_x),
+        wall_position_y: Math.max(minY, card.wall_position_y)
+      }));
+      
       // If no collisions detected, we're done
       if (!hasCollision) break;
     }
     
     return adjusted;
+  };
+
+  // Calculate dynamic canvas size based on card positions
+  const getCanvasSize = () => {
+    if (profiles.length === 0) {
+      return { width: 2000, height: 1500 };
+    }
+    
+    const cardWidth = 200;
+    const cardHeight = 250;
+    const padding = 100;
+    
+    let maxX = 0;
+    let maxY = 0;
+    
+    profiles.forEach(profile => {
+      const position = getCardPosition(profile);
+      maxX = Math.max(maxX, position.x + cardWidth);
+      maxY = Math.max(maxY, position.y + cardHeight);
+    });
+    
+    // Add padding and ensure minimum size
+    return {
+      width: Math.max(2000, maxX + padding),
+      height: Math.max(1500, maxY + padding)
+    };
   };
   const handleZoomIn = () => {
     setZoom(prev => Math.min(200, prev + 25));
@@ -981,8 +1017,8 @@ const SummitWall = () => {
         }}
       >
         <div className="relative" style={{
-        width: '2000px',
-        height: '1500px'
+        width: `${getCanvasSize().width}px`,
+        height: `${getCanvasSize().height}px`
       }}>
           {/* Centered Watermark Branding */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-3 pointer-events-none opacity-10">
