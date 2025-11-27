@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ExternalLink } from "lucide-react";
+import { cn } from "@/lib/utils";
 import SuyenL from "@/assets/SuyenL-2.jpeg";
 import SilviaB from "@/assets/SilviaB-2.jpeg";
 import AlexisB from "@/assets/AlexisB-2.png";
@@ -15,6 +17,62 @@ import CarissaS from "@/assets/CarissaS.jpeg";
 import CaitlynB from "@/assets/CaitlynB.jpeg";
 import SaraS from "@/assets/SaraS.jpeg";
 import EstherJ from "@/assets/EstherJ.jpg";
+
+interface Facilitator {
+  name: string;
+  title: string;
+  company: string | null;
+  bio: string;
+  linkedin: string;
+  image: string;
+}
+
+const FacilitatorCard = ({ facilitator, index }: { facilitator: Facilitator; index: number }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  return (
+    <Card key={index} className="group hover:shadow-lg transition-shadow">
+      <CardContent className="p-6">
+        <div className="flex items-start gap-4 mb-4">
+          <Avatar className="w-20 h-20 flex-shrink-0">
+            <AvatarImage src={facilitator.image} alt={facilitator.name} className="object-cover" />
+            <AvatarFallback>{facilitator.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+          </Avatar>
+          <div className="flex-[1.38] min-w-0">
+            <h3 className="font-bold text-lg mb-1">{facilitator.name}</h3>
+            <p className="text-sm text-muted-foreground mb-1">{facilitator.title}</p>
+            {facilitator.company && <p className="text-sm font-semibold text-foreground">{facilitator.company}</p>}
+          </div>
+        </div>
+        <p className={cn(
+          "text-sm text-muted-foreground leading-relaxed mb-2 transition-all duration-300",
+          !isExpanded && "line-clamp-4"
+        )}>
+          {facilitator.bio}
+        </p>
+        <button 
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="text-sm text-primary hover:text-primary/80 transition-colors mb-3 font-medium"
+        >
+          {isExpanded ? "Less" : "More"}
+        </button>
+        {facilitator.linkedin !== "#" && (
+          <a 
+            href={facilitator.linkedin} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors text-sm font-medium"
+            aria-label={`Visit ${facilitator.name}'s LinkedIn profile`}
+          >
+            LinkedIn Profile
+            <ExternalLink className="w-4 h-4" />
+          </a>
+        )}
+      </CardContent>
+    </Card>
+  );
+};
+
 const SocialProof = () => {
   const facilitators = [{
     name: "Danny Setiawan",
@@ -125,36 +183,9 @@ const SocialProof = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {facilitators.slice(0, 8).map((facilitator, index) => <Card key={index} className="group hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4 mb-4">
-                  <Avatar className="w-20 h-20 flex-shrink-0">
-                    <AvatarImage src={facilitator.image} alt={facilitator.name} className="object-cover" />
-                    <AvatarFallback>{facilitator.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                  </Avatar>
-                  <div className="flex-[1.38] min-w-0">
-                    <h3 className="font-bold text-lg mb-1">{facilitator.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-1">{facilitator.title}</p>
-                    {facilitator.company && <p className="text-sm font-semibold text-foreground">{facilitator.company}</p>}
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-                  {facilitator.bio}
-                </p>
-                {facilitator.linkedin !== "#" && (
-                  <a 
-                    href={facilitator.linkedin} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors text-sm font-medium"
-                    aria-label={`Visit ${facilitator.name}'s LinkedIn profile`}
-                  >
-                    LinkedIn Profile
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                )}
-              </CardContent>
-            </Card>)}
+          {facilitators.slice(0, 8).map((facilitator, index) => (
+            <FacilitatorCard key={index} facilitator={facilitator} index={index} />
+          ))}
         </div>
 
         <div className="text-center my-16">
@@ -164,36 +195,9 @@ const SocialProof = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {facilitators.slice(8).map((facilitator, index) => <Card key={index + 8} className="group hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-4 mb-4">
-                  <Avatar className="w-20 h-20 flex-shrink-0">
-                    <AvatarImage src={facilitator.image} alt={facilitator.name} className="object-cover" />
-                    <AvatarFallback>{facilitator.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                  </Avatar>
-                  <div className="flex-[1.38] min-w-0">
-                    <h3 className="font-bold text-lg mb-1">{facilitator.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-1">{facilitator.title}</p>
-                    {facilitator.company && <p className="text-sm font-semibold text-foreground">{facilitator.company}</p>}
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-                  {facilitator.bio}
-                </p>
-                {facilitator.linkedin !== "#" && (
-                  <a 
-                    href={facilitator.linkedin} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors text-sm font-medium"
-                    aria-label={`Visit ${facilitator.name}'s LinkedIn profile`}
-                  >
-                    LinkedIn Profile
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                )}
-              </CardContent>
-            </Card>)}
+          {facilitators.slice(8).map((facilitator, index) => (
+            <FacilitatorCard key={index + 8} facilitator={facilitator} index={index + 8} />
+          ))}
         </div>
       </div>
     </section>;
