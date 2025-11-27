@@ -9,7 +9,7 @@ import AlexisB from "@/assets/AlexisB-2.png";
 import VolkanU from "@/assets/VolkanU-2.jpeg";
 import RenataR from "@/assets/RenataR-2.jpeg";
 import DannyS from "@/assets/DannyS-2.jpeg";
-import HayleyD from "@/assets/HayleyD-new.jpg";
+import HayleyD from "@/assets/HayleyD-option2.png";
 import FarooqK from "@/assets/FarooqK-3.jpg";
 import FarahK from "@/assets/FarahK-2.jpeg";
 import YatongW from "@/assets/YatongW-2.jpeg";
