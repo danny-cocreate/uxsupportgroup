@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ExternalLink } from "lucide-react";
@@ -29,6 +29,15 @@ interface Facilitator {
 
 const FacilitatorCard = ({ facilitator, index }: { facilitator: Facilitator; index: number }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showToggle, setShowToggle] = useState(false);
+  const bioRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (bioRef.current) {
+      const isOverflowing = bioRef.current.scrollHeight > bioRef.current.clientHeight;
+      setShowToggle(isOverflowing);
+    }
+  }, [facilitator.bio]);
 
   return (
     <Card key={index} className="group hover:shadow-lg transition-shadow">
@@ -44,18 +53,25 @@ const FacilitatorCard = ({ facilitator, index }: { facilitator: Facilitator; ind
             {facilitator.company && <p className="text-sm font-semibold text-foreground">{facilitator.company}</p>}
           </div>
         </div>
-        <p className={cn(
-          "text-sm text-muted-foreground leading-relaxed mb-2 transition-all duration-300",
-          !isExpanded && "line-clamp-4"
-        )}>
-          {facilitator.bio}
-        </p>
-        <button 
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="text-sm text-primary hover:text-primary/80 transition-colors mb-3 font-medium"
-        >
-          {isExpanded ? "Less" : "More"}
-        </button>
+        <div className="mb-3">
+          <div
+            ref={bioRef}
+            className={cn(
+              "text-sm text-muted-foreground leading-relaxed transition-all duration-300",
+              !isExpanded && "line-clamp-4"
+            )}
+          >
+            {facilitator.bio}
+            {showToggle && (
+              <button 
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="ml-1 text-sm text-primary hover:text-primary/80 transition-colors font-medium inline"
+              >
+                {isExpanded ? "Less" : "More"}
+              </button>
+            )}
+          </div>
+        </div>
         {facilitator.linkedin !== "#" && (
           <a 
             href={facilitator.linkedin} 
