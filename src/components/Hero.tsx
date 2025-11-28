@@ -15,7 +15,8 @@ const Hero = () => {
           data
         } = await supabase.functions.invoke('check-ticket-availability');
         if (data) {
-          setIsEarlyBird(data.isEarlyBird);
+          const earlyBirdActive = data.earlyBirdRemaining > 0 && !data.isPastCutoff;
+          setIsEarlyBird(earlyBirdActive);
           setEarlyBirdRemaining(data.earlyBirdRemaining);
         }
       } catch (error) {
