@@ -10,7 +10,7 @@ const EARLY_BIRD_PAYMENT_LINK = "https://buy.stripe.com/3cI9AT0gxf6y5tt3r4es002"
 const GENERAL_ADMISSION_PAYMENT_LINK = "https://buy.stripe.com/cNi00j2oFbUm2hhaTwes003";
 const TicketingSection = () => {
   const [isEarlyBird, setIsEarlyBird] = useState(true);
-  const [earlyBirdRemaining, setEarlyBirdRemaining] = useState(15);
+  const [earlyBirdRemaining, setEarlyBirdRemaining] = useState(10);
   const [isLoading, setIsLoading] = useState(false);
   const [isCheckingAvailability, setIsCheckingAvailability] = useState(true);
   const [timeRemaining, setTimeRemaining] = useState({
@@ -19,7 +19,7 @@ const TicketingSection = () => {
     minutes: 0,
     seconds: 0
   });
-  const earlyBirdSeats = 40;
+  const earlyBirdSeats = 20;
   const totalSeats = 100;
   const currentPrice = isEarlyBird ? "$99" : "$199";
   const originalPrice = isEarlyBird ? "$199" : null;
@@ -73,7 +73,7 @@ const TicketingSection = () => {
         const now = new Date();
         const cutoff = new Date("2025-12-01T00:00:00Z");
         setIsEarlyBird(now < cutoff);
-        setEarlyBirdRemaining(cutoff > now ? 40 : 0);
+        setEarlyBirdRemaining(cutoff > now ? 20 : 0);
         return;
       }
       setIsEarlyBird(data.isEarlyBird);
