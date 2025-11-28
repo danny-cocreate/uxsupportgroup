@@ -8,7 +8,7 @@ const corsHeaders = {
 
 const EARLY_BIRD_PRICE_ID = "price_1SGlggEt4aAP5ylPfhAvGpJW";
 const EARLY_BIRD_CUTOFF_DATE = new Date("2025-12-01T00:00:00Z");
-const EARLY_BIRD_CAPACITY = 10;
+const EARLY_BIRD_CAPACITY = 20;
 
 const logStep = (step: string, details?: any) => {
   const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
