@@ -90,8 +90,8 @@ const Footer = () => {
             <p>© 2025 UX Support Group. All rights reserved.</p>
           </div>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
+            <a href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</a>
+            <a href="/terms" className="hover:text-primary transition-colors">Terms of Service</a>
             <a href="#" className="hover:text-primary transition-colors">Code of Conduct</a>
           </div>
         </div>

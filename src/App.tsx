@@ -15,6 +15,8 @@ import SummitWall from "./pages/SummitWall";
 import SummitVerify from "./pages/SummitVerify";
 import AdminPanel from "./pages/AdminPanel";
 import NotFound from "./pages/NotFound";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +39,8 @@ const App = () => (
           <Route path="/summit-profiles/verify" element={<SummitVerify />} />
           <Route path="/summit-profiles/:slug" element={<SummitWall />} />
           <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfService />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
