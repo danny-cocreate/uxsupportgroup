@@ -80,6 +80,11 @@ const SummitWall = () => {
   });
   const [isGeneratingScreenshot, setIsGeneratingScreenshot] = useState(false);
   const [newCardIds, setNewCardIds] = useState<Set<string>>(new Set());
+  
+  // Drag threshold detection refs
+  const dragStartRef = useRef<{ x: number; y: number; profileId: string } | null>(null);
+  const wasDragRef = useRef(false);
+  const DRAG_THRESHOLD = 5; // pixels - distance to move before it's considered a drag
 
   // Generate deterministic animation properties based on profile ID
   const getFloatAnimation = (profileId: string) => {
@@ -874,9 +879,6 @@ const SummitWall = () => {
 
   // Drag handlers - using document listeners for better responsiveness
   const handleMouseDown = (e: React.MouseEvent, profileId: string) => {
-    // Prevent drag if clicking on the card content (allow modal to open)
-    if ((e.target as HTMLElement).closest('.card-content')) return;
-    
     e.preventDefault();
     e.stopPropagation();
     
@@ -886,7 +888,14 @@ const SummitWall = () => {
     const currentX = tempPositions[profileId]?.x ?? profile.wall_position_x;
     const currentY = tempPositions[profileId]?.y ?? profile.wall_position_y;
     
-    setDraggedProfile(profileId);
+    // Record start position for drag threshold detection
+    dragStartRef.current = { 
+      x: e.clientX / (zoom / 100), 
+      y: e.clientY / (zoom / 100), 
+      profileId 
+    };
+    wasDragRef.current = false;
+    
     const offset = {
       x: e.clientX / (zoom / 100) - currentX,
       y: e.clientY / (zoom / 100) - currentY
@@ -895,35 +904,131 @@ const SummitWall = () => {
     
     // Attach document-level listeners for better tracking
     const handleMove = (moveEvent: MouseEvent) => {
-      const newX = moveEvent.clientX / (zoom / 100) - offset.x;
-      const newY = moveEvent.clientY / (zoom / 100) - offset.y;
+      if (!dragStartRef.current) return;
       
-      // Clamp within canvas bounds
-      const clampedX = Math.max(0, Math.min(1800, newX));
-      const clampedY = Math.max(0, Math.min(1250, newY));
+      const currentMouseX = moveEvent.clientX / (zoom / 100);
+      const currentMouseY = moveEvent.clientY / (zoom / 100);
       
-      setTempPositions(prev => {
-        const newPositions = {
+      // Calculate distance from start position
+      const distanceX = Math.abs(currentMouseX - dragStartRef.current.x);
+      const distanceY = Math.abs(currentMouseY - dragStartRef.current.y);
+      const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+      
+      // Only start dragging if threshold exceeded
+      if (distance > DRAG_THRESHOLD) {
+        if (!wasDragRef.current) {
+          wasDragRef.current = true;
+          setDraggedProfile(profileId);
+        }
+        
+        const newX = moveEvent.clientX / (zoom / 100) - offset.x;
+        const newY = moveEvent.clientY / (zoom / 100) - offset.y;
+        
+        // Clamp within canvas bounds
+        const clampedX = Math.max(0, Math.min(1800, newX));
+        const clampedY = Math.max(0, Math.min(1250, newY));
+        
+        setTempPositions(prev => ({
           ...prev,
           [profileId]: { x: clampedX, y: clampedY }
-        };
-        // Throttle sessionStorage updates
-        requestAnimationFrame(() => {
-          sessionStorage.setItem('summit_card_positions', JSON.stringify(newPositions));
-        });
-        return newPositions;
-      });
+        }));
+      }
     };
     
     const handleUp = () => {
       document.removeEventListener('mousemove', handleMove);
       document.removeEventListener('mouseup', handleUp);
-      toast.success("Card position saved for this session");
-      setDraggedProfile(null);
+      
+      if (wasDragRef.current) {
+        toast.success("Card position saved for this session");
+        setDraggedProfile(null);
+      }
+      
+      dragStartRef.current = null;
+      // Reset drag flag after a brief delay to allow click handler to check it
+      setTimeout(() => {
+        wasDragRef.current = false;
+      }, 10);
     };
     
     document.addEventListener('mousemove', handleMove);
     document.addEventListener('mouseup', handleUp);
+  };
+
+  // Touch handlers for mobile support
+  const handleTouchStart = (e: React.TouchEvent, profileId: string) => {
+    const touch = e.touches[0];
+    const profile = profiles.find(p => p.id === profileId);
+    if (!profile) return;
+    
+    const currentX = tempPositions[profileId]?.x ?? profile.wall_position_x;
+    const currentY = tempPositions[profileId]?.y ?? profile.wall_position_y;
+    
+    // Record start position for drag threshold detection
+    dragStartRef.current = { 
+      x: touch.clientX / (zoom / 100), 
+      y: touch.clientY / (zoom / 100), 
+      profileId 
+    };
+    wasDragRef.current = false;
+    
+    const offset = {
+      x: touch.clientX / (zoom / 100) - currentX,
+      y: touch.clientY / (zoom / 100) - currentY
+    };
+    setDragOffset(offset);
+    
+    const handleTouchMove = (moveEvent: TouchEvent) => {
+      if (!dragStartRef.current) return;
+      
+      const touch = moveEvent.touches[0];
+      const currentTouchX = touch.clientX / (zoom / 100);
+      const currentTouchY = touch.clientY / (zoom / 100);
+      
+      // Calculate distance from start position
+      const distanceX = Math.abs(currentTouchX - dragStartRef.current.x);
+      const distanceY = Math.abs(currentTouchY - dragStartRef.current.y);
+      const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+      
+      // Only start dragging if threshold exceeded
+      if (distance > DRAG_THRESHOLD) {
+        if (!wasDragRef.current) {
+          wasDragRef.current = true;
+          setDraggedProfile(profileId);
+        }
+        
+        const newX = touch.clientX / (zoom / 100) - offset.x;
+        const newY = touch.clientY / (zoom / 100) - offset.y;
+        
+        // Clamp within canvas bounds
+        const clampedX = Math.max(0, Math.min(1800, newX));
+        const clampedY = Math.max(0, Math.min(1250, newY));
+        
+        setTempPositions(prev => ({
+          ...prev,
+          [profileId]: { x: clampedX, y: clampedY }
+        }));
+      }
+    };
+    
+    const handleTouchEnd = () => {
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleTouchEnd);
+      
+      if (wasDragRef.current) {
+        toast.success("Card position saved for this session");
+        setDraggedProfile(null);
+      }
+      
+      dragStartRef.current = null;
+      // Reset drag flag after a brief delay to allow click handler to check it
+      setTimeout(() => {
+        wasDragRef.current = false;
+      }, 10);
+    };
+    
+    document.addEventListener('touchmove', handleTouchMove);
+    document.addEventListener('touchend', handleTouchEnd);
   };
 
   const getCardPosition = (profile: ProfileCard) => {
@@ -1068,8 +1173,13 @@ const SummitWall = () => {
               userSelect: 'none'
             }} 
             onMouseDown={(e) => handleMouseDown(e, profile.id)}
+            onTouchStart={(e) => handleTouchStart(e, profile.id)}
           >
-              <div className="card-content flex flex-col items-center gap-3" onClick={() => !isDragging && handleCardClick(profile)}>
+              <div className="card-content flex flex-col items-center gap-3" onClick={() => {
+                if (!wasDragRef.current) {
+                  handleCardClick(profile);
+                }
+              }}>
                 <div className="w-16 h-16 rounded-full bg-[#E5E7EB] overflow-hidden flex-shrink-0">
                   {profile.profile_photo_url ? <img src={getProfilePhotoUrl(profile.profile_photo_url)} alt={profile.name} className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center text-[#9CA3AF] text-xs">
                       No photo
