@@ -256,10 +256,6 @@ const SummitWall = () => {
     try {
       setIsLoading(true);
       
-      // Clear cached positions to allow fresh collision detection
-      sessionStorage.removeItem('summit_card_positions');
-      setTempPositions({});
-      
       const {
         data,
         error
@@ -271,9 +267,8 @@ const SummitWall = () => {
         return;
       }
       
-      // Apply collision detection to prevent overlapping
-      const adjustedProfiles = preventOverlapping(data || []);
-      setProfiles(adjustedProfiles);
+      // Use database positions directly - no client-side manipulation
+      setProfiles(data || []);
     } catch (error) {
       console.error('Critical error loading profiles:', error);
       toast.error("Something went wrong. Please try again later.");
@@ -287,7 +282,7 @@ const SummitWall = () => {
   const preventOverlapping = (profiles: ProfileCard[]) => {
     const cardWidth = 200;
     const cardHeight = 250;
-    const minSpacing = 40; // Increased from 20 to account for floating animation (±18px)
+    const minSpacing = 50; // Increased to 50px to account for floating animation (±18px)
     const maxIterations = 10;
     const padding = 50; // Padding from canvas edges
     const minX = padding;
