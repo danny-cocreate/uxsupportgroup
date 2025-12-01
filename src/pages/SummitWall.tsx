@@ -1068,7 +1068,7 @@ const SummitWall = () => {
             </div>
             <Button onClick={handleEditProfile} className="bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:opacity-90 shadow-lg h-14 px-6" size="lg">
               <Edit className="w-5 h-5 mr-2" />
-              Edit Profile
+              Edit Card
             </Button>
           </> : <Button onClick={() => setShowAuthModal(true)} className="bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:opacity-90 shadow-lg h-14 px-6" size="lg">
             <UserPlus className="w-5 h-5 mr-2" />
@@ -1449,7 +1449,7 @@ const SummitWall = () => {
                 <div className="flex gap-3 pt-4">
                   {currentUserId === selectedProfile.id && <Button onClick={handleEdit} variant="outline" className="flex-1 border-[#8B5CF6] text-[#8B5CF6] hover:bg-[#8B5CF6] hover:text-white">
                       <Edit className="w-4 h-4 mr-2" />
-                      Edit Profile
+                      Edit Card
                     </Button>}
                   <Button onClick={handleShare} className={`${currentUserId === selectedProfile.id ? 'flex-1' : 'w-full'} bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] hover:opacity-90`}>
                     <Share2 className="w-4 h-4 mr-2" />
