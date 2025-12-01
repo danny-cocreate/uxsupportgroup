@@ -346,40 +346,57 @@ const SummitWall = () => {
   };
 
   const findEmptyPosition = (existingProfiles: ProfileCard[]) => {
+    console.log('[findEmptyPosition] Called with', existingProfiles.length, 'existing profiles');
+    
     const cardWidth = 200;
     const cardHeight = 250;
-    const spacing = 50;
+    const spacingX = 240;  // Actual horizontal spacing in the grid
+    const spacingY = 300;  // Actual vertical spacing in the grid
     const startX = 50;
     const startY = 50;
-    const maxX = 2000;
+    const cardsPerRow = 5;
     
-    // Grid-based search for empty space
-    for (let y = startY; y < 3000; y += cardHeight + spacing) {
-      for (let x = startX; x < maxX; x += cardWidth + spacing) {
-        let hasCollision = false;
-        
-        for (const profile of existingProfiles) {
-          const px = profile.wall_position_x || 0;
-          const py = profile.wall_position_y || 0;
-          
-          // Check if this position overlaps with existing card
-          if (Math.abs(x - px) < cardWidth + spacing && 
-              Math.abs(y - py) < cardHeight + spacing) {
-            hasCollision = true;
-            break;
-          }
-        }
-        
-        if (!hasCollision) {
-          return { x, y };
-        }
+    // Generate all possible grid positions
+    const gridPositions: {x: number, y: number}[] = [];
+    for (let row = 0; row < 20; row++) {  // Support up to 20 rows
+      for (let col = 0; col < cardsPerRow; col++) {
+        gridPositions.push({
+          x: startX + col * spacingX,
+          y: startY + row * spacingY
+        });
       }
     }
     
-    // Fallback: place at the bottom of all existing cards
+    console.log('[findEmptyPosition] Generated', gridPositions.length, 'grid positions');
+    
+    // Find the first position that doesn't overlap with existing cards
+    for (const pos of gridPositions) {
+      let hasCollision = false;
+      
+      for (const profile of existingProfiles) {
+        const px = profile.wall_position_x || 0;
+        const py = profile.wall_position_y || 0;
+        
+        // Tighter collision detection using just card dimensions
+        if (Math.abs(pos.x - px) < cardWidth && 
+            Math.abs(pos.y - py) < cardHeight) {
+          hasCollision = true;
+          break;
+        }
+      }
+      
+      if (!hasCollision) {
+        console.log('[findEmptyPosition] Found empty position:', pos);
+        return pos;
+      }
+    }
+    
+    // Fallback: place at the end
     const maxY = existingProfiles.reduce((max, p) => 
       Math.max(max, (p.wall_position_y || 0)), 0);
-    return { x: startX, y: maxY + cardHeight + spacing };
+    const fallbackPos = { x: startX, y: maxY + spacingY };
+    console.log('[findEmptyPosition] No empty grid position, using fallback:', fallbackPos);
+    return fallbackPos;
   };
 
   // Calculate dynamic canvas size based on card positions
@@ -530,6 +547,8 @@ const SummitWall = () => {
 
       // Find an empty position for the new card
       const emptyPosition = findEmptyPosition(profiles);
+      console.log('[handleFormSubmit] Empty position calculated:', emptyPosition);
+      console.log('[handleFormSubmit] Profiles count:', profiles.length);
 
       // Create user profile with explicit position
       const {
