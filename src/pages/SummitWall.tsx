@@ -339,11 +339,47 @@ const SummitWall = () => {
         wall_position_y: Math.max(minY, card.wall_position_y)
       }));
       
-      // If no collisions detected, we're done
       if (!hasCollision) break;
     }
     
     return adjusted;
+  };
+
+  const findEmptyPosition = (existingProfiles: ProfileCard[]) => {
+    const cardWidth = 200;
+    const cardHeight = 250;
+    const spacing = 50;
+    const startX = 50;
+    const startY = 50;
+    const maxX = 2000;
+    
+    // Grid-based search for empty space
+    for (let y = startY; y < 3000; y += cardHeight + spacing) {
+      for (let x = startX; x < maxX; x += cardWidth + spacing) {
+        let hasCollision = false;
+        
+        for (const profile of existingProfiles) {
+          const px = profile.wall_position_x || 0;
+          const py = profile.wall_position_y || 0;
+          
+          // Check if this position overlaps with existing card
+          if (Math.abs(x - px) < cardWidth + spacing && 
+              Math.abs(y - py) < cardHeight + spacing) {
+            hasCollision = true;
+            break;
+          }
+        }
+        
+        if (!hasCollision) {
+          return { x, y };
+        }
+      }
+    }
+    
+    // Fallback: place at the bottom of all existing cards
+    const maxY = existingProfiles.reduce((max, p) => 
+      Math.max(max, (p.wall_position_y || 0)), 0);
+    return { x: startX, y: maxY + cardHeight + spacing };
   };
 
   // Calculate dynamic canvas size based on card positions
@@ -492,7 +528,10 @@ const SummitWall = () => {
       // Create slug from name
       const slug = formData.name.toLowerCase().replace(/\s+/g, '-') + '-' + Date.now();
 
-      // Create user profile
+      // Find an empty position for the new card
+      const emptyPosition = findEmptyPosition(profiles);
+
+      // Create user profile with explicit position
       const {
         data: profile,
         error: profileError
@@ -502,7 +541,9 @@ const SummitWall = () => {
         job_title: formData.jobTitle.trim(),
         company_name: formData.companyName.trim() || null,
         linkedin_url: formData.linkedinUrl.trim() || null,
-        slug
+        slug,
+        wall_position_x: emptyPosition.x,
+        wall_position_y: emptyPosition.y
       }).select().single();
       if (profileError) throw profileError;
 
