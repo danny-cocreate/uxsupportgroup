@@ -456,6 +456,32 @@ const SummitWall = () => {
       behavior: 'smooth'
     });
   };
+
+  const scrollToPosition = (x: number, y: number) => {
+    const container = canvasContainerRef.current;
+    if (!container) {
+      console.log('[scrollToPosition] No container ref');
+      return;
+    }
+    
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
+    const cardWidth = 200;
+    const cardHeight = 250;
+    
+    // Calculate scroll position to center on the given coordinates
+    const scrollX = (x + cardWidth / 2) * (zoom / 100) - containerWidth / 2;
+    const scrollY = (y + cardHeight / 2) * (zoom / 100) - containerHeight / 2;
+    
+    console.log('[scrollToPosition] Scrolling to:', { x, y, scrollX, scrollY });
+    
+    container.scrollTo({
+      left: Math.max(0, scrollX),
+      top: Math.max(0, scrollY),
+      behavior: 'smooth'
+    });
+  };
+
   const handleCreateProfile = () => {
     const email = sessionStorage.getItem('summit_user_email');
     if (!email) {
@@ -608,9 +634,10 @@ const SummitWall = () => {
       setShowCreateModal(false);
       await loadProfiles();
       
-      // Scroll to the newly created card after a short delay to ensure DOM update
+      // Scroll to the newly created card position directly (no lookup needed)
+      console.log('[handleFormSubmit] Scrolling to new card at:', emptyPosition);
       setTimeout(() => {
-        scrollToCard(profile.id);
+        scrollToPosition(emptyPosition.x, emptyPosition.y);
       }, 500);
     } catch (error) {
       console.error('Error creating profile:', error);
