@@ -16,9 +16,9 @@ const findEmptyPosition = (existingProfiles: any[]) => {
   const startY = 50;
   const cardsPerRow = 5;
   
-  // Generate all possible grid positions (up to 20 rows = 100 cards)
+  // Generate all possible grid positions (up to 45 rows = 225 cards)
   const gridPositions: {x: number, y: number}[] = [];
-  for (let row = 0; row < 20; row++) {
+  for (let row = 0; row < 45; row++) {
     for (let col = 0; col < cardsPerRow; col++) {
       gridPositions.push({
         x: startX + col * spacingX,
