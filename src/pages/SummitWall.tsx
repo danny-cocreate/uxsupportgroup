@@ -1192,14 +1192,24 @@ const SummitWall = () => {
         ref={canvasContainerRef}
         className="w-full h-full overflow-auto p-8"
         style={{
-          cursor: draggedProfile ? 'grabbing' : 'grab',
-          transform: `scale(${zoom / 100})`
+          cursor: draggedProfile ? 'grabbing' : 'grab'
         }}
       >
-        <div className="relative" style={{
-        width: `${getCanvasSize().width}px`,
-        height: `${getCanvasSize().height}px`
-      }}>
+        {/* Scaled wrapper - dimensions shrink/grow with zoom for proper scroll bounds */}
+        <div style={{
+          width: `${getCanvasSize().width * (zoom / 100)}px`,
+          height: `${getCanvasSize().height * (zoom / 100)}px`
+        }}>
+          {/* Inner canvas - full size, scaled via transform */}
+          <div 
+            className="relative" 
+            style={{
+              width: `${getCanvasSize().width}px`,
+              height: `${getCanvasSize().height}px`,
+              transform: `scale(${zoom / 100})`,
+              transformOrigin: 'top left'
+            }}
+          >
           {/* Centered Watermark Branding */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center gap-3 pointer-events-none opacity-10">
             <img src={uxsgLogo} alt="UXSG" className="h-33 w-auto -mr-[45px]" />
@@ -1293,6 +1303,7 @@ const SummitWall = () => {
           {profiles.length === 0 && <div className="absolute inset-0 flex items-center justify-center">
               <p className="text-black text-lg">No profiles yet</p>
             </div>}
+          </div>
         </div>
       </div>
 
