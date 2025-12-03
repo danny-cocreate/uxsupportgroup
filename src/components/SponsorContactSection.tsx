@@ -205,11 +205,11 @@ const SponsorContactSection = () => {
             </div>
 
             {/* Submit Button with rounded gradient border */}
-            <div className="w-full h-14 rounded-md p-[2px] gradient-hero">
+            <div className="w-full h-14 rounded-[var(--radius)] p-[2px] gradient-hero">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-full rounded-[calc(0.375rem-2px)] bg-foreground text-background text-lg font-semibold hover:bg-foreground/95 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full h-full rounded-[calc(var(--radius)-2px)] bg-foreground text-background text-lg font-semibold hover:bg-foreground/95 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
                   <>
