@@ -83,11 +83,9 @@ const SummitSponsorshipSection = () => {
                   </li>)}
               </ul>
               
-              <div className="mb-4 p-3 bg-primary/10 rounded-lg border border-primary/20">
-                <p className="text-xs font-bold text-center text-primary uppercase">
-                  Only 10 available—first come, first served!
-                </p>
-              </div>
+              <p className="mb-4 text-xs font-bold text-center text-primary uppercase">
+                Only 10 available—first come, first served!
+              </p>
               
               <Button className="w-full h-12 text-sm font-bold bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group uppercase" onClick={() => scrollToContact('Virtual Booth Add-On - $400')}>
                 Add Virtual Booth
