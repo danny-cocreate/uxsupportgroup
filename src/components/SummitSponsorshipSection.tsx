@@ -128,52 +128,7 @@ const SummitSponsorshipSection = () => {
             </Card>
 
             {/* Custom Package */}
-            <Card className="p-6 relative overflow-hidden border-2 border-border hover:border-primary/50 transition-colors">
-              <div className="mb-6 pb-6 border-b-2 border-dashed border-border">
-                <h3 className="text-xl font-bold mb-3 uppercase">Custom Package</h3>
-                <div className="flex items-baseline gap-2 mb-1">
-                  <span className="text-2xl font-bold text-foreground">Let's Design It</span>
-                </div>
-                <p className="text-sm text-muted-foreground uppercase">Tailored Partnership</p>
-              </div>
-              
-              <div className="space-y-4 mb-8 min-h-[240px]">
-                <p className="text-sm text-muted-foreground">
-                  For companies seeking more exposure or unique partnership ideas:
-                </p>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-2 text-sm">
-                    <Check className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span>Hackathon sponsorship</span>
-                  </li>
-                  <li className="flex items-start gap-2 text-sm">
-                    <Check className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span>Have your founder/expert involved
-                  </span>
-                  </li>
-                  <li className="flex items-start gap-2 text-sm">
-                    <Check className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span>Special offers & promotions</span>
-                  </li>
-                  <li className="flex items-start gap-2 text-sm">
-                    <Check className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span>Dedicated follow-up demo event</span>
-                  </li>
-                  <li className="flex items-start gap-2 text-sm">
-                    <Check className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span>And more...</span>
-                  </li>
-                </ul>
-                <p className="text-sm font-semibold text-foreground italic">
-                  "Let's create something amazing together—contact us to co-design a custom package!"
-                </p>
-              </div>
-              
-              <Button variant="outline" className="w-full h-12 text-sm font-bold uppercase group border-2" onClick={() => scrollToContact('Custom Summit Partnership')}>
-                Let's Talk
-                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Card>
+            
           </div>
 
           {/* Comparison Table */}
