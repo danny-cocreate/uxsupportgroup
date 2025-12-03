@@ -179,7 +179,7 @@ const CommunitySponsorshipSection = () => {
             </div>
 
             {/* ROI Results */}
-            <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide mb-4 pt-6 border-t border-border">
+            <div className="flex items-center gap-2 font-semibold mb-4 text-lg pt-6 border-t border-border">
               <TrendingUp className="w-5 h-5 text-primary" />
               Your Projected ROI
             </div>
