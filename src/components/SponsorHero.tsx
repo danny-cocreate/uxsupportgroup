@@ -23,7 +23,7 @@ const SponsorHero = () => {
           </h1>
           
           <h2 className="text-3xl text-foreground mb-8 leading-tight md:text-3xl font-semibold">
-            Workshop leads convert at <span className="text-primary font-bold">3x the rate</span> of paid social—because they've already experienced your product in context
+            Workshop leads convert at <span className="text-primary font-bold">3x the rate</span> of paid social—through hands-on experience
           </h2>
           
           {/* Hero Stats */}
