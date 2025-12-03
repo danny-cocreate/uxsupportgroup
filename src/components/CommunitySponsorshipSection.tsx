@@ -83,7 +83,13 @@ const CommunitySponsorshipSection = () => {
                 </div>
               </div>
               
-              <p className="font-semibold mb-6 text-lg">Test the channel with low commitment</p>
+              <p className="font-semibold mb-4 text-lg">Test the channel with low commitment</p>
+              
+              {/* ROI Callout */}
+              <div className="bg-primary/10 rounded-lg p-3 mb-6 text-sm">
+                <span className="font-bold text-primary">📊 At industry benchmarks:</span>{" "}
+                <span className="text-foreground">50 trials → ~10 customers → ~$150K revenue → ~29x ROI</span>
+              </div>
               
               <ul className="space-y-3 mb-8">
                 {quarterlyFeatures.map((feature, index) => (
@@ -120,7 +126,13 @@ const CommunitySponsorshipSection = () => {
                 <p className="text-sm text-muted-foreground">vs $20,000 quarterly rate</p>
               </div>
               
-              <p className="font-semibold mb-6 text-lg">Full-funnel integration from trial → activation</p>
+              <p className="font-semibold mb-4 text-lg">Full-funnel integration from trial → activation</p>
+              
+              {/* ROI Callout */}
+              <div className="bg-primary/10 rounded-lg p-3 mb-6 text-sm">
+                <span className="font-bold text-primary">📊 At industry benchmarks:</span>{" "}
+                <span className="text-foreground">200 trials → ~40 customers → ~$600K revenue → ~35x ROI</span>
+              </div>
               
               <ul className="space-y-3 mb-8">
                 {annualFeatures.map((feature, index) => (

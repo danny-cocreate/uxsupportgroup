@@ -1,6 +1,8 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SponsorHero from "@/components/SponsorHero";
+import SponsorValueProposition from "@/components/SponsorValueProposition";
+import SponsorROICalculator from "@/components/SponsorROICalculator";
 import CommunitySponsorshipSection from "@/components/CommunitySponsorshipSection";
 import SummitSponsorshipSection from "@/components/SummitSponsorshipSection";
 import SponsorContactSection from "@/components/SponsorContactSection";
@@ -11,6 +13,8 @@ const Sponsor = () => {
       <Header />
       <main>
         <SponsorHero />
+        <SponsorValueProposition />
+        <SponsorROICalculator />
         <CommunitySponsorshipSection />
         <SummitSponsorshipSection />
         <SponsorContactSection />
