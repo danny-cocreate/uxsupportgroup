@@ -164,7 +164,6 @@ const SponsorContactSection = () => {
                     <SelectGroup>
                       <SelectLabel className="uppercase font-bold">Community</SelectLabel>
                       <SelectItem value="Quarterly Partnership - $5,000">Quarterly Partnership - $5,000</SelectItem>
-                      <SelectItem value="Annual Partnership - $17,000">Annual Partnership - $17,000</SelectItem>
                       <SelectItem value="Custom Community Partnership">Custom Community Partnership</SelectItem>
                     </SelectGroup>
                     <SelectGroup>
