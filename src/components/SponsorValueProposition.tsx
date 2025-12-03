@@ -101,17 +101,23 @@ const SponsorValueProposition = () => {
           </Card>
 
           {/* Citations */}
-          <div className="mt-6 text-center">
+          <div className="mt-6 text-center space-y-2">
             <p className="text-xs text-muted-foreground">
-              ROI benchmarks from B2B marketing industry reports.{" "}
+              <span className="font-medium">Sources:</span>{" "}
               <a href="https://www.data-mania.com/blog/b2b-marketing-roi-benchmarks-2025/" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">
-                [1]
-              </a>{" "}
+                B2B ROI Benchmarks 2025
+              </a>{" · "}
               <a href="https://martal.ca/b2b-digital-marketing-benchmarks-lb/" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">
-                [2]
-              </a>{" "}
+                Digital Marketing Benchmarks
+              </a>{" · "}
               <a href="https://www.lomitpatel.com/articles/saas-event-sponsorship-roi/" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">
-                [3]
+                SaaS Event Sponsorship ROI
+              </a>{" · "}
+              <a href="https://www.wordstream.com/blog/ws/2017/02/28/facebook-advertising-benchmarks" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">
+                Social Ads Conversion Rates
+              </a>{" · "}
+              <a href="https://www.forentrepreneurs.com/saas-metrics-2/" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">
+                SaaS LTV/CAC Metrics
               </a>
             </p>
           </div>
