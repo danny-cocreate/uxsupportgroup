@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, SelectGroup, SelectLabel } from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { useState, FormEvent, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+
 const SponsorContactSection = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -42,6 +42,7 @@ const SponsorContactSection = () => {
       window.removeEventListener('packageSelected', handlePackageSelected as EventListener);
     };
   }, []);
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -101,7 +102,9 @@ const SponsorContactSection = () => {
       setIsSubmitting(false);
     }
   };
-  return <section id="contact" className="py-24 relative overflow-hidden bg-foreground text-background">
+
+  return (
+    <section id="contact" className="py-24 relative overflow-hidden bg-foreground text-background">
       <div className="absolute inset-0 gradient-hero opacity-10" />
       
       <div className="container mx-auto px-4 relative z-10">
@@ -109,74 +112,77 @@ const SponsorContactSection = () => {
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Get <span className="text-gradient">Started</span>
           </h2>
-          
         </div>
 
-        <Card className="max-w-3xl mx-auto p-8 md:p-12 bg-background text-foreground border-2 border-background/20 shadow-2xl">
+        <div className="max-w-3xl mx-auto">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name and Email Row */}
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="name" className="text-sm font-bold uppercase">
+                <Label htmlFor="name" className="text-sm font-medium text-background">
                   Name *
                 </Label>
-                <Input id="name" type="text" required value={formData.name} onChange={e => setFormData({
-                ...formData,
-                name: e.target.value
-              })} className="border-2" />
+                <Input 
+                  id="name" 
+                  type="text" 
+                  required 
+                  value={formData.name} 
+                  onChange={e => setFormData({ ...formData, name: e.target.value })} 
+                  className="bg-background/10 border border-background/30 text-background placeholder:text-background/50 focus-visible:ring-background/50" 
+                />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-bold uppercase">
+                <Label htmlFor="email" className="text-sm font-medium text-background">
                   Email *
                 </Label>
-                <Input id="email" type="email" required value={formData.email} onChange={e => setFormData({
-                ...formData,
-                email: e.target.value
-              })} className="border-2" />
+                <Input 
+                  id="email" 
+                  type="email" 
+                  required 
+                  value={formData.email} 
+                  onChange={e => setFormData({ ...formData, email: e.target.value })} 
+                  className="bg-background/10 border border-background/30 text-background placeholder:text-background/50 focus-visible:ring-background/50" 
+                />
               </div>
             </div>
 
             {/* Company and Package Row */}
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label htmlFor="company" className="text-sm font-bold uppercase">
+                <Label htmlFor="company" className="text-sm font-medium text-background">
                   Company *
                 </Label>
-                <Input id="company" type="text" required value={formData.company} onChange={e => setFormData({
-                ...formData,
-                company: e.target.value
-              })} className="border-2" />
+                <Input 
+                  id="company" 
+                  type="text" 
+                  required 
+                  value={formData.company} 
+                  onChange={e => setFormData({ ...formData, company: e.target.value })} 
+                  className="bg-background/10 border border-background/30 text-background placeholder:text-background/50 focus-visible:ring-background/50" 
+                />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="package" className="text-sm font-bold uppercase">
+                <Label htmlFor="package" className="text-sm font-medium text-background">
                   Package Interest *
                 </Label>
-                <Select required value={formData.package} onValueChange={value => setFormData({
-                ...formData,
-                package: value
-              })}>
-                  <SelectTrigger id="package" className="border-2">
+                <Select 
+                  required 
+                  value={formData.package} 
+                  onValueChange={value => setFormData({ ...formData, package: value })}
+                >
+                  <SelectTrigger id="package" className="bg-background/10 border border-background/30 text-background focus:ring-background/50">
                     <SelectValue placeholder="Select..." />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectLabel className="uppercase font-bold">Community</SelectLabel>
-                      <SelectItem value="Quarterly Partnership - $5,000">Quarterly Partnership - $5,000</SelectItem>
-                      <SelectItem value="Custom Community Partnership">Custom Community Partnership</SelectItem>
-                    </SelectGroup>
-                    <SelectGroup>
-                      <SelectLabel className="uppercase font-bold">Summit</SelectLabel>
-                      <SelectItem value="Standard (Free) Sponsor">Standard (Free) Sponsor</SelectItem>
-                      <SelectItem value="Virtual Booth Add-On - $400">Virtual Booth Add-On - $400</SelectItem>
-                      <SelectItem value="Custom Summit Partnership">Custom Summit Partnership</SelectItem>
-                    </SelectGroup>
-                    <SelectGroup>
-                      <SelectLabel className="uppercase font-bold">Other</SelectLabel>
-                      <SelectItem value="Both Community + Summit">Both Community + Summit</SelectItem>
-                      <SelectItem value="Just Exploring">Just Exploring</SelectItem>
-                    </SelectGroup>
+                  <SelectContent className="bg-background">
+                    <SelectItem value="Quarterly Partnership - $5,000">Quarterly Partnership - $5,000</SelectItem>
+                    <SelectItem value="Custom Community Partnership">Custom Community Partnership</SelectItem>
+                    <SelectItem value="Standard (Free) Sponsor">Standard (Free) Sponsor</SelectItem>
+                    <SelectItem value="Virtual Booth Add-On - $400">Virtual Booth Add-On - $400</SelectItem>
+                    <SelectItem value="Custom Summit Partnership">Custom Summit Partnership</SelectItem>
+                    <SelectItem value="Both Community + Summit">Both Community + Summit</SelectItem>
+                    <SelectItem value="Just Exploring">Just Exploring</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -184,27 +190,40 @@ const SponsorContactSection = () => {
 
             {/* Message */}
             <div className="space-y-2">
-              <Label htmlFor="message" className="text-sm font-bold uppercase">
+              <Label htmlFor="message" className="text-sm font-medium text-background">
                 Tell us about your goals *
               </Label>
-              <Textarea id="message" required rows={5} placeholder="What are you hoping to achieve?" value={formData.message} onChange={e => setFormData({
-              ...formData,
-              message: e.target.value
-            })} className="border-2 resize-none" />
+              <Textarea 
+                id="message" 
+                required 
+                rows={5} 
+                placeholder="What are you hoping to achieve?" 
+                value={formData.message} 
+                onChange={e => setFormData({ ...formData, message: e.target.value })} 
+                className="bg-background/10 border border-background/30 text-background placeholder:text-background/50 focus-visible:ring-background/50 resize-none" 
+              />
             </div>
 
             {/* Submit Button */}
-            <Button type="submit" disabled={isSubmitting} className="w-full h-14 text-lg font-bold bg-foreground text-background hover:bg-foreground/90 shadow-lg hover:shadow-xl transition-all group uppercase disabled:opacity-50 disabled:cursor-not-allowed">
-              {isSubmitting ? <>
+            <Button 
+              type="submit" 
+              disabled={isSubmitting} 
+              className="w-full h-14 text-lg font-semibold bg-background text-foreground hover:bg-background/90 transition-all group disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? (
+                <>
                   <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                   Submitting...
-                </> : <>
+                </>
+              ) : (
+                <>
                   Submit Inquiry
                   <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                </>}
+                </>
+              )}
             </Button>
           </form>
-        </Card>
+        </div>
 
         <p className="text-center mt-8 text-background/70">
           Questions? Email us at{' '}
@@ -213,6 +232,8 @@ const SponsorContactSection = () => {
           </a>
         </p>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default SponsorContactSection;
