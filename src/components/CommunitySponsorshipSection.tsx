@@ -132,6 +132,25 @@ const CommunitySponsorshipSection = () => {
               </div>
             </Card>
 
+            {/* Footnote & Sources */}
+            <div className="mt-4 text-center space-y-2">
+              <p className="text-xs text-muted-foreground">
+                Projections based on your inputs and guaranteed trial minimums. Actual results may vary.
+              </p>
+              <p className="text-xs text-muted-foreground">
+                <span className="font-medium">Sources:</span>{" "}
+                <a href="https://www.data-mania.com/blog/b2b-marketing-roi-benchmarks-2025/" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">
+                  B2B ROI Benchmarks 2025
+                </a>{" · "}
+                <a href="https://martal.ca/b2b-digital-marketing-benchmarks-lb/" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">
+                  Digital Marketing Benchmarks
+                </a>{" · "}
+                <a href="https://www.lomitpatel.com/articles/saas-event-sponsorship-roi/" target="_blank" rel="noopener noreferrer" className="underline hover:text-primary">
+                  SaaS Event Sponsorship ROI
+                </a>
+              </p>
+            </div>
+
             {/* Quarterly Package with ROI */}
             <Card className="p-8 relative overflow-hidden border-2 border-primary/50 shadow-xl">
               <div className="mb-6 pb-6 border-b-2 border-dashed border-border">
@@ -212,10 +231,6 @@ const CommunitySponsorshipSection = () => {
             </Card>
           </div>
 
-          {/* Footnote */}
-          <p className="text-xs text-muted-foreground text-center mt-8 max-w-xl mx-auto">
-            Projections based on your inputs and guaranteed trial minimums. Actual results may vary.
-          </p>
         </div>
       </section>
     </>
