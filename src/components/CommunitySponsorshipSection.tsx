@@ -75,7 +75,7 @@ const CommunitySponsorshipSection = () => {
                 <span className="text-lg text-muted-foreground">/ 3 months</span>
               </div>
               <span className="inline-block bg-primary/10 text-primary text-sm font-medium px-3 py-1 rounded-full">
-                💡 Save 15% with annual commitment
+                💡 Save $3,000 with annual commitment
               </span>
             </div>
             
