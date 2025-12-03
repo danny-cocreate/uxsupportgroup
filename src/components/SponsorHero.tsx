@@ -23,7 +23,7 @@ const SponsorHero = () => {
           </h1>
           
           <h2 className="text-3xl text-foreground mb-8 leading-tight md:text-3xl font-semibold">
-            Reach high-intent UX professionals actively seeking AI solutions
+            Workshop leads convert at <span className="text-primary font-bold">3x the rate</span> of paid social—because they've already experienced your product in context
           </h2>
           
           {/* Hero Stats */}
