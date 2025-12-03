@@ -108,7 +108,7 @@ const CommunitySponsorshipSection = () => {
               </p>
               <Button 
                 variant="outline"
-                className="font-bold uppercase group border-2"
+                className="w-full h-12 text-base font-bold uppercase group border-2"
                 onClick={() => scrollToContact('Custom Partnership')}
               >
                 Discuss Custom Partnership
