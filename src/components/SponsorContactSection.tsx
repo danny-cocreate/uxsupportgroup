@@ -204,27 +204,26 @@ const SponsorContactSection = () => {
               />
             </div>
 
-            {/* Submit Button */}
-            <Button 
-              type="submit" 
-              disabled={isSubmitting} 
-              className="w-full h-14 text-lg font-semibold bg-transparent text-background hover:bg-background/10 transition-all group disabled:opacity-50 disabled:cursor-not-allowed border-2 border-transparent"
-              style={{ 
-                borderImage: 'linear-gradient(135deg, hsl(25 95% 58%) 0%, hsl(265 85% 65%) 40%, hsl(220 90% 55%) 100%) 1'
-              }}
-            >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                  Submitting...
-                </>
-              ) : (
-                <>
-                  Submit Inquiry
-                  <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                </>
-              )}
-            </Button>
+            {/* Submit Button with rounded gradient border */}
+            <div className="w-full h-14 rounded-md p-[2px] gradient-hero">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full h-full rounded-[calc(0.375rem-2px)] bg-foreground text-background text-lg font-semibold hover:bg-foreground/95 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    Submitting...
+                  </>
+                ) : (
+                  <>
+                    Submit Inquiry
+                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                  </>
+                )}
+              </button>
+            </div>
           </form>
         </div>
 
