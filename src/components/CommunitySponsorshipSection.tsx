@@ -99,6 +99,22 @@ const CommunitySponsorshipSection = () => {
               Get Started
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
+
+            {/* Custom Partnership - Inline */}
+            <div className="mt-8 pt-6 border-t-2 border-dashed border-border text-center">
+              <h4 className="text-lg font-bold mb-2 uppercase">Need Something Different?</h4>
+              <p className="text-sm text-muted-foreground mb-4">
+                Build a custom partnership with flexible terms, adjusted workshop frequency, or unique add-ons tailored to your goals.
+              </p>
+              <Button 
+                variant="outline"
+                className="font-bold uppercase group border-2"
+                onClick={() => scrollToContact('Custom Partnership')}
+              >
+                Discuss Custom Partnership
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </div>
           </Card>
 
           {/* Right: ROI Calculator */}
@@ -212,24 +228,6 @@ const CommunitySponsorshipSection = () => {
                 </a>
               </p>
             </div>
-          </Card>
-        </div>
-
-        {/* Custom Plan */}
-        <div className="max-w-6xl mx-auto mt-12 text-center">
-          <Card className="p-8 border-2 border-dashed border-border bg-muted/30">
-            <h3 className="text-xl font-bold mb-3 uppercase">Need Something Different?</h3>
-            <p className="text-muted-foreground mb-6">
-              Build a custom partnership with flexible terms, adjusted workshop frequency, or unique add-ons tailored to your goals.
-            </p>
-            <Button 
-              variant="outline"
-              className="font-bold uppercase group border-2"
-              onClick={() => scrollToContact('Custom Partnership')}
-            >
-              Discuss Custom Partnership
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-            </Button>
           </Card>
         </div>
       </div>
