@@ -184,19 +184,16 @@ const CommunitySponsorshipSection = () => {
               Your Projected ROI
             </div>
             
-            <div className="grid grid-cols-2 gap-4 mb-4">
-              <div className="text-center">
-                <div className="text-2xl font-bold">{calculations.trials}+</div>
-                <div className="text-xs text-muted-foreground uppercase">Trials</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold">~{calculations.customers}</div>
-                <div className="text-xs text-muted-foreground uppercase">Customers</div>
-              </div>
-            </div>
-            
-            <div className="space-y-3 pt-4 border-t border-border">
+            <div className="space-y-3">
               <div className="flex justify-between items-center">
+                <span className="text-muted-foreground">Guaranteed Trials</span>
+                <span className="font-bold text-xl">{calculations.trials}+</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-muted-foreground">Est. Customers</span>
+                <span className="font-bold text-xl">~{calculations.customers}</span>
+              </div>
+              <div className="flex justify-between items-center pt-3 border-t border-border">
                 <span className="text-muted-foreground">Projected Revenue</span>
                 <span className="font-bold text-primary text-xl">{formatCurrency(calculations.revenue)}</span>
               </div>
