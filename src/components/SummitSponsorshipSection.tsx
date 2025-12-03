@@ -58,7 +58,7 @@ const SummitSponsorshipSection = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Become a Sponsor – <span className="text-gradient">Simple, High-Impact Packages</span>
+              AI Summit <span className="text-gradient">Sponsorship</span>
             </h2>
             <p className="text-xl text-muted-foreground mb-4">
               Meet 100+ UX & AI professionals, founders, and decision-makers from leading design and tech teams at our virtual summit.
