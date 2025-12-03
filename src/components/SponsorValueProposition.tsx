@@ -10,6 +10,14 @@ const SponsorValueProposition = () => {
     uxsg: "High-intent, product-educated",
     instagram: "Mixed intent"
   }, {
+    metric: "LTV/CAC Ratio",
+    uxsg: "5–8x",
+    instagram: "~3x"
+  }, {
+    metric: "Customer Quality",
+    uxsg: "Low churn, high expansion",
+    instagram: "High churn risk"
+  }, {
     metric: "Typical B2B ROI",
     uxsg: "3–8x",
     instagram: "4–5x (lower quality)"
@@ -80,6 +88,9 @@ const SponsorValueProposition = () => {
 
           {/* Callout Box */}
           <Card className="p-6 bg-primary/5 border-2 border-primary/20">
+            <p className="text-center text-lg font-bold text-primary mb-3">
+              "We don't focus on $300 CAC. We focus on $10,000 LTV."
+            </p>
             <p className="text-center text-foreground">
               <span className="font-bold">Unlike paid social</span> where spend often hits low-intent audiences, 
               workshop leads have already engaged with your product in a{" "}
