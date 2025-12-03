@@ -121,9 +121,7 @@ const CommunitySponsorshipSection = () => {
           <Card className="p-8 border-2 border-border bg-muted/30">
             {/* Prominent Header */}
             <div className="flex items-center gap-3 mb-2">
-              <div className="p-3 bg-primary rounded-lg">
-                <Calculator className="w-6 h-6 text-primary-foreground" />
-              </div>
+              <Calculator className="w-6 h-6 text-primary" />
               <h3 className="text-2xl font-bold uppercase">ROI Calculator</h3>
             </div>
             <p className="text-muted-foreground mb-8">
@@ -181,32 +179,30 @@ const CommunitySponsorshipSection = () => {
             </div>
 
             {/* ROI Results */}
-            <div className="bg-background rounded-lg p-6 border-2 border-primary/30">
-              <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide mb-4">
-                <TrendingUp className="w-5 h-5 text-primary" />
-                Your Projected ROI
+            <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide mb-4 pt-6 border-t border-border">
+              <TrendingUp className="w-5 h-5 text-primary" />
+              Your Projected ROI
+            </div>
+            
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              <div className="text-center">
+                <div className="text-2xl font-bold">{calculations.trials}+</div>
+                <div className="text-xs text-muted-foreground uppercase">Trials</div>
               </div>
-              
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <div className="text-center p-3 bg-muted/50 rounded-lg">
-                  <div className="text-2xl font-bold">{calculations.trials}+</div>
-                  <div className="text-xs text-muted-foreground uppercase">Trials</div>
-                </div>
-                <div className="text-center p-3 bg-muted/50 rounded-lg">
-                  <div className="text-2xl font-bold">~{calculations.customers}</div>
-                  <div className="text-xs text-muted-foreground uppercase">Customers</div>
-                </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold">~{calculations.customers}</div>
+                <div className="text-xs text-muted-foreground uppercase">Customers</div>
               </div>
-              
-              <div className="space-y-3 pt-4 border-t border-border">
-                <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Projected Revenue</span>
-                  <span className="font-bold text-primary text-xl">{formatCurrency(calculations.revenue)}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-muted-foreground">Expected ROI</span>
-                  <span className="font-bold text-primary text-3xl">{formatROI(calculations.roi)}</span>
-                </div>
+            </div>
+            
+            <div className="space-y-3 pt-4 border-t border-border">
+              <div className="flex justify-between items-center">
+                <span className="text-muted-foreground">Projected Revenue</span>
+                <span className="font-bold text-primary text-xl">{formatCurrency(calculations.revenue)}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-muted-foreground">Expected ROI</span>
+                <span className="font-bold text-primary text-3xl">{formatROI(calculations.roi)}</span>
               </div>
             </div>
 
