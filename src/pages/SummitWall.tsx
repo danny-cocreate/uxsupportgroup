@@ -261,10 +261,9 @@ const SummitWall = () => {
     try {
       setIsLoading(true);
       
-      const {
-        data,
-        error
-      } = await supabase.from('user_profiles').select('id, name, job_title, company_name, bio, profile_photo_url, wall_position_x, wall_position_y, slug, linkedin_url, card_screenshot_url').not('name', 'is', null);
+      // Use security definer function to get public profiles (excludes email addresses)
+      const { data, error } = await supabase.rpc('get_public_profiles');
+      
       if (error) {
         console.error('Error loading profiles:', error);
         toast.error("Unable to load profiles. Please refresh the page.");
@@ -272,8 +271,9 @@ const SummitWall = () => {
         return;
       }
       
-      // Use database positions directly - no client-side manipulation
-      setProfiles(data || []);
+      // Filter out profiles without names and use database positions directly
+      const validProfiles = (data || []).filter((p: any) => p.name !== null);
+      setProfiles(validProfiles);
     } catch (error) {
       console.error('Critical error loading profiles:', error);
       toast.error("Something went wrong. Please try again later.");
