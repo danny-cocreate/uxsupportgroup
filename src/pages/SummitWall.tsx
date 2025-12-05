@@ -283,39 +283,52 @@ const SummitWall = () => {
     }
   };
 
+  // Fermat spiral positioning algorithm (80 card capacity)
+  // Fixed center point calculated for max 80 cards with edge padding
   const findEmptyPosition = (existingProfiles: ProfileCard[]) => {
     console.log('[findEmptyPosition] Called with', existingProfiles.length, 'existing profiles');
     
     const cardWidth = 200;
     const cardHeight = 250;
-    const spacingX = 240;  // Actual horizontal spacing in the grid
-    const spacingY = 300;  // Actual vertical spacing in the grid
-    const startX = 50;
-    const startY = 50;
-    const cardsPerRow = 5;
+    const goldenAngle = 137.507764 * (Math.PI / 180); // Golden angle in radians
+    const spacingFactor = 110; // Controls spiral tightness (ensures no overlap)
     
-    // Generate all possible grid positions
-    const gridPositions: {x: number, y: number}[] = [];
-    for (let row = 0; row < 20; row++) {  // Support up to 20 rows
-      for (let col = 0; col < cardsPerRow; col++) {
-        gridPositions.push({
-          x: startX + col * spacingX,
-          y: startY + row * spacingY
-        });
-      }
-    }
+    // Fixed center for 80 cards: maxRadius = 110 * sqrt(80) ≈ 984
+    // centerX = 984 + 150 (edge padding) + 100 (half card width) = 1234
+    // centerY = 984 + 175 (edge padding) + 125 (half card height) = 1284
+    const centerX = 1234;
+    const centerY = 1284;
     
-    console.log('[findEmptyPosition] Generated', gridPositions.length, 'grid positions');
-    
-    // Find the first position that doesn't overlap with existing cards
-    for (const pos of gridPositions) {
-      let hasCollision = false;
+    // Generate spiral position for index n (returns card center)
+    const generateSpiralPosition = (n: number) => {
+      if (n === 0) return { x: centerX, y: centerY };
       
+      const radius = spacingFactor * Math.sqrt(n);
+      const angle = n * goldenAngle;
+      
+      return {
+        x: centerX + radius * Math.cos(angle),
+        y: centerY + radius * Math.sin(angle)
+      };
+    };
+    
+    // Convert center position to top-left corner for storage
+    const centerToTopLeft = (pos: {x: number, y: number}) => ({
+      x: Math.round(pos.x - (cardWidth / 2)),
+      y: Math.round(pos.y - (cardHeight / 2))
+    });
+    
+    // Try spiral positions starting from 0
+    for (let n = 0; n < 100; n++) {
+      const spiralCenter = generateSpiralPosition(n);
+      const pos = centerToTopLeft(spiralCenter);
+      
+      // Check collision with existing cards
+      let hasCollision = false;
       for (const profile of existingProfiles) {
         const px = profile.wall_position_x || 0;
         const py = profile.wall_position_y || 0;
         
-        // Tighter collision detection using just card dimensions
         if (Math.abs(pos.x - px) < cardWidth && 
             Math.abs(pos.y - py) < cardHeight) {
           hasCollision = true;
@@ -324,50 +337,42 @@ const SummitWall = () => {
       }
       
       if (!hasCollision) {
-        console.log('[findEmptyPosition] Found empty position:', pos);
+        console.log('[findEmptyPosition] Found spiral position n=' + n + ':', pos);
         return pos;
       }
     }
     
-    // Fallback: place at the end
-    const maxY = existingProfiles.reduce((max, p) => 
-      Math.max(max, (p.wall_position_y || 0)), 0);
-    const fallbackPos = { x: startX, y: maxY + spacingY };
-    console.log('[findEmptyPosition] No empty grid position, using fallback:', fallbackPos);
+    // Fallback: extend spiral further
+    const fallbackN = existingProfiles.length + 1;
+    const fallbackPos = centerToTopLeft(generateSpiralPosition(fallbackN));
+    console.log('[findEmptyPosition] Using fallback position:', fallbackPos);
     return fallbackPos;
   };
 
-  // Calculate dynamic canvas size based on card positions
+  // Calculate dynamic canvas size based on spiral positions
   const getCanvasSize = () => {
     if (profiles.length === 0) {
-      return { width: 2000, height: 1500 };
+      return { width: 2500, height: 2600 }; // Default for spiral center visibility
     }
     
     const cardWidth = 200;
     const cardHeight = 250;
-    const padding = 100;
-    const cardsPerRow = 5;
-    const spacingX = 240;
-    const startX = 50;
+    const padding = 200; // Extra padding for organic layout
     
-    // Calculate minimum width to fit centered grid
-    const gridContentWidth = startX + ((cardsPerRow - 1) * spacingX) + cardWidth + startX;
-    
-    let maxX = 0;
-    let maxY = 0;
+    let minX = Infinity, maxX = 0, minY = Infinity, maxY = 0;
     
     profiles.forEach(profile => {
-      // Use base positions without centering offset for canvas calculation
-      const baseX = profile.wall_position_x || 0;
-      const baseY = profile.wall_position_y || 0;
-      maxX = Math.max(maxX, baseX + cardWidth);
-      maxY = Math.max(maxY, baseY + cardHeight);
+      const x = profile.wall_position_x || 0;
+      const y = profile.wall_position_y || 0;
+      minX = Math.min(minX, x);
+      maxX = Math.max(maxX, x + cardWidth);
+      minY = Math.min(minY, y);
+      maxY = Math.max(maxY, y + cardHeight);
     });
     
-    // Ensure canvas is wide enough for centered grid
     return {
-      width: Math.max(2000, gridContentWidth, maxX + padding),
-      height: Math.max(1500, maxY + padding)
+      width: Math.max(2500, maxX + padding),
+      height: Math.max(2600, maxY + padding)
     };
   };
   const handleZoomIn = () => {

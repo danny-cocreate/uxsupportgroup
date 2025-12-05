@@ -6,31 +6,46 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Find an empty position in the grid (exact copy from client-side logic)
+// Fermat spiral positioning algorithm (80 card capacity)
+// Fixed center point calculated for max 80 cards with edge padding
 const findEmptyPosition = (existingProfiles: any[]) => {
   const cardWidth = 200;
   const cardHeight = 250;
-  const spacingX = 240;
-  const spacingY = 300;
-  const startX = 50;
-  const startY = 50;
-  const cardsPerRow = 5;
+  const goldenAngle = 137.507764 * (Math.PI / 180); // Golden angle in radians
+  const spacingFactor = 110; // Controls spiral tightness (ensures no overlap)
   
-  // Generate all possible grid positions (up to 45 rows = 225 cards)
-  const gridPositions: {x: number, y: number}[] = [];
-  for (let row = 0; row < 45; row++) {
-    for (let col = 0; col < cardsPerRow; col++) {
-      gridPositions.push({
-        x: startX + col * spacingX,
-        y: startY + row * spacingY
-      });
-    }
-  }
+  // Fixed center for 80 cards: maxRadius = 110 * sqrt(80) ≈ 984
+  // centerX = 984 + 150 (edge padding) + 100 (half card width) = 1234
+  // centerY = 984 + 175 (edge padding) + 125 (half card height) = 1284
+  const centerX = 1234;
+  const centerY = 1284;
   
-  // Find first position without collision
-  for (const pos of gridPositions) {
-    let hasCollision = false;
+  // Generate spiral position for index n (returns card center)
+  const generateSpiralPosition = (n: number) => {
+    if (n === 0) return { x: centerX, y: centerY };
     
+    const radius = spacingFactor * Math.sqrt(n);
+    const angle = n * goldenAngle;
+    
+    return {
+      x: centerX + radius * Math.cos(angle),
+      y: centerY + radius * Math.sin(angle)
+    };
+  };
+  
+  // Convert center position to top-left corner for storage
+  const centerToTopLeft = (pos: {x: number, y: number}) => ({
+    x: Math.round(pos.x - (cardWidth / 2)),
+    y: Math.round(pos.y - (cardHeight / 2))
+  });
+  
+  // Try spiral positions starting from 0
+  for (let n = 0; n < 100; n++) {
+    const spiralCenter = generateSpiralPosition(n);
+    const pos = centerToTopLeft(spiralCenter);
+    
+    // Check collision with existing cards
+    let hasCollision = false;
     for (const profile of existingProfiles) {
       const px = profile.wall_position_x || 0;
       const py = profile.wall_position_y || 0;
@@ -47,10 +62,9 @@ const findEmptyPosition = (existingProfiles: any[]) => {
     }
   }
   
-  // Fallback: place at the end
-  const maxY = existingProfiles.reduce((max, p) => 
-    Math.max(max, (p.wall_position_y || 0)), 0);
-  return { x: startX, y: maxY + spacingY };
+  // Fallback: extend spiral further
+  const fallbackN = existingProfiles.length + 1;
+  return centerToTopLeft(generateSpiralPosition(fallbackN));
 };
 
 serve(async (req) => {
