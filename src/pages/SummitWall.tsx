@@ -941,29 +941,41 @@ const SummitWall = () => {
     const profile = profiles.find(p => p.id === profileId);
     if (!profile) return;
     
-    const currentX = tempPositions[profileId]?.x ?? profile.wall_position_x;
-    const currentY = tempPositions[profileId]?.y ?? profile.wall_position_y;
+    const container = canvasContainerRef.current;
+    if (!container) return;
+    
+    // Get the RENDERED position (canvas coords with offset applied)
+    const renderedPosition = getCardPosition(profile);
+    
+    // Mouse position in canvas coordinates (add scroll, apply zoom)
+    const mouseCanvasX = (e.clientX + container.scrollLeft) / (zoom / 100);
+    const mouseCanvasY = (e.clientY + container.scrollTop) / (zoom / 100);
     
     // Record start position for drag threshold detection
     dragStartRef.current = { 
-      x: e.clientX / (zoom / 100), 
-      y: e.clientY / (zoom / 100), 
+      x: mouseCanvasX, 
+      y: mouseCanvasY, 
       profileId 
     };
     wasDragRef.current = false;
     
+    // Offset in canvas coordinates
     const offset = {
-      x: e.clientX / (zoom / 100) - currentX,
-      y: e.clientY / (zoom / 100) - currentY
+      x: mouseCanvasX - renderedPosition.x,
+      y: mouseCanvasY - renderedPosition.y
     };
     setDragOffset(offset);
+    
+    const canvasSize = getCanvasSize();
+    const maxRadius = 1850; // Spiral max radius
     
     // Attach document-level listeners for better tracking
     const handleMove = (moveEvent: MouseEvent) => {
       if (!dragStartRef.current) return;
       
-      const currentMouseX = moveEvent.clientX / (zoom / 100);
-      const currentMouseY = moveEvent.clientY / (zoom / 100);
+      // Mouse position in canvas coordinates
+      const currentMouseX = (moveEvent.clientX + container.scrollLeft) / (zoom / 100);
+      const currentMouseY = (moveEvent.clientY + container.scrollTop) / (zoom / 100);
       
       // Calculate distance from start position
       const distanceX = Math.abs(currentMouseX - dragStartRef.current.x);
@@ -977,12 +989,17 @@ const SummitWall = () => {
           setDraggedProfile(profileId);
         }
         
-        const newX = moveEvent.clientX / (zoom / 100) - offset.x;
-        const newY = moveEvent.clientY / (zoom / 100) - offset.y;
+        // New position in canvas coordinates
+        const newCanvasX = currentMouseX - offset.x;
+        const newCanvasY = currentMouseY - offset.y;
         
-        // Clamp within canvas bounds
-        const clampedX = Math.max(0, Math.min(1800, newX));
-        const clampedY = Math.max(0, Math.min(1250, newY));
+        // Convert back to DB coordinates (subtract canvas/2)
+        const newDbX = newCanvasX - (canvasSize.width / 2);
+        const newDbY = newCanvasY - (canvasSize.height / 2);
+        
+        // Clamp to spiral bounds (allows negative values)
+        const clampedX = Math.max(-maxRadius, Math.min(maxRadius, newDbX));
+        const clampedY = Math.max(-maxRadius, Math.min(maxRadius, newDbY));
         
         setTempPositions(prev => ({
           ...prev,
@@ -1017,29 +1034,41 @@ const SummitWall = () => {
     const profile = profiles.find(p => p.id === profileId);
     if (!profile) return;
     
-    const currentX = tempPositions[profileId]?.x ?? profile.wall_position_x;
-    const currentY = tempPositions[profileId]?.y ?? profile.wall_position_y;
+    const container = canvasContainerRef.current;
+    if (!container) return;
+    
+    // Get the RENDERED position (canvas coords with offset applied)
+    const renderedPosition = getCardPosition(profile);
+    
+    // Touch position in canvas coordinates (add scroll, apply zoom)
+    const touchCanvasX = (touch.clientX + container.scrollLeft) / (zoom / 100);
+    const touchCanvasY = (touch.clientY + container.scrollTop) / (zoom / 100);
     
     // Record start position for drag threshold detection
     dragStartRef.current = { 
-      x: touch.clientX / (zoom / 100), 
-      y: touch.clientY / (zoom / 100), 
+      x: touchCanvasX, 
+      y: touchCanvasY, 
       profileId 
     };
     wasDragRef.current = false;
     
+    // Offset in canvas coordinates
     const offset = {
-      x: touch.clientX / (zoom / 100) - currentX,
-      y: touch.clientY / (zoom / 100) - currentY
+      x: touchCanvasX - renderedPosition.x,
+      y: touchCanvasY - renderedPosition.y
     };
     setDragOffset(offset);
+    
+    const canvasSize = getCanvasSize();
+    const maxRadius = 1850; // Spiral max radius
     
     const handleTouchMove = (moveEvent: TouchEvent) => {
       if (!dragStartRef.current) return;
       
-      const touch = moveEvent.touches[0];
-      const currentTouchX = touch.clientX / (zoom / 100);
-      const currentTouchY = touch.clientY / (zoom / 100);
+      const moveTouch = moveEvent.touches[0];
+      // Touch position in canvas coordinates
+      const currentTouchX = (moveTouch.clientX + container.scrollLeft) / (zoom / 100);
+      const currentTouchY = (moveTouch.clientY + container.scrollTop) / (zoom / 100);
       
       // Calculate distance from start position
       const distanceX = Math.abs(currentTouchX - dragStartRef.current.x);
@@ -1053,12 +1082,17 @@ const SummitWall = () => {
           setDraggedProfile(profileId);
         }
         
-        const newX = touch.clientX / (zoom / 100) - offset.x;
-        const newY = touch.clientY / (zoom / 100) - offset.y;
+        // New position in canvas coordinates
+        const newCanvasX = currentTouchX - offset.x;
+        const newCanvasY = currentTouchY - offset.y;
         
-        // Clamp within canvas bounds
-        const clampedX = Math.max(0, Math.min(1800, newX));
-        const clampedY = Math.max(0, Math.min(1250, newY));
+        // Convert back to DB coordinates (subtract canvas/2)
+        const newDbX = newCanvasX - (canvasSize.width / 2);
+        const newDbY = newCanvasY - (canvasSize.height / 2);
+        
+        // Clamp to spiral bounds (allows negative values)
+        const clampedX = Math.max(-maxRadius, Math.min(maxRadius, newDbX));
+        const clampedY = Math.max(-maxRadius, Math.min(maxRadius, newDbY));
         
         setTempPositions(prev => ({
           ...prev,
