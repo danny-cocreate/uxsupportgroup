@@ -152,55 +152,48 @@ const SummitWall = () => {
     }
   }, []);
 
-  // Calculate the center of the actual card cluster for centering the view
-  const calculateCardClusterCenter = (profileList: ProfileCard[]) => {
-    if (profileList.length === 0) {
-      return { x: 0, y: 0 }; // Spiral center is at origin
-    }
+  // Unified scroll function - takes DB coordinates (relative to 0,0 spiral center)
+  const scrollToCanvasPosition = (dbX: number, dbY: number, smooth: boolean = true) => {
+    const container = canvasContainerRef.current;
+    if (!container) return;
     
-    const cardWidth = 200;
-    const cardHeight = 250;
+    const canvasSize = getCanvasSize();
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
     
-    let minX = Infinity, maxX = -Infinity;
-    let minY = Infinity, maxY = -Infinity;
+    // Convert DB position to canvas position (add canvas/2 offset)
+    const canvasX = dbX + (canvasSize.width / 2);
+    const canvasY = dbY + (canvasSize.height / 2);
     
-    profileList.forEach(p => {
-      const x = p.wall_position_x || 0;
-      const y = p.wall_position_y || 0;
-      minX = Math.min(minX, x);
-      maxX = Math.max(maxX, x + cardWidth);
-      minY = Math.min(minY, y);
-      maxY = Math.max(maxY, y + cardHeight);
+    // Calculate scroll to center this position in the viewport
+    const scrollX = canvasX * (zoom / 100) - containerWidth / 2;
+    const scrollY = canvasY * (zoom / 100) - containerHeight / 2;
+    
+    container.scrollTo({
+      left: Math.max(0, scrollX),
+      top: Math.max(0, scrollY),
+      behavior: smooth ? 'smooth' : 'instant'
     });
-    
-    return {
-      x: (minX + maxX) / 2,
-      y: (minY + maxY) / 2
-    };
   };
 
-  // Auto-scroll to card cluster center on initial load
+  // Auto-scroll on initial load: logged-in users see their card, others see spiral center
   useEffect(() => {
     if (!isLoading && profiles.length > 0 && !slug) {
-      const container = canvasContainerRef.current;
-      if (!container) return;
-
-      // Calculate actual center of card cluster (instead of hardcoded spiral center)
-      const clusterCenter = calculateCardClusterCenter(profiles);
+      const userId = sessionStorage.getItem('summit_user_id');
       
-      const containerWidth = container.clientWidth;
-      const containerHeight = container.clientHeight;
+      if (userId) {
+        // Logged in: scroll to user's card center
+        const userProfile = profiles.find(p => p.id === userId);
+        if (userProfile) {
+          const cardCenterX = (userProfile.wall_position_x || 0) + 100; // card width/2
+          const cardCenterY = (userProfile.wall_position_y || 0) + 125; // card height/2
+          scrollToCanvasPosition(cardCenterX, cardCenterY, false);
+          return;
+        }
+      }
       
-      // Calculate scroll position to center the cluster
-      const scrollX = clusterCenter.x * (zoom / 100) - containerWidth / 2;
-      const scrollY = clusterCenter.y * (zoom / 100) - containerHeight / 2;
-      
-      // Use instant scroll on initial load (no animation)
-      container.scrollTo({
-        left: Math.max(0, scrollX),
-        top: Math.max(0, scrollY),
-        behavior: 'instant'
-      });
+      // Not logged in: scroll to spiral center (0, 0)
+      scrollToCanvasPosition(0, 0, false);
     }
   }, [isLoading, profiles.length > 0]);
 
@@ -419,56 +412,20 @@ const SummitWall = () => {
     setZoom(100);
   };
   const scrollToCard = (profileId: string) => {
-    const container = canvasContainerRef.current;
-    if (!container) return;
-    
     const profile = profiles.find(p => p.id === profileId);
     if (!profile) return;
     
-    const position = getCardPosition(profile);
-    const containerWidth = container.clientWidth;
-    const containerHeight = container.clientHeight;
-    const cardWidth = 200; // card width
-    const cardHeight = 180; // approximate card height
-    
-    // Calculate scroll position to center the card (position already includes offset)
-    const scrollX = (position.x + cardWidth / 2) * (zoom / 100) - containerWidth / 2;
-    const scrollY = (position.y + cardHeight / 2) * (zoom / 100) - containerHeight / 2;
-    
-    container.scrollTo({
-      left: Math.max(0, scrollX),
-      top: Math.max(0, scrollY),
-      behavior: 'smooth'
-    });
+    // Use DB coordinates + card center offset
+    const cardCenterX = (profile.wall_position_x || 0) + 100;
+    const cardCenterY = (profile.wall_position_y || 0) + 125;
+    scrollToCanvasPosition(cardCenterX, cardCenterY, true);
   };
 
   const scrollToPosition = (x: number, y: number) => {
-    const container = canvasContainerRef.current;
-    if (!container) {
-      console.log('[scrollToPosition] No container ref');
-      return;
-    }
-    
-    const { offsetX } = getCenterOffset();
-    const containerWidth = container.clientWidth;
-    const containerHeight = container.clientHeight;
-    const cardWidth = 200;
-    const cardHeight = 250;
-    
-    // Apply centering offset to the position
-    const centeredX = x + offsetX;
-    
-    // Calculate scroll position to center on the given coordinates
-    const scrollX = (centeredX + cardWidth / 2) * (zoom / 100) - containerWidth / 2;
-    const scrollY = (y + cardHeight / 2) * (zoom / 100) - containerHeight / 2;
-    
-    console.log('[scrollToPosition] Scrolling to:', { x, y, centeredX, scrollX, scrollY });
-    
-    container.scrollTo({
-      left: Math.max(0, scrollX),
-      top: Math.max(0, scrollY),
-      behavior: 'smooth'
-    });
+    // x, y are DB coordinates (top-left of card)
+    const cardCenterX = x + 100; // card width/2
+    const cardCenterY = y + 125; // card height/2
+    scrollToCanvasPosition(cardCenterX, cardCenterY, true);
   };
 
   const handleCreateProfile = () => {
