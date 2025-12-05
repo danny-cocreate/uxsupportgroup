@@ -152,22 +152,48 @@ const SummitWall = () => {
     }
   }, []);
 
-  // Auto-scroll to spiral center on initial load
+  // Calculate the center of the actual card cluster for centering the view
+  const calculateCardClusterCenter = (profileList: ProfileCard[]) => {
+    if (profileList.length === 0) {
+      return { x: 1849, y: 1874 }; // Fallback to spiral center
+    }
+    
+    const cardWidth = 200;
+    const cardHeight = 250;
+    
+    let minX = Infinity, maxX = -Infinity;
+    let minY = Infinity, maxY = -Infinity;
+    
+    profileList.forEach(p => {
+      const x = p.wall_position_x || 0;
+      const y = p.wall_position_y || 0;
+      minX = Math.min(minX, x);
+      maxX = Math.max(maxX, x + cardWidth);
+      minY = Math.min(minY, y);
+      maxY = Math.max(maxY, y + cardHeight);
+    });
+    
+    return {
+      x: (minX + maxX) / 2,
+      y: (minY + maxY) / 2
+    };
+  };
+
+  // Auto-scroll to card cluster center on initial load
   useEffect(() => {
     if (!isLoading && profiles.length > 0 && !slug) {
       const container = canvasContainerRef.current;
       if (!container) return;
 
-      // Spiral center coordinates (matches edge function)
-      const spiralCenterX = 1849;
-      const spiralCenterY = 1874;
+      // Calculate actual center of card cluster (instead of hardcoded spiral center)
+      const clusterCenter = calculateCardClusterCenter(profiles);
       
       const containerWidth = container.clientWidth;
       const containerHeight = container.clientHeight;
       
-      // Calculate scroll position to center the spiral
-      const scrollX = spiralCenterX * (zoom / 100) - containerWidth / 2;
-      const scrollY = spiralCenterY * (zoom / 100) - containerHeight / 2;
+      // Calculate scroll position to center the cluster
+      const scrollX = clusterCenter.x * (zoom / 100) - containerWidth / 2;
+      const scrollY = clusterCenter.y * (zoom / 100) - containerHeight / 2;
       
       // Use instant scroll on initial load (no animation)
       container.scrollTo({
