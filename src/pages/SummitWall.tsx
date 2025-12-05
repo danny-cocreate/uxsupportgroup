@@ -152,6 +152,32 @@ const SummitWall = () => {
     }
   }, []);
 
+  // Auto-scroll to spiral center on initial load
+  useEffect(() => {
+    if (!isLoading && profiles.length > 0 && !slug) {
+      const container = canvasContainerRef.current;
+      if (!container) return;
+
+      // Spiral center coordinates (matches edge function)
+      const spiralCenterX = 1849;
+      const spiralCenterY = 1874;
+      
+      const containerWidth = container.clientWidth;
+      const containerHeight = container.clientHeight;
+      
+      // Calculate scroll position to center the spiral
+      const scrollX = spiralCenterX * (zoom / 100) - containerWidth / 2;
+      const scrollY = spiralCenterY * (zoom / 100) - containerHeight / 2;
+      
+      // Use instant scroll on initial load (no animation)
+      container.scrollTo({
+        left: Math.max(0, scrollX),
+        top: Math.max(0, scrollY),
+        behavior: 'instant'
+      });
+    }
+  }, [isLoading, profiles.length > 0]);
+
   // Real-time subscription for new profiles
   useEffect(() => {
     const channel = supabase
