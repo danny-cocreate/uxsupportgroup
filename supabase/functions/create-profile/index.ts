@@ -12,13 +12,13 @@ const findEmptyPosition = (existingProfiles: any[]) => {
   const cardWidth = 200;
   const cardHeight = 250;
   const goldenAngle = 137.507764 * (Math.PI / 180); // Golden angle in radians
-  const spacingFactor = 110; // Controls spiral tightness (ensures no overlap)
+  const spacingFactor = 170; // Controls spiral tightness (ensures no overlap with 200x250 cards)
   
-  // Fixed center for 80 cards: maxRadius = 110 * sqrt(80) ≈ 984
-  // centerX = 984 + 150 (edge padding) + 100 (half card width) = 1234
-  // centerY = 984 + 175 (edge padding) + 125 (half card height) = 1284
-  const centerX = 1234;
-  const centerY = 1284;
+  // Fixed center for 80 cards: maxRadius = 170 * sqrt(80) ≈ 1520
+  // centerX = 1520 + 150 (edge padding) = 1670
+  // centerY = 1520 + 175 (edge padding) = 1695
+  const centerX = 1670;
+  const centerY = 1695;
   
   // Generate spiral position for index n (returns card center)
   const generateSpiralPosition = (n: number) => {
