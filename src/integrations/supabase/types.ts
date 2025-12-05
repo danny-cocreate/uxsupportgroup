@@ -101,6 +101,13 @@ export type Database = {
             referencedRelation: "user_profiles"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "enrichments_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       events: {
@@ -170,6 +177,13 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "user_profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "magic_link_tokens_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles_public"
             referencedColumns: ["id"]
           },
         ]
@@ -294,11 +308,71 @@ export type Database = {
             referencedRelation: "user_profiles"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "user_roles_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "user_profiles_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
     }
     Views: {
-      [_ in never]: never
+      user_profiles_public: {
+        Row: {
+          bio: string | null
+          card_screenshot_url: string | null
+          company_name: string | null
+          created_at: string | null
+          id: string | null
+          job_title: string | null
+          linkedin_url: string | null
+          name: string | null
+          profile_photo_url: string | null
+          screenshot_generated_at: string | null
+          screenshot_version: number | null
+          slug: string | null
+          updated_at: string | null
+          wall_position_x: number | null
+          wall_position_y: number | null
+        }
+        Insert: {
+          bio?: string | null
+          card_screenshot_url?: string | null
+          company_name?: string | null
+          created_at?: string | null
+          id?: string | null
+          job_title?: string | null
+          linkedin_url?: string | null
+          name?: string | null
+          profile_photo_url?: string | null
+          screenshot_generated_at?: string | null
+          screenshot_version?: number | null
+          slug?: string | null
+          updated_at?: string | null
+          wall_position_x?: number | null
+          wall_position_y?: number | null
+        }
+        Update: {
+          bio?: string | null
+          card_screenshot_url?: string | null
+          company_name?: string | null
+          created_at?: string | null
+          id?: string | null
+          job_title?: string | null
+          linkedin_url?: string | null
+          name?: string | null
+          profile_photo_url?: string | null
+          screenshot_generated_at?: string | null
+          screenshot_version?: number | null
+          slug?: string | null
+          updated_at?: string | null
+          wall_position_x?: number | null
+          wall_position_y?: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       has_role: {
