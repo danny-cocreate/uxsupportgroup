@@ -155,7 +155,7 @@ const SummitWall = () => {
   // Calculate the center of the actual card cluster for centering the view
   const calculateCardClusterCenter = (profileList: ProfileCard[]) => {
     if (profileList.length === 0) {
-      return { x: 1849, y: 1874 }; // Fallback to spiral center
+      return { x: 769, y: 769 }; // Fallback to new spiral center
     }
     
     const cardWidth = 200;
@@ -345,11 +345,9 @@ const SummitWall = () => {
     const goldenAngle = 137.507764 * (Math.PI / 180); // Golden angle in radians
     const spacingFactor = 190; // Controls spiral tightness (ensures no overlap with 200x250 cards)
     
-    // Fixed center for 80 cards: maxRadius = 190 * sqrt(80) ≈ 1699
-    // centerX = 1699 + 150 (edge padding) = 1849
-    // centerY = 1699 + 175 (edge padding) = 1874
-    const centerX = 1849;
-    const centerY = 1874;
+    // New center after position normalization (shifted from 1849, 1874)
+    const centerX = 769;
+    const centerY = 769;
     
     // Generate spiral position for index n (returns card center)
     const generateSpiralPosition = (n: number) => {
@@ -404,7 +402,7 @@ const SummitWall = () => {
   // Calculate dynamic canvas size based on spiral positions
   const getCanvasSize = () => {
     if (profiles.length === 0) {
-      return { width: 3900, height: 4000 }; // Default for spiral center visibility
+      return { width: 2000, height: 2000 }; // Default for new spiral center
     }
     
     const cardWidth = 200;
@@ -1148,33 +1146,15 @@ const SummitWall = () => {
     document.addEventListener('touchend', handleTouchEnd);
   };
 
-  // Calculate centering offset for horizontal alignment
-  const getCenterOffset = () => {
-    const cardsPerRow = 5;
-    const spacingX = 240;
-    const cardWidth = 200;
-    const startX = 50;
-    
-    // Calculate actual grid content width
-    const gridContentWidth = startX + ((cardsPerRow - 1) * spacingX) + cardWidth;
-    
-    const canvasWidth = getCanvasSize().width;
-    
-    // Calculate offset to center the grid
-    const offsetX = Math.max(0, (canvasWidth - gridContentWidth) / 2);
-    
-    return { offsetX };
-  };
-
+  // Get card position directly from database (no offset needed after normalization)
   const getCardPosition = (profile: ProfileCard) => {
-    const { offsetX } = getCenterOffset();
     const basePosition = tempPositions[profile.id] || {
       x: profile.wall_position_x || 0,
       y: profile.wall_position_y || 0
     };
     
     return {
-      x: basePosition.x + offsetX,
+      x: basePosition.x,
       y: basePosition.y
     };
   };
