@@ -8,7 +8,7 @@ import {
 const AgendaSection = () => {
   const sessions = [
     { time: "9:00 AM", title: "Welcome & AI-Profile Creation", facilitator: "Suyen Stevenson", desc: "Attendees build profiles (LinkedIn import/guided Q&A); submit goals/questions" },
-    { time: "9:30 AM", title: "Keynote: The Future of AI & UX", facilitator: "Danny Setiawan", desc: "Inspirational opening, live poll on AI priorities" },
+    { time: "9:15 AM", title: "Keynote: The Future of AI & UX", facilitator: "Danny Setiawan", desc: "Inspirational opening, live poll on AI priorities" },
     { time: "10:00 AM", title: "Express Yourself with AI", facilitator: "Silvia Balu", desc: "Hands-on: Create a song with Suno; add artifact to profile" },
     { time: "10:45 AM", title: "Live Design Challenge: AI in Action", facilitator: "3–5 designers", desc: "Designers tackle surprise prompt live using AI tools; audience Q&A and voting" },
     { time: "11:45 AM", title: "Why Executives Don't Care About Your Design Work (And How to Fix It)", facilitator: "Alexis Brochu", desc: "Your design is excellent. Your stakeholders are confused. Learn the \"So What?\" Chain—a questioning technique that reveals whether your work truly connects to business outcomes or just stops at user satisfaction. Through hands-on practice, you'll learn to answer the question every executive is silently asking: \"Why should I fund this?\"" },
