@@ -64,11 +64,8 @@ serve(async (req) => {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Magic Link - UX Support Group</title>
-            <link rel="preconnect" href="https://fonts.googleapis.com">
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-            <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
           </head>
-          <body style="margin: 0; padding: 0; font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #E8E5F0; line-height: 1.6;">
+          <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #E8E5F0; line-height: 1.6;">
             <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #E8E5F0; padding: 20px 0;">
               <tr>
                 <td align="center" style="padding: 20px 0;">
@@ -94,8 +91,8 @@ serve(async (req) => {
                                           </table>
                                         </td>
                                         <td style="padding: 0; padding-left: 7px; vertical-align: middle;">
-                                          <h3 style="margin: 0; font-size: 21px; font-weight: 600; color: #000000; font-family: 'Space Grotesk', sans-serif; line-height: 1;">
-                                            AI<span style="background: linear-gradient(135deg, #FA832E 0%, #995AF2 40%, #256AF4 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;">x</span>UX Summit 2025
+                                          <h3 style="margin: 0; font-size: 21px; font-weight: 600; color: #000000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1;">
+                                            AI<span style="color: #995AF2;">x</span>UX Summit 2025
                                           </h3>
                                         </td>
                                       </tr>
@@ -116,11 +113,11 @@ serve(async (req) => {
                     <!-- Content -->
                     <tr>
                       <td style="padding: 40px;">
-                        <h2 style="margin: 0 0 24px; color: #1A1A1A; font-size: 40px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; font-family: 'Space Grotesk', sans-serif;">Welcome! 👋</h2>
-              <p style="margin: 0 0 20px; color: #4A4A4A; font-size: 18px; font-family: 'Space Grotesk', sans-serif; line-height: 1.6;">
-                You've requested a magic link to access your profile card for the AI<span style="background: linear-gradient(135deg, #FA832E 0%, #995AF2 40%, #256AF4 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;">x</span>UX Virtual Summit 2025.
-              </p>
-                        <p style="margin: 0 0 30px; color: #4A4A4A; font-size: 18px; font-family: 'Space Grotesk', sans-serif; line-height: 1.6;">
+                        <h2 style="margin: 0 0 24px; color: #1A1A1A; font-size: 40px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">Welcome! 👋</h2>
+                        <p style="margin: 0 0 20px; color: #4A4A4A; font-size: 18px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6;">
+                          You've requested a magic link to access your profile card for the AI<span style="color: #995AF2;">x</span>UX Virtual Summit 2025.
+                        </p>
+                        <p style="margin: 0 0 30px; color: #4A4A4A; font-size: 18px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6;">
                           Click the button below to ${existingProfile ? "view or edit your profile card" : "create your profile card"}:
                         </p>
                         
@@ -128,7 +125,7 @@ serve(async (req) => {
                         <table role="presentation" style="width: 100%; margin: 30px 0;">
                           <tr>
                             <td align="center">
-                              <a href="${magicLink}" style="display: inline-block; padding: 16px 32px; background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%); color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 6px rgba(139, 92, 246, 0.3); font-family: 'Space Grotesk', sans-serif;">
+                              <a href="${magicLink}" style="display: inline-block; padding: 16px 32px; background: linear-gradient(135deg, #8B5CF6 0%, #7C3AED 100%); color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 16px; box-shadow: 0 4px 6px rgba(139, 92, 246, 0.3); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
                                 ${existingProfile ? "Edit My Profile Card" : "Create My Profile Card"}
                               </a>
                             </td>
