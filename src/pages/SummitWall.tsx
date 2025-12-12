@@ -247,6 +247,12 @@ const SummitWall = () => {
     if (slug && profiles.length > 0 && !isLoading) {
       const profile = profiles.find(p => p.slug === slug || p.id === slug);
       if (profile) {
+        // Scroll to the card's position first (instant, not smooth for initial load)
+        const cardCenterX = (profile.wall_position_x || 0) + 100;
+        const cardCenterY = (profile.wall_position_y || 0) + 125;
+        scrollToCanvasPosition(cardCenterX, cardCenterY, false);
+        
+        // Then open the modal
         handleCardClick(profile);
         // Update URL to remove slug after opening modal
         navigate('/summit-profiles', {
