@@ -1,22 +1,23 @@
 import Header from "@/components/Header";
-import SummitBanner from "@/components/SummitBanner";
 import HomeHero from "@/components/HomeHero";
-import HomeStats from "@/components/HomeStats";
-import WhatWeOffer from "@/components/WhatWeOffer";
+import TwoPathsSection from "@/components/TwoPathsSection";
 import UpcomingEvents from "@/components/UpcomingEvents";
-
+import PhilosophySection from "@/components/PhilosophySection";
 import Footer from "@/components/Footer";
+
 const Index = () => {
-  return <div className="min-h-screen">
-      <SummitBanner />
+  return (
+    <div className="min-h-screen">
       <Header />
       <main>
         <HomeHero />
-        <HomeStats />
-        
+        <TwoPathsSection />
         <UpcomingEvents />
+        <PhilosophySection />
       </main>
       <Footer />
-    </div>;
+    </div>
+  );
 };
+
 export default Index;
