@@ -74,7 +74,10 @@ const UpcomingEvents = () => {
                   <Card key={event.id} className={`relative overflow-hidden hover:shadow-lg transition-shadow border-t-4 ${borderColors[index % 3]}`}>
                     <div className="p-6">
                       <div className={`text-sm font-bold uppercase mb-3 ${timeColors[index % 3]}`}>
-                        {format(eventDate, 'EEEE')} · {event.start_time || format(eventDate, 'h:mm a')} EST
+                        {format(eventDate, 'EEEE')}
+                        {event.start_time && (
+                          <> · {event.start_time}</>
+                        )}
                       </div>
                       
                       <h3 className="text-xl font-bold mb-3 leading-tight">
