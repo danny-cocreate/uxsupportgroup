@@ -1,7 +1,6 @@
 import Header from "@/components/Header";
 import HomeHero from "@/components/HomeHero";
 import TwoPathsSection from "@/components/TwoPathsSection";
-import UpcomingEvents from "@/components/UpcomingEvents";
 import PhilosophySection from "@/components/PhilosophySection";
 import Footer from "@/components/Footer";
 
@@ -12,7 +11,6 @@ const Index = () => {
       <main>
         <HomeHero />
         <TwoPathsSection />
-        <UpcomingEvents />
         <PhilosophySection />
       </main>
       <Footer />

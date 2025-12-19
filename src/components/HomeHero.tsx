@@ -18,19 +18,13 @@ const HomeHero = () => {
       
       <div className="container relative z-10 mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center px-3 py-1 rounded-full border border-border bg-background/50 text-sm font-medium mb-6">
-            <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-            Defining the Human Future of UX
-          </div>
-          
           <h1 className="text-5xl font-bold text-foreground leading-tight mb-6 md:text-7xl">
             The Future of UX is Human.<br />
             <span className="text-gradient">We're Here to Prove It.</span>
           </h1>
           
           <p className="text-xl text-foreground/70 mb-8 max-w-2xl mx-auto">
-            Don't let the AI age define you. Define it.<br />
-            UXSG is the global practice ground where <strong>9,000+ designers</strong> actively build the future of our industry—together.
+            Don't let AI define you. Define it. Join <strong>9,000+ designers</strong> building the future—together.
           </p>
 
           {/* Stats integrated into hero */}
@@ -52,10 +46,7 @@ const HomeHero = () => {
               asChild
             >
               <a href="https://www.meetup.com/ux-support-group/" target="_blank" rel="noopener noreferrer">
-                <span className="flex items-center gap-2">
-                  <span>Explore Events</span>
-                  <span className="text-muted-foreground text-sm">→ Try the Sandbox</span>
-                </span>
+                Browse Events
               </a>
             </Button>
             
@@ -65,10 +56,7 @@ const HomeHero = () => {
               asChild
             >
               <a href="https://www.skool.com/ux-support-group-6932/about" target="_blank" rel="noopener noreferrer">
-                <span className="flex items-center gap-2">
-                  <span>Join Membership</span>
-                  <span className="opacity-80 text-sm">→ Enter the Accelerator</span>
-                </span>
+                Join Accelerator
               </a>
             </Button>
           </div>

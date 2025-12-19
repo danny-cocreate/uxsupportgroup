@@ -55,7 +55,7 @@ const TwoPathsSection = () => {
                 asChild
               >
                 <a href="https://www.meetup.com/ux-support-group/" target="_blank" rel="noopener noreferrer">
-                  Browse Meetup Events
+                  Browse Events
                 </a>
               </Button>
             </div>
@@ -103,7 +103,7 @@ const TwoPathsSection = () => {
                 asChild
               >
                 <a href="https://www.skool.com/ux-support-group-6932/about" target="_blank" rel="noopener noreferrer">
-                  Apply for Membership
+                  Join Accelerator
                 </a>
               </Button>
             </div>

@@ -1,5 +1,4 @@
-// Note: Please add the Miro collaboration board image to /src/assets/miro-collaboration.png
-// This should be the image showing the community collaboration board with member feedback
+import miroBoard from "@/assets/miro-collaboration.png";
 
 const PhilosophySection = () => {
   return (
@@ -57,13 +56,11 @@ const PhilosophySection = () => {
           <div className="relative">
             <div className="absolute -inset-4 bg-gradient-to-r from-blue-100 to-purple-100 rounded-2xl transform rotate-2" />
             <div className="relative bg-background rounded-xl shadow-2xl overflow-hidden border border-border aspect-video flex items-center justify-center">
-              <div className="text-center p-8 text-muted-foreground">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto mb-4 opacity-20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <p className="text-sm">Add miro-collaboration.png to /src/assets/</p>
-                <p className="text-xs mt-2">This will show the community collaboration board</p>
-              </div>
+              <img 
+                src={miroBoard} 
+                alt="UXSG community collaboration board showing real member contributions, questions, realizations, and observations from live sessions"
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
         </div>

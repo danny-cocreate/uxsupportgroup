@@ -23,7 +23,7 @@ const Header = () => {
         
         <div className="flex items-center gap-4">
           <Button size="sm" className="bg-foreground text-background hover:bg-foreground/90" asChild>
-            <a href="/summit">Get Summit Tickets</a>
+            <a href="/membership">Join Accelerator</a>
           </Button>
         </div>
       </div>
