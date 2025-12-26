@@ -1,20 +1,36 @@
 import { Button } from "@/components/ui/button";
-import { Award, Star, Users2 } from "lucide-react";
+import { Award, Star, Users2, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
 const ProfileCallout = () => {
-  return <section className="py-24 bg-background">
+  const navigate = useNavigate();
+
+  const handleViewSummitWall = () => {
+    navigate('/summit-wall');
+  };
+
+  return (
+    <section className="py-24 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                Every ticket unlocks a{" "}
+                Every attendee received a{" "}
                 <span className="text-gradient">personal profile highlight</span>
               </h2>
               <p className="text-xl text-muted-foreground mb-8">
-                Get noticed by peers and industry leaders. Testimonials and milestone 
-                shoutouts included as part of your inaugural attendee status.
+                Our inaugural attendees were featured in our community gallery,
+                showcasing their achievements and contributions to the summit.
               </p>
-              
+              <Button 
+                size="lg"
+                onClick={handleViewSummitWall}
+                className="group"
+              >
+                View Summit Wall
+                <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
             </div>
             
             <div className="space-y-6">
@@ -22,8 +38,8 @@ const ProfileCallout = () => {
                 <Award className="w-10 h-10 text-primary mb-4" />
                 <h3 className="text-xl font-bold mb-2">Featured Profile</h3>
                 <p className="text-muted-foreground">
-                  Showcase your work and achievements in our inaugural attendee gallery. 
-                  Get your profile featured to 1000+ industry professionals.
+                  Attendees showcased their work and achievements in our inaugural attendee gallery,
+                  featured to 1000+ industry professionals.
                 </p>
               </div>
               
@@ -31,8 +47,8 @@ const ProfileCallout = () => {
                 <Star className="w-10 h-10 text-primary mb-4" />
                 <h3 className="text-xl font-bold mb-2">Milestone Recognition</h3>
                 <p className="text-muted-foreground">
-                  Share your summit achievements and learning artifacts. Get recognized 
-                  for your contributions and workshop creations.
+                  Attendees shared their summit achievements and learning artifacts,
+                  recognized for their contributions and workshop creations.
                 </p>
               </div>
               
@@ -40,14 +56,16 @@ const ProfileCallout = () => {
                 <Users2 className="w-10 h-10 text-primary mb-4" />
                 <h3 className="text-xl font-bold mb-2">Community Connections</h3>
                 <p className="text-muted-foreground">
-                  AI-powered matchmaking based on your profile, interests, and goals. 
-                  Connect with the right collaborators and mentors.
+                  AI-powered matchmaking based on profiles, interests, and goals
+                  connected attendees with the right collaborators and mentors.
                 </p>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default ProfileCallout;

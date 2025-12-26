@@ -1,32 +1,32 @@
 const ConceptSection = () => {
   const outcomes = [
     {
-      title: "You'll build something.",
-      description: "An actual prototype or tool you can use Monday morning. Real challenges, not hypotheticals.",
+      title: "You built something.",
+      description: "An actual prototype or tool you could use Monday morning. Real challenges, not hypotheticals.",
       gradient: "from-primary/20 to-transparent"
     },
     {
-      title: "You'll make friends and feel less alone.",
-      description: "The format forces collaboration. By end of day, inside jokes turn into ongoing partnerships. Everyone's figuring this out—even the experts are improvising.",
+      title: "You made friends and felt less alone.",
+      description: "The format forced collaboration. By end of day, inside jokes turned into ongoing partnerships. Everyone was figuring this out—even the experts were improvising.",
       gradient: "from-secondary/20 to-transparent"
     },
     {
-      title: "You'll find your position in the AI landscape.",
-      description: "See where you naturally fit and leave with a clear roadmap for what to develop next.",
+      title: "You found your position in the AI landscape.",
+      description: "You saw where you naturally fit and left with a clear roadmap for what to develop next.",
       gradient: "from-primary/20 to-transparent"
     },
     {
-      title: "You'll know how to actually use AI tools.",
-      description: "Use them, watch others apply them. That same evening, techniques that cut your work time in half.",
+      title: "You learned how to actually use AI tools.",
+      description: "Used them, watched others apply them. That same evening, techniques that cut your work time in half.",
       gradient: "from-secondary/20 to-transparent"
     },
     {
-      title: "You'll see new possibilities.",
-      description: "Watch different approaches to the same problem. That stuck project suddenly has five new angles.",
+      title: "You discovered new possibilities.",
+      description: "Watched different approaches to the same problem. That stuck project suddenly had five new angles.",
       gradient: "from-primary/20 to-transparent"
     },
     {
-      title: "You'll build real momentum.",
+      title: "You built real momentum.",
       description: "Confidence from doing, not listening. A network actively working on what's next. Career moves six months from now trace back to here.",
       gradient: "from-secondary/20 to-transparent"
     }
@@ -39,8 +39,8 @@ const ConceptSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold mb-20 leading-tight text-center">
-            What <span className="text-gradient">Actually Happens</span> <br />
-            at This Summit
+            What <span className="text-gradient">Actually Happened</span> <br />
+            at the Summit
           </h2>
           
           <div className="grid md:grid-cols-3 gap-6">
