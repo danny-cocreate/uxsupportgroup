@@ -14,9 +14,13 @@
 - **Speaker perks:** 3 comp invites + personal discount code for their community
 
 ## Team
-- **D** — Founder, decision-maker on strategy, money, and speaker relationships
-- **Su Yen** — Main producer
-- **Tim (OpenClaw)** — Execution & technical support
+- **Danny S** — Agenda, Sponsorship, Partnership, Email Marketing, Speaker Recruitment, Web Site(s), Ticketing
+- **Suye Sn** — Main producer, technical Implementation
+- **Hayley D** - Audience Engagement
+- **Sylvia B** - Marketing Assets
+- **Yatong W** - ?
+- **Esther J G** - ?
+- **Tim Bot(OpenClaw)** — Execution & technical support
 
 ## Decisions
 
