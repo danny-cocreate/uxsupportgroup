@@ -25,19 +25,51 @@ const Summit2026 = () => {
 
     setIsSubmitting(true);
 
-    // Placeholder for Brevo integration - will be updated with actual list ID
+    // Brevo API configuration
+    // TODO: Replace with actual Brevo API key from environment variables
+    const BREVO_API_KEY = process.env.NEXT_PUBLIC_BREVO_API_KEY || "YOUR_BREVO_API_KEY";
+    const BREVO_LIST_ID = 8;
+    const BREVO_API_URL = "https://api.brevo.com/v3/contacts";
+
     try {
-      // Simulating API call - replace with actual Brevo API call
-      // For now, just simulate success
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      setIsSubscribed(true);
-      setEmail("");
-      toast({
-        title: "You're on the list!",
-        description: "We'll notify you when registration opens for AIxUX Virtual Summit 2026."
+      const response = await fetch(BREVO_API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Api-Key": BREVO_API_KEY
+        },
+        body: JSON.stringify({
+          email: email,
+          listIds: [BREVO_LIST_ID],
+          updateEnabled: true // Allows updating existing contacts
+        })
       });
+
+      if (response.ok) {
+        setIsSubscribed(true);
+        setEmail("");
+        toast({
+          title: "You're on the list!",
+          description: "We'll notify you when registration opens for AIxUX Virtual Summit 2026."
+        });
+      } else if (response.status === 400) {
+        const errorData = await response.json();
+        if (errorData.code === "duplicate_parameter") {
+          // Email already exists - treat as success
+          setIsSubscribed(true);
+          setEmail("");
+          toast({
+            title: "You're on the list!",
+            description: "This email is already on our waitlist. We'll notify you when registration opens."
+          });
+        } else {
+          throw new Error(errorData.message || "Failed to join waitlist");
+        }
+      } else {
+        throw new Error("Failed to join waitlist");
+      }
     } catch (error) {
+      console.error("Waitlist signup error:", error);
       toast({
         title: "Error",
         description: "Failed to join waitlist. Please try again.",
