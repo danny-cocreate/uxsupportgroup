@@ -123,8 +123,8 @@ const Summit2026 = () => {
                 </div>
                 <div className="flex items-center gap-2 text-foreground/80">
                   <Clock className="w-5 h-5" />
-                  <span className="text-lg">2 Half-Days</div>
-                </span>
+                  <span className="text-lg">2 Half-Days</span>
+                </div>
                 <div className="flex items-center gap-2 text-foreground/80">
                   <Users className="w-5 h-5" />
                   <span className="text-lg">Fully Virtual</span>
