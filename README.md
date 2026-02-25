@@ -1,6 +1,6 @@
-# AI UX Pioneer Page
+# UX Support Group Web site
 
-Landing page for the AI UX Pioneer program, part of the CoCreate ecosystem.
+Website for UX Support Group Community.
 
 ## Current Stack
 
