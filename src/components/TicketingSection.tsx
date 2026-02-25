@@ -21,8 +21,8 @@ const TicketingSection = () => {
   });
   const earlyBirdSeats = 20;
   const totalSeats = 100;
-  const currentPrice = isEarlyBird ? "$99" : "$199";
-  const originalPrice = isEarlyBird ? "$199" : null;
+  const currentPrice = isEarlyBird ? "$199" : "$299";
+  const originalPrice = isEarlyBird ? "$299" : null;
   const percentRemaining = isEarlyBird ? (earlyBirdRemaining / earlyBirdSeats) * 100 : 17; // Shows remaining tickets
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const TicketingSection = () => {
   }, []);
   useEffect(() => {
     const calculateTimeRemaining = () => {
-      const cutoffDate = new Date("2025-12-01T00:00:00Z");
+      const cutoffDate = new Date("2026-06-04T00:00:00Z");
       const now = new Date();
       const diff = cutoffDate.getTime() - now.getTime();
       if (diff <= 0) {
@@ -71,7 +71,7 @@ const TicketingSection = () => {
         toast.error('Unable to check ticket availability');
         // Fallback: show early bird until Dec 1st, 2025
         const now = new Date();
-        const cutoff = new Date("2025-12-01T00:00:00Z");
+        const cutoff = new Date("2026-06-04T00:00:00Z");
         setIsEarlyBird(now < cutoff);
         setEarlyBirdRemaining(cutoff > now ? 20 : 0);
         return;
@@ -83,7 +83,7 @@ const TicketingSection = () => {
       toast.error('Connection error. Please refresh the page.');
       // Fallback to date-based logic
       const now = new Date();
-      const cutoff = new Date("2025-12-01T00:00:00Z");
+      const cutoff = new Date("2026-06-04T00:00:00Z");
       setIsEarlyBird(now < cutoff);
     } finally {
       setIsCheckingAvailability(false);
