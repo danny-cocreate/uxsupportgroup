@@ -60,6 +60,7 @@ const Footer = () => {
             
             <ul className="space-y-2 text-background/80">
               <li><a href="/about" className="hover:text-primary transition-colors">About</a></li>
+              <li><a href="/summit-2025" className="hover:text-primary transition-colors">Summit 2025</a></li>
               <li><a href="/sponsor" className="hover:text-primary transition-colors">Become a Sponsor</a></li>
               <li><a href="/partner" className="hover:text-primary transition-colors">Partner Inquiry</a></li>
               <li><a href="/media-kit" className="hover:text-primary transition-colors">Media Kit</a></li>
