@@ -59,6 +59,7 @@ const Footer = () => {
           <div>
             
             <ul className="space-y-2 text-background/80">
+              <li><a href="/summit-2025" className="hover:text-primary transition-colors">AIxUX Summit 2025</a></li>
               <li><a href="/about" className="hover:text-primary transition-colors">About</a></li>
               <li><a href="/sponsor" className="hover:text-primary transition-colors">Become a Sponsor</a></li>
               <li><a href="/partner" className="hover:text-primary transition-colors">Partner Inquiry</a></li>
