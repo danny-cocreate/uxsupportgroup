@@ -14,10 +14,10 @@ Website for UX Support Group Community.
 **Option 1: Local Development**
 ```sh
 # Clone the repo
-git clone https://github.com/danny-cocreate/ai-ux-pioneer-page.git
+git clone https://github.com/danny-cocreate/uxsupportgroup.git
 
 # Navigate to project
-cd ai-ux-pioneer-page
+cd uxsupportgroup
 
 # Install dependencies
 npm install
