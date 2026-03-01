@@ -1,19 +1,12 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-
-const PrivacyPolicy = () => {
-  return (
-    <div className="min-h-screen bg-background">
-      <Header />
+const PrivacyPolicy = () => (
+  <main className="container mx-auto px-4 py-24">
+    <div className="max-w-4xl mx-auto">
+      <h1 className="font-headline text-4xl md:text-5xl font-bold text-uxsg-ink mb-8">Privacy Policy</h1>
+      <p className="text-foreground/80 mb-8">Last updated: November 2025</p>
       
-      <main className="container mx-auto px-4 py-24">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-8">Privacy Policy</h1>
-          <p className="text-muted-foreground mb-8">Last updated: November 2025</p>
-          
-          <div className="space-y-8 text-foreground/90">
-            <section>
-              <h2 className="text-2xl font-bold mb-4">1. Information We Collect</h2>
+      <div className="space-y-8 text-foreground/90">
+        <section>
+          <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">1. Information We Collect</h2>
               <p className="mb-4">
                 When you register for the AIxUX Virtual Summit, we collect information that you provide directly to us, including:
               </p>
@@ -27,7 +20,7 @@ const PrivacyPolicy = () => {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">2. How We Use Your Information</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">2. How We Use Your Information</h2>
               <p className="mb-4">We use the information we collect to:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Provide access to the virtual summit and related materials</li>
@@ -41,7 +34,7 @@ const PrivacyPolicy = () => {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">3. Information Sharing</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">3. Information Sharing</h2>
               <p className="mb-4">
                 We do not sell your personal information. We may share your information with:
               </p>
@@ -53,7 +46,7 @@ const PrivacyPolicy = () => {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">4. Your Profile and Public Information</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">4. Your Profile and Public Information</h2>
               <p className="mb-4">
                 By creating an attendee profile, you agree that the following information may be displayed publicly in our community gallery:
               </p>
@@ -69,14 +62,14 @@ const PrivacyPolicy = () => {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">5. Data Security</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">5. Data Security</h2>
               <p>
                 We implement appropriate security measures to protect your personal information. Payment information is processed securely through Stripe and we do not store credit card details. All data is encrypted in transit and at rest.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">6. Recording and Content</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">6. Recording and Content</h2>
               <p className="mb-4">
                 The virtual summit sessions will be recorded. By attending, you acknowledge that:
               </p>
@@ -89,7 +82,7 @@ const PrivacyPolicy = () => {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">7. Your Rights</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">7. Your Rights</h2>
               <p className="mb-4">You have the right to:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Access your personal information</li>
@@ -101,39 +94,35 @@ const PrivacyPolicy = () => {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">8. Cookies and Analytics</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">8. Cookies and Analytics</h2>
               <p>
                 We use cookies and similar technologies to improve your experience on our website and analyze usage patterns. You can control cookie preferences through your browser settings.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">9. Children's Privacy</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">9. Children's Privacy</h2>
               <p>
                 Our services are not intended for individuals under 18 years of age. We do not knowingly collect information from children.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">10. Changes to This Policy</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">10. Changes to This Policy</h2>
               <p>
                 We may update this privacy policy from time to time. We will notify registered attendees of any material changes via email.
               </p>
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">11. Contact Us</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">11. Contact Us</h2>
               <p>
                 If you have questions about this privacy policy or how we handle your information, please contact us at privacy@uxsg.co
               </p>
             </section>
-          </div>
-        </div>
-      </main>
-      
-      <Footer />
+      </div>
     </div>
-  );
-};
+  </main>
+);
 
 export default PrivacyPolicy;

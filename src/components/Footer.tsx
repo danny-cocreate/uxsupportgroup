@@ -1,7 +1,8 @@
 // @ts-nocheck
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Mail, Twitter, Linkedin, Instagram } from "lucide-react";
+import { Mail } from "lucide-react";
 import uxsgLogo from "@/assets/uxsg-logo-dark-bg.png";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,7 +14,7 @@ import { toast } from "@/hooks/use-toast";
 const emailSchema = z.object({
   email: z.string().email("Please enter a valid email address")
 });
-const Footer = () => {
+const Footer = ({ variant }: { variant?: 'default' | 'sketchy' }) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const {
     register,
@@ -59,27 +60,49 @@ const Footer = () => {
           <div>
             
             <ul className="space-y-2 text-background/80">
-              <li><a href="/summit-2025" className="hover:text-primary transition-colors">AIxUX Summit 2025</a></li>
-              <li><a href="/about" className="hover:text-primary transition-colors">About</a></li>
-              <li><a href="/sponsor" className="hover:text-primary transition-colors">Become a Sponsor</a></li>
-              <li><a href="/partner" className="hover:text-primary transition-colors">Partner Inquiry</a></li>
-              <li><a href="/media-kit" className="hover:text-primary transition-colors">Media Kit</a></li>
-              <li><a href="/contact" className="hover:text-primary transition-colors">Contact</a></li>
+              <li><Link to="/summit-2025" className="hover:text-primary transition-colors">AIxUX Summit 2025</Link></li>
+              <li><Link to="/about" className="hover:text-primary transition-colors">About</Link></li>
+              <li><Link to="/sponsor" className="hover:text-primary transition-colors">Become a Sponsor</Link></li>
+              <li><Link to="/partner" className="hover:text-primary transition-colors">Partner Inquiry</Link></li>
+              <li><Link to="/media-kit" className="hover:text-primary transition-colors">Media Kit</Link></li>
+              <li><Link to="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
             </ul>
           </div>
           
           <div>
-            <h4 className="text-xl font-bold mb-4">Stay Updated</h4>
-            <p className="text-background/80 mb-4">
-              Get the latest updates on future events and AI x UX insights
-            </p>
+            <h4 className="text-xl font-bold mb-4">{variant === 'sketchy' ? 'Stay Updated! Join the resistance.' : 'Stay Updated'}</h4>
+            {variant !== 'sketchy' && (
+              <p className="text-background/80 mb-4">
+                Get the latest updates on future events and AI x UX insights
+              </p>
+            )}
             <form onSubmit={handleSubmit(onSubmit)} className="flex gap-2">
               <div className="flex-1">
-                <Input type="email" placeholder="Your email" {...register("email")} className="bg-background/10 border-background/20 text-background placeholder:text-background/60" />
+                <label htmlFor="footer-email" className="sr-only">Your email</label>
+                <Input
+                  id="footer-email"
+                  type="email"
+                  placeholder="Your email"
+                  {...register("email")}
+                  className={
+                    variant === 'sketchy'
+                      ? "bg-white border-2 border-[#090907] text-[#090907] placeholder:text-[#090907]/60 rounded-md shadow-[1px_1px_0_0_#090907]"
+                      : "bg-background/10 border-background/20 text-background placeholder:text-background/60"
+                  }
+                />
                 {!!errors.email && <p className="text-red-400 text-xs mt-1">{errors.email.message as string}</p>}
               </div>
-              <Button type="submit" variant="ghost" className="shrink-0 border border-white hover:border-white/80">
-                <Mail className="w-4 h-4" />
+              <Button
+                type="submit"
+                variant={variant === 'sketchy' ? 'default' : 'ghost'}
+                className={variant === 'sketchy' ? "shrink-0 bg-[#090907] text-white hover:bg-[#090907]/90 border-2 border-[#090907] shadow-[1px_1px_0_0_rgba(255,255,255,0.2)]" : "shrink-0 border border-white hover:border-white/80"}
+                aria-label="Subscribe to newsletter"
+              >
+                {variant === 'sketchy' ? (
+                  <Mail className="w-4 h-4" />
+                ) : (
+                  <Mail className="w-4 h-4" />
+                )}
               </Button>
             </form>
           </div>
@@ -91,9 +114,9 @@ const Footer = () => {
             <p>© 2025 UX Support Group. All rights reserved.</p>
           </div>
           <div className="flex gap-6">
-            <a href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</a>
-            <a href="/terms" className="hover:text-primary transition-colors">Terms of Service</a>
-            <a href="/code-of-conduct" className="hover:text-primary transition-colors">Summit Code of Conduct</a>
+            <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
+            <Link to="/code-of-conduct" className="hover:text-primary transition-colors">Summit Code of Conduct</Link>
           </div>
         </div>
       </div>

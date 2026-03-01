@@ -1,19 +1,10 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-
-const MediaKit = () => {
-  return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1 container mx-auto px-4 py-24 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-5xl font-bold mb-4">Media Kit</h1>
-          <p className="text-xl text-muted-foreground">Coming Soon</p>
-        </div>
-      </main>
-      <Footer />
+const MediaKit = () => (
+  <main className="container mx-auto px-4 py-24 flex items-center justify-center">
+    <div className="text-center">
+      <h1 className="font-headline text-5xl font-bold text-uxsg-ink mb-4">Media Kit</h1>
+      <p className="text-xl text-foreground/80">Coming Soon</p>
     </div>
-  );
-};
+  </main>
+);
 
 export default MediaKit;

@@ -1,19 +1,12 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-
-const CodeOfConduct = () => {
-  return (
-    <div className="min-h-screen bg-background">
-      <Header />
+const CodeOfConduct = () => (
+  <main className="container mx-auto px-4 py-24">
+    <div className="max-w-4xl mx-auto">
+      <h1 className="font-headline text-4xl md:text-5xl font-bold text-uxsg-ink mb-8">AIxUX Summit Code of Conduct</h1>
+      <p className="text-foreground/80 mb-8">Last updated: November 2025</p>
       
-      <main className="container mx-auto px-4 py-24">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-8">AIxUX Summit Code of Conduct</h1>
-          <p className="text-muted-foreground mb-8">Last updated: November 2025</p>
-          
-          <div className="space-y-8 text-foreground/90">
-            <section>
-              <h2 className="text-2xl font-bold mb-4">Our Commitment</h2>
+      <div className="space-y-8 text-foreground/90">
+        <section>
+          <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">Our Commitment</h2>
               <p>
                 The AIxUX Virtual Summit is dedicated to providing a harassment-free, inclusive, and welcoming experience for everyone, regardless of gender, gender identity and expression, age, sexual orientation, disability, physical appearance, body size, race, ethnicity, religion, technology choices, or level of experience.
               </p>
@@ -23,7 +16,7 @@ const CodeOfConduct = () => {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">Expected Behavior</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">Expected Behavior</h2>
               <p className="mb-4">All participants are expected to:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li><strong>Be respectful:</strong> Value each other's ideas, perspectives, and experiences</li>
@@ -37,7 +30,7 @@ const CodeOfConduct = () => {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">Unacceptable Behavior</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">Unacceptable Behavior</h2>
               <p className="mb-4">Harassment and unacceptable behavior includes, but is not limited to:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Offensive comments related to gender, gender identity, sexual orientation, disability, mental illness, physical appearance, race, religion, or any protected characteristic</li>
@@ -55,7 +48,7 @@ const CodeOfConduct = () => {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">Virtual Event Guidelines</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">Virtual Event Guidelines</h2>
               <p className="mb-4">For our virtual format on Zoom, we expect participants to:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li><strong>Use appropriate backgrounds:</strong> Ensure your virtual background or physical background is professional and non-distracting</li>
@@ -69,7 +62,7 @@ const CodeOfConduct = () => {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">AI Tool Usage Guidelines</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">AI Tool Usage Guidelines</h2>
               <p className="mb-4">When using AI tools during workshops:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Use AI tools ethically and responsibly</li>
@@ -82,7 +75,7 @@ const CodeOfConduct = () => {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">Reporting Violations</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">Reporting Violations</h2>
               <p className="mb-4">
                 If you experience or witness unacceptable behavior, or have any other concerns, please report it as soon as possible:
               </p>
@@ -97,7 +90,7 @@ const CodeOfConduct = () => {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">Consequences</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">Consequences</h2>
               <p className="mb-4">
                 Participants asked to stop any unacceptable behavior are expected to comply immediately. If a participant engages in unacceptable behavior, the organizers may take any action they deem appropriate, including:
               </p>
@@ -111,7 +104,7 @@ const CodeOfConduct = () => {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">Content Recording and Sharing</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">Content Recording and Sharing</h2>
               <p className="mb-4">
                 Respect intellectual property and privacy:
               </p>
@@ -125,7 +118,7 @@ const CodeOfConduct = () => {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">Accessibility and Inclusion</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">Accessibility and Inclusion</h2>
               <p className="mb-4">
                 We strive to make our event accessible to all:
               </p>
@@ -139,7 +132,7 @@ const CodeOfConduct = () => {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">Scope</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">Scope</h2>
               <p>
                 This Code of Conduct applies to all AIxUX Virtual Summit spaces, including:
               </p>
@@ -154,14 +147,14 @@ const CodeOfConduct = () => {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold mb-4">Questions</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">Questions</h2>
               <p>
                 If you have questions about this Code of Conduct or need clarification on any points, please contact us at conduct@uxsg.co
               </p>
             </section>
 
             <section className="bg-primary/5 border border-primary/20 rounded-xl p-6 mt-8">
-              <h2 className="text-2xl font-bold mb-4">Our Promise</h2>
+              <h2 className="font-headline text-2xl font-bold text-uxsg-ink mb-4">Our Promise</h2>
               <p>
                 By fostering a respectful, inclusive, and collaborative environment, we aim to create a space where everyone can learn, grow, and connect. We appreciate your cooperation in making the AIxUX Virtual Summit a positive experience for all participants.
               </p>
@@ -171,11 +164,7 @@ const CodeOfConduct = () => {
             </section>
           </div>
         </div>
-      </main>
-      
-      <Footer />
-    </div>
-  );
-};
+  </main>
+);
 
 export default CodeOfConduct;

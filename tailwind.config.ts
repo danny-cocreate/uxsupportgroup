@@ -14,9 +14,20 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Space Grotesk', 'system-ui', 'sans-serif'],
+        sans: ['Sora', 'system-ui', 'sans-serif'],
+        headline: ['Cabin Sketch', 'system-ui', 'sans-serif'],
+        body: ['Sora', 'system-ui', 'sans-serif'],
       },
       colors: {
+        uxsg: {
+          ink: 'var(--uxsg-ink)',
+          paper: 'var(--uxsg-paper)',
+          yellow: 'var(--uxsg-yellow)',
+          teal: 'var(--uxsg-teal)',
+          white: 'var(--uxsg-white)',
+          'sticky-blue': 'var(--uxsg-sticky-blue)',
+          rsvp: 'var(--uxsg-rsvp)',
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

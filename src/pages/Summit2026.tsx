@@ -1,6 +1,4 @@
 import { useState, FormEvent } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -75,9 +73,7 @@ const Summit2026 = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main>
+    <main>
         {/* Hero / holding section */}
         <section className="relative min-h-[60vh] flex items-center overflow-hidden">
           <img
@@ -176,8 +172,6 @@ const Summit2026 = () => {
           </div>
         </section>
       </main>
-      <Footer />
-    </div>
   );
 };
 

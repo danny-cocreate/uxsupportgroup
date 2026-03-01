@@ -1,5 +1,3 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -71,10 +69,8 @@ const Contact = () => {
       setIsSubmitting(false);
     }
   };
-  return <div className="min-h-screen flex flex-col">
-      <Header />
-      
-      <main className="flex-1">
+  return (
+    <main className="flex-1">
         {/* Hero Section */}
         <section className="py-24 relative overflow-hidden bg-gradient-to-br from-primary/10 via-background to-secondary/10">
           <div className="container mx-auto px-4 text-center">
@@ -170,8 +166,6 @@ const Contact = () => {
           </div>
         </section>
       </main>
-
-      <Footer />
-    </div>;
+  );
 };
 export default Contact;
