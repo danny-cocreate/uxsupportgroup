@@ -162,6 +162,7 @@ const Summit2026 = () => {
               </p>
               <ul className="list-disc pl-5 space-y-3 text-muted-foreground">
                 <li>Hands-on labs where you build real AI x UX artifacts</li>
+                <li>Opportunities to make great connections with peers and experts</li>
                 <li>Facilitated sessions led by experienced practitioners</li>
                 <li>
                   A curated group of designers, product builders, and leaders
