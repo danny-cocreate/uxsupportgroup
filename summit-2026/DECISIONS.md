@@ -18,7 +18,7 @@
 - **Suye Sn** — Main producer, technical Implementation
 - **Hayley D** - Audience Engagement
 - **Sylvia B** - Marketing Assets
-- **Yatong W** - ?
+- **Yatong W** - Audience Engagement
 - **Esther J G** - ?
 - **Jerry** - Tech. support and video production
 - **Tim Bot(OpenClaw)** — Execution & technical support
