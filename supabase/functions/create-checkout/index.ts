@@ -5,6 +5,7 @@ import {
   EARLY_BIRD_CAPACITY,
   EARLY_BIRD_PRICE_ID,
   REGULAR_PRICE_ID,
+  SUMMIT_PRODUCT_SLUG,
 } from "../_shared/summitEarlyBird.ts";
 
 const corsHeaders = {
@@ -92,6 +93,7 @@ serve(async (req) => {
       metadata: {
         price_id: priceId,
         ticket_type: priceId === EARLY_BIRD_PRICE_ID ? "early_bird" : "regular",
+        product: SUMMIT_PRODUCT_SLUG,
       },
       success_url: `${base}/summit?checkout=success`,
       cancel_url: `${base}/summit?checkout=canceled`,

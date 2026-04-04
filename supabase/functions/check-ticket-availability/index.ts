@@ -28,15 +28,14 @@ serve(async (req) => {
 
     const stripe = new Stripe(stripeKey, { apiVersion: "2025-08-27.basil" });
 
-    const { earlyBirdSold, truncated, sessionsExamined } = await countPaidEarlyBirdSales(
-      stripe,
-      (step, d) => logStep(step, d)
-    );
+    const { earlyBirdSold, truncated, sessionsExamined, sessionsCreatedGteUnix } =
+      await countPaidEarlyBirdSales(stripe, (step, d) => logStep(step, d));
 
     logStep("Early bird count complete", {
       earlyBirdSold,
       sessionsExamined,
       truncated,
+      sessionsCreatedGteUnix,
     });
 
     const isEarlyBirdAvailable = earlyBirdSold < EARLY_BIRD_CAPACITY;
@@ -49,6 +48,7 @@ serve(async (req) => {
         earlyBirdRemaining,
         truncated,
         sessionsExamined,
+        sessionsCreatedGteUnix,
       }),
       {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
