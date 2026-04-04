@@ -26,3 +26,18 @@ verify_jwt = false
 
 [functions.send-sponsorship-inquiry]
 verify_jwt = false
+
+[functions.create-checkout]
+verify_jwt = false
+
+[functions.check-ticket-availability]
+verify_jwt = false
+
+[functions.join-summit-waitlist]
+verify_jwt = false
+
+[functions.send-contact-inquiry]
+verify_jwt = false
+
+[functions.assign-admin-role]
+verify_jwt = false
