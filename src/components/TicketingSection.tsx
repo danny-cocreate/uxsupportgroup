@@ -8,6 +8,17 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 const EARLY_BIRD_PRICE_ID = "price_1TIEduEt4aAP5ylPU5RJtO6s";
 const REGULAR_PRICE_ID = "price_1TIEdyEt4aAP5ylPN6ffwF5U";
+
+function describeInvokeError(err: unknown): string {
+  if (!err || typeof err !== "object") return "Something went wrong.";
+  const e = err as { name?: string; message?: string };
+  const msg = e.message ?? "";
+  if (e.name === "FunctionsFetchError" || msg.includes("Failed to send a request to the Edge Function")) {
+    return "Could not reach the payment service. Please try again shortly or email info@uxsupportgroup.com.";
+  }
+  return msg.trim() || "Something went wrong.";
+}
+
 const TicketingSection = () => {
   const [isEarlyBird, setIsEarlyBird] = useState(true);
   const [earlyBirdRemaining, setEarlyBirdRemaining] = useState(10);
@@ -54,7 +65,7 @@ const TicketingSection = () => {
       const { data, error } = await supabase.functions.invoke("create-checkout", {
         body: { priceId },
       });
-      if (error) throw new Error(error.message);
+      if (error) throw new Error(describeInvokeError(error));
       const url = data?.url as string | undefined;
       const errMsg = data?.error as string | undefined;
       if (errMsg || !url) throw new Error(errMsg || "Checkout unavailable");

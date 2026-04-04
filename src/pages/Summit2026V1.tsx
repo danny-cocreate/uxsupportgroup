@@ -2,7 +2,6 @@ import { FormEvent, useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Progress } from "@/components/ui/progress";
 import { Accordion, AccordionContent } from "@/components/ui/accordion";
-import Summit2026HeroGraphic from "@/components/Summit2026HeroGraphic";
 import { MembershipAccordionItem, MembershipAccordionTrigger } from "@/components/MembershipAccordion";
 import { HandDrawnHighlight } from "@/components/sketchy/HandDrawnHighlight";
 import { HandDrawnRect } from "@/components/sketchy/HandDrawnRect";
@@ -34,6 +33,16 @@ function scrollPricingBelowStickyHeader() {
   const y =
     el.getBoundingClientRect().top + window.scrollY - SUMMIT_STICKY_HEADER_OFFSET_PX;
   window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+}
+
+function describeInvokeError(err: unknown): string {
+  if (!err || typeof err !== "object") return "Something went wrong.";
+  const e = err as { name?: string; message?: string };
+  const msg = e.message ?? "";
+  if (e.name === "FunctionsFetchError" || msg.includes("Failed to send a request to the Edge Function")) {
+    return "Checkout could not reach the server. If this keeps happening, the payment service may need a quick update on our side — try again shortly or email info@uxsupportgroup.com.";
+  }
+  return msg.trim() || "Something went wrong.";
 }
 
 const SUMMIT_TESTIMONIALS = [
@@ -247,7 +256,7 @@ const Summit2026V1 = () => {
       });
       if (error) {
         console.error("[TICKETS] create-checkout invoke error", error);
-        throw new Error(error.message || "Could not start checkout.");
+        throw new Error(describeInvokeError(error));
       }
       const url =
         data && typeof data === "object" && "url" in data
@@ -346,49 +355,35 @@ const Summit2026V1 = () => {
 
   return (
     <main id="main" className="space-y-24 md:space-y-32 pb-20">
-      {/* Hero — cyber summit graphic + sketchy body */}
-      <section className="max-w-7xl mx-auto px-6 pt-6 sm:pt-8 md:pt-10 py-6 lg:py-8">
-        <div className="flex flex-col items-center gap-10 lg:gap-12">
-          <div className="w-full max-w-5xl mx-auto">
-            <div className="relative w-full overflow-hidden rounded-2xl border-2 border-uxsg-ink/30 bg-black shadow-[4px_4px_0_0_var(--uxsg-ink)] min-h-[min(52vh,420px)] md:min-h-[min(48vh,480px)]">
-              <Summit2026HeroGraphic className="absolute inset-0 w-full h-full object-cover opacity-95" />
-              <div
-                className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/20 pointer-events-none"
-                aria-hidden
-              />
-              <div className="relative z-10 flex flex-col items-center justify-center text-center px-5 sm:px-8 py-14 md:py-20 lg:py-24 min-h-[min(52vh,420px)] md:min-h-[min(48vh,480px)]">
-                <div className="inline-flex items-center gap-3 px-4 py-1.5 mb-8 bg-white/10 backdrop-blur-sm border border-white/20 font-body text-[10px] sm:text-xs tracking-[0.2em] uppercase text-white/90">
-                  June 18-19, 2026 (EDT)
-                  <span className="w-1 h-1 bg-amber-400 rounded-full shrink-0" />
-                  Online / Global
-                </div>
-                <h1 className="font-black font-heading text-white leading-[0.95] tracking-tight">
-                  <span className="block text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
-                    AI
-                    <span className="relative inline-block mx-0.5 sm:mx-1 text-amber-400 drop-shadow-[0_0_28px_rgba(251,191,36,0.95)]">
-                      X
-                      <span
-                        className="absolute inset-0 -z-10 blur-md bg-amber-400/60 rounded-full scale-150"
-                        aria-hidden
-                      />
-                    </span>
-                    UX SUMMIT{" "}
-                    <span className="text-transparent [-webkit-text-stroke:2px_rgb(255_255_255)] sm:[-webkit-text-stroke-width:2.5px] md:[-webkit-text-stroke-width:3px]">
-                      2026
-                    </span>
-                  </span>
-                </h1>
-                <p className="mt-6 font-headline text-2xl sm:text-3xl md:text-4xl text-amber-100/95 relative inline-block">
-                  Becoming AI Designer
-                  <span className="absolute -bottom-1 left-0 right-0 block w-full text-amber-400/90 pointer-events-none">
-                    <RoughWavyUnderline className="w-full h-2.5 sm:h-3 md:h-3.5" strokeW={6} expandToBounds />
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
+      {/* Hero — full-bleed banner (art: public/summit-2026-hero.svg; replace file to swap creative) */}
+      <section className="w-full pt-6 sm:pt-8 md:pt-10" aria-label="AIxUX Summit 2026">
+        <div className="relative w-full overflow-hidden bg-black border-y border-uxsg-ink/20 shadow-[0_4px_0_0_var(--uxsg-ink)]">
+          <img
+            src="/summit-2026-hero.svg"
+            alt="AIxUX Summit 2026 — matrix-style banner with event title"
+            className="block w-full h-[min(42vw,220px)] min-h-[180px] sm:h-[min(38vw,320px)] md:h-[min(34vw,420px)] lg:h-[min(32vw,520px)] object-cover object-center"
+            width={1920}
+            height={640}
+            fetchPriority="high"
+            decoding="async"
+          />
+        </div>
+      </section>
 
+      <section className="max-w-7xl mx-auto px-6 py-6 lg:py-8">
+        <div className="flex flex-col items-center gap-10 lg:gap-12">
           <div className="space-y-8 text-center w-full max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-4 px-6 py-2 bg-uxsg-yellow border-b-2 border-uxsg-ink/5 font-body text-xs tracking-widest uppercase">
+              June 18-19, 2026 (EDT)
+              <span className="w-1 h-1 bg-uxsg-ink rounded-full shrink-0" />
+              Online / Global
+            </div>
+            <p className="font-headline text-3xl sm:text-4xl md:text-5xl text-uxsg-ink relative inline-block">
+              Becoming AI Designer
+              <span className="absolute -bottom-1 left-0 right-0 block w-full text-[var(--uxsg-yellow)] pointer-events-none">
+                <RoughWavyUnderline className="w-full h-3 md:h-4" strokeW={7} expandToBounds />
+              </span>
+            </p>
             <p className="font-body text-xl md:text-2xl text-foreground/90 max-w-2xl mx-auto leading-relaxed">
               2 half days. Real builds. <br />
               For future-forward designers navigating the AI shift.
