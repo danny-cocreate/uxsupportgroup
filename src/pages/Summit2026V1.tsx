@@ -23,8 +23,8 @@ const EARLY_BIRD_PRICE_ID = "price_1TIEduEt4aAP5ylPU5RJtO6s";
 const REGULAR_PRICE_ID = "price_1TIEdyEt4aAP5ylPN6ffwF5U";
 const EARLY_BIRD_SEATS = 20;
 
-/** Wide panoramic banner — add the file to `public/` with this exact name. */
-const SUMMIT_HERO_IMAGE = "/summit-2026-hero.png";
+/** Wide panoramic banner — file lives in `public/`. */
+const SUMMIT_HERO_IMAGE = "/summit-2026-hero-no-text.webp";
 
 /** Sticky header height on `/summit` (no announcement bar) — `SketchyHeader` uses `h-16`. */
 const SUMMIT_STICKY_HEADER_OFFSET_PX = 64;
