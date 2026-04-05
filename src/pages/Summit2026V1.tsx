@@ -2,7 +2,6 @@ import { FormEvent, useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Progress } from "@/components/ui/progress";
 import { Accordion, AccordionContent } from "@/components/ui/accordion";
-import Summit2026HeroGraphic from "@/components/Summit2026HeroGraphic";
 import { MembershipAccordionItem, MembershipAccordionTrigger } from "@/components/MembershipAccordion";
 import { HandDrawnHighlight } from "@/components/sketchy/HandDrawnHighlight";
 import { SketchyHandDrawnInput } from "@/components/sketchy/SketchyHandDrawnInput";
@@ -23,6 +22,9 @@ import { CheckCircle2, HandHeart, Loader2, Mail, MessagesSquare, PencilLine, Sta
 const EARLY_BIRD_PRICE_ID = "price_1TIEduEt4aAP5ylPU5RJtO6s";
 const REGULAR_PRICE_ID = "price_1TIEdyEt4aAP5ylPN6ffwF5U";
 const EARLY_BIRD_SEATS = 20;
+
+/** Wide panoramic banner — add the file to `public/` with this exact name. */
+const SUMMIT_HERO_IMAGE = "/summit-2026-hero.png";
 
 /** Sticky header height on `/summit` (no announcement bar) — `SketchyHeader` uses `h-16`. */
 const SUMMIT_STICKY_HEADER_OFFSET_PX = 64;
@@ -363,13 +365,21 @@ const Summit2026V1 = () => {
 
   return (
     <main id="main" className="pb-20">
-      {/* Full-viewport-width hero. Swap <Summit2026HeroGraphic /> for <img src="/your-banner.webp" className="absolute inset-0 h-full w-full object-cover" alt="..." /> to use a static file in public/. */}
+      {/* Full-viewport-width hero — background files live in public/ (see SUMMIT_HERO_* constants). */}
       <section
         className="relative w-screen max-w-[100vw] left-1/2 -translate-x-1/2 pt-6 sm:pt-8 md:pt-10"
         aria-label="AIxUX Summit 2026"
       >
         <div className="relative w-full overflow-hidden bg-black border-y border-uxsg-ink/25 shadow-[0_4px_0_0_var(--uxsg-ink)] min-h-[min(42vw,240px)] sm:min-h-[min(36vw,320px)] md:min-h-[min(32vw,400px)] lg:min-h-[min(28vw,480px)]">
-          <Summit2026HeroGraphic className="absolute inset-0 h-full w-full min-h-full" />
+          <img
+            src={SUMMIT_HERO_IMAGE}
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover object-center"
+            width={1920}
+            height={640}
+            fetchPriority="high"
+            decoding="async"
+          />
           <div
             className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 to-black/15 pointer-events-none"
             aria-hidden
