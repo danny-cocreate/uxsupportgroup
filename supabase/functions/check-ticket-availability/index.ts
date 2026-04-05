@@ -10,6 +10,9 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+/** Bump when response shape changes — if missing in JSON, an old/other deployment is serving. */
+const AVAILABILITY_API_VERSION = 3;
+
 const logStep = (step: string, details?: Record<string, unknown>) => {
   const detailsStr = details ? ` - ${JSON.stringify(details)}` : "";
   console.log(`[CHECK-AVAILABILITY] ${step}${detailsStr}`);
@@ -43,6 +46,7 @@ serve(async (req) => {
 
     return new Response(
       JSON.stringify({
+        apiVersion: AVAILABILITY_API_VERSION,
         isEarlyBird: isEarlyBirdAvailable,
         earlyBirdSold,
         earlyBirdRemaining,
