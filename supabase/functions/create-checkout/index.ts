@@ -2,6 +2,7 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@18.5.0";
 import {
   countPaidEarlyBirdSales,
+  EARLY_BIRD_API_VERSION,
   EARLY_BIRD_CAPACITY,
   EARLY_BIRD_PRICE_ID,
   REGULAR_PRICE_ID,
@@ -100,7 +101,7 @@ serve(async (req) => {
 
     logStep("Checkout session created", { sessionId: session.id, url: session.url });
 
-    return new Response(JSON.stringify({ url: session.url }), {
+    return new Response(JSON.stringify({ apiVersion: EARLY_BIRD_API_VERSION, url: session.url }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });

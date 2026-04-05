@@ -2,6 +2,7 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@18.5.0";
 import {
   countPaidEarlyBirdSales,
+  EARLY_BIRD_API_VERSION,
   EARLY_BIRD_CAPACITY,
 } from "../_shared/summitEarlyBird.ts";
 
@@ -44,6 +45,7 @@ serve(async (req) => {
 
     return new Response(
       JSON.stringify({
+        apiVersion: EARLY_BIRD_API_VERSION,
         isEarlyBird: isEarlyBirdAvailable,
         earlyBirdSold,
         earlyBirdRemaining,

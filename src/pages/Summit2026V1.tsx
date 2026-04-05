@@ -2,7 +2,7 @@ import { FormEvent, useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Progress } from "@/components/ui/progress";
 import { Accordion, AccordionContent } from "@/components/ui/accordion";
-import Summit2026HeroGraphic from "@/components/Summit2026HeroGraphic";
+import summitHeroBg from "@/assets/summit-2026-hero.png";
 import { MembershipAccordionItem, MembershipAccordionTrigger } from "@/components/MembershipAccordion";
 import { HandDrawnHighlight } from "@/components/sketchy/HandDrawnHighlight";
 import { HandDrawnRect } from "@/components/sketchy/HandDrawnRect";
@@ -359,7 +359,15 @@ const Summit2026V1 = () => {
         <div className="flex flex-col items-center gap-10 lg:gap-12">
           <div className="w-full max-w-5xl mx-auto">
             <div className="relative w-full overflow-hidden rounded-2xl border-2 border-uxsg-ink/30 bg-black shadow-[4px_4px_0_0_var(--uxsg-ink)] min-h-[min(52vh,420px)] md:min-h-[min(48vh,480px)]">
-              <Summit2026HeroGraphic className="absolute inset-0 w-full h-full object-cover opacity-95" />
+              <img
+                src={summitHeroBg}
+                alt=""
+                className="absolute inset-0 w-full h-full object-cover object-center opacity-95"
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                aria-hidden
+              />
               <div
                 className="absolute inset-0 bg-gradient-to-t from-black via-black/55 to-black/20 pointer-events-none"
                 aria-hidden

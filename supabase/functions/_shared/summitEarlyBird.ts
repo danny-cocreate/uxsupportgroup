@@ -1,3 +1,6 @@
+/** Bump when early-bird counting or checkout eligibility rules change in a breaking way. */
+export const EARLY_BIRD_API_VERSION = 3;
+
 export const EARLY_BIRD_PRICE_ID = "price_1TIEduEt4aAP5ylPU5RJtO6s";
 export const REGULAR_PRICE_ID = "price_1TIEdyEt4aAP5ylPN6ffwF5U";
 export const EARLY_BIRD_CAPACITY = 20;
