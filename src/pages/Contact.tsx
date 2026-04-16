@@ -3,10 +3,11 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowRight, Loader2, Mail, Phone, MapPin } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 import { useState, FormEvent } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { describeFunctionInvokeError } from "@/lib/functionInvokeErrors";
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -58,11 +59,12 @@ const Contact = () => {
         email: '',
         message: ''
       });
-    } catch (error: any) {
-      console.error('Submission error:', error);
+    } catch (error: unknown) {
+      console.error("Submission error:", error);
+      const description = await describeFunctionInvokeError(error);
       toast({
         title: "Submission Failed",
-        description: error.message || "Something went wrong. Please try again or email us directly at info@uxsupportgroup.com",
+        description,
         variant: "destructive"
       });
     } finally {

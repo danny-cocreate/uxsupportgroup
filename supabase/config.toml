@@ -26,3 +26,6 @@ verify_jwt = false
 
 [functions.send-sponsorship-inquiry]
 verify_jwt = false
+
+[functions.send-contact-inquiry]
+verify_jwt = false

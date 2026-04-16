@@ -7,6 +7,7 @@ import { ArrowRight, Loader2 } from "lucide-react";
 import { useState, FormEvent, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { describeFunctionInvokeError } from "@/lib/functionInvokeErrors";
 
 const SponsorContactSection = () => {
   const [formData, setFormData] = useState({
@@ -91,11 +92,12 @@ const SponsorContactSection = () => {
         package: '',
         message: ''
       });
-    } catch (error: any) {
-      console.error('Submission error:', error);
+    } catch (error: unknown) {
+      console.error("Submission error:", error);
+      const description = await describeFunctionInvokeError(error);
       toast({
         title: "Submission Failed",
-        description: error.message || "Something went wrong. Please try again or email us directly at info@uxsupportgroup.com",
+        description,
         variant: "destructive"
       });
     } finally {
