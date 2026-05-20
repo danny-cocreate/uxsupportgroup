@@ -22,6 +22,7 @@ const navLinks: NavItem[] = [
   { to: "/summit", label: "AI Summit 2026", promoWavyUnderline: true },
   { to: "/membership", label: "Membership" },
   { to: "/sponsor", label: "Sponsor" },
+  { to: "/replay", label: "Replay" },
   { to: "/about", label: "About" },
 ];
 

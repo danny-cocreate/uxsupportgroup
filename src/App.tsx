@@ -19,6 +19,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Membership from "./pages/Membership";
 import Sponsor from "./pages/Sponsor";
+import Replay from "./pages/Replay";
 import Partner from "./pages/Partner";
 import MediaKit from "./pages/MediaKit";
 import SummitWall from "./pages/SummitWall";
@@ -54,6 +55,7 @@ const App = () => (
             <Route path="/contact" element={<Contact />} />
             <Route path="/membership" element={<Membership />} />
             <Route path="/sponsor" element={<Sponsor />} />
+            <Route path="/replay" element={<Replay />} />
             <Route path="/partner" element={<Partner />} />
             <Route path="/media-kit" element={<MediaKit />} />
             <Route path="/summit-profiles" element={<SummitWall />} />

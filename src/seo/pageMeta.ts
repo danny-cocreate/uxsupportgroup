@@ -59,6 +59,7 @@ const EXACT: Record<string, PageMeta> = {
   "/contact": { title: formatPageTitle("Contact") },
   "/membership": { title: formatPageTitle("Membership") },
   "/sponsor": { title: formatPageTitle("Sponsor") },
+  "/replay": { title: formatPageTitle("Replay") },
   "/partner": { title: formatPageTitle("Partner") },
   "/media-kit": { title: formatPageTitle("Media Kit") },
   "/summit-profiles": { title: formatPageTitle("Summit profiles") },
