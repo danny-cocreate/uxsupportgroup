@@ -10,9 +10,8 @@ export type Summit2026FacilitatorCardProps = {
   imageSrc?: string;
   imageAlt?: string;
   linkedinUrl: string;
-  /** Session this facilitator is leading (title + day/time). */
-  sessionTitle?: string;
-  sessionDayTime?: string;
+  /** Short bio preview shown on the card; truncated to a few lines. */
+  bio?: string;
   /** If true, render a "Keynote Speaker" callout above the name. */
   keynote?: boolean;
   /** Fires when the card is clicked (anywhere except the LinkedIn icon). */
@@ -43,8 +42,7 @@ export function Summit2026FacilitatorCard({
   imageSrc,
   imageAlt,
   linkedinUrl,
-  sessionTitle,
-  sessionDayTime,
+  bio,
   keynote,
   onOpen,
 }: Summit2026FacilitatorCardProps) {
@@ -66,7 +64,7 @@ export function Summit2026FacilitatorCard({
   return (
     <div
       className={cn(
-        "summit-facilitator-card-frame relative group transform transition-transform",
+        "summit-facilitator-card-frame relative group transform transition-transform h-full",
         isClickable &&
           "cursor-pointer hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-uxsg-rsvp focus-visible:ring-offset-2 rounded",
       )}
@@ -87,7 +85,7 @@ export function Summit2026FacilitatorCard({
         <span className="summit-pushpin-point" />
       </div>
 
-      <div className="relative z-0 bg-card p-8 pb-8 summit-facilitator-paper flex flex-col gap-5">
+      <div className="relative z-0 bg-card p-8 pb-8 summit-facilitator-paper flex flex-col gap-5 h-full">
         {/* Top row: photo + LinkedIn */}
         <div className="flex items-start justify-between gap-3">
           <div
@@ -143,27 +141,19 @@ export function Summit2026FacilitatorCard({
           </p>
         </div>
 
-        {/* Session */}
-        {sessionTitle || sessionDayTime ? (
+        {/* Bio preview */}
+        {bio ? (
           <>
             <hr className="border-0 border-t border-dashed border-uxsg-ink/25" />
-            <div>
-              <p className="font-body text-[11px] font-bold uppercase tracking-widest text-muted-foreground mb-1.5">
-                Leading
+            <div className="flex-1">
+              <p className="font-body text-[15px] text-uxsg-ink leading-snug line-clamp-4">
+                {bio}
               </p>
-              {sessionTitle ? (
-                <p className="font-body text-[15px] font-semibold text-uxsg-ink leading-snug">
-                  {sessionTitle}
-                </p>
-              ) : null}
-              {sessionDayTime ? (
-                <p className="font-hand text-base text-neutral-700 leading-tight mt-1">
-                  {sessionDayTime}
-                </p>
-              ) : null}
             </div>
           </>
-        ) : null}
+        ) : (
+          <div className="flex-1" />
+        )}
 
         {isClickable ? (
           <span

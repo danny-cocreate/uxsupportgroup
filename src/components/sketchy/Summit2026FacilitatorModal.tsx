@@ -285,8 +285,16 @@ export function Summit2026FacilitatorModal({
                   <div
                     className={cn(
                       "h-32 w-32 shrink-0 overflow-hidden rounded-full border-2 border-uxsg-rsvp p-1",
-                      "bg-muted",
+                      "bg-muted flex items-center justify-center",
                     )}
+                    role={speaker?.photo ? undefined : "img"}
+                    aria-label={
+                      speaker?.photo
+                        ? undefined
+                        : speaker
+                          ? `${speaker.name} — placeholder avatar`
+                          : undefined
+                    }
                   >
                     {speaker?.photo ? (
                       <img
@@ -294,6 +302,19 @@ export function Summit2026FacilitatorModal({
                         alt={speaker.name}
                         className="h-full w-full rounded-full object-cover"
                       />
+                    ) : speaker ? (
+                      <span
+                        className="font-body text-2xl font-semibold text-muted-foreground"
+                        aria-hidden
+                      >
+                        {speaker.name
+                          .split(/\s+/)
+                          .filter(Boolean)
+                          .map((p) => p[0])
+                          .join("")
+                          .slice(0, 2)
+                          .toUpperCase()}
+                      </span>
                     ) : null}
                   </div>
 
@@ -314,6 +335,36 @@ export function Summit2026FacilitatorModal({
                           </li>
                         ))}
                       </ul>
+                    </div>
+                  ) : null}
+
+                  {speaker &&
+                  (speaker.favAITools.length > 0 || speaker.tryNextTools.length > 0) ? (
+                    <div className="w-full space-y-4">
+                      {speaker.favAITools.length > 0 ? (
+                        <div>
+                          <p className="font-body text-[12px] font-bold uppercase tracking-wider text-uxsg-ink mb-2">
+                            Fav AI tools
+                          </p>
+                          <div className="flex flex-wrap gap-x-1 gap-y-1 leading-tight">
+                            {speaker.favAITools.map((t) => (
+                              <ToolPill key={`fav-${t}`}>{t}</ToolPill>
+                            ))}
+                          </div>
+                        </div>
+                      ) : null}
+                      {speaker.tryNextTools.length > 0 ? (
+                        <div>
+                          <p className="font-body text-[12px] font-bold uppercase tracking-wider text-uxsg-ink mb-2">
+                            Try Next
+                          </p>
+                          <div className="flex flex-wrap gap-x-1 gap-y-1 leading-tight">
+                            {speaker.tryNextTools.map((t) => (
+                              <ToolPill key={`next-${t}`}>{t}</ToolPill>
+                            ))}
+                          </div>
+                        </div>
+                      ) : null}
                     </div>
                   ) : null}
                 </div>
@@ -369,31 +420,6 @@ export function Summit2026FacilitatorModal({
                     ))}
                   </div>
 
-                  {speaker &&
-                  (speaker.favAITools.length > 0 || speaker.tryNextTools.length > 0) ? (
-                    <div className="mt-6 space-y-3">
-                      {speaker.favAITools.length > 0 ? (
-                        <div className="flex flex-wrap items-center gap-x-1 gap-y-1 leading-tight">
-                          <span className="font-body text-[12px] font-bold uppercase tracking-wider text-uxsg-ink">
-                            Fav AI tools:
-                          </span>
-                          {speaker.favAITools.map((t) => (
-                            <ToolPill key={`fav-${t}`}>{t}</ToolPill>
-                          ))}
-                        </div>
-                      ) : null}
-                      {speaker.tryNextTools.length > 0 ? (
-                        <div className="flex flex-wrap items-center gap-x-1 gap-y-1 leading-tight">
-                          <span className="font-body text-[12px] font-bold uppercase tracking-wider text-uxsg-ink">
-                            Try Next:
-                          </span>
-                          {speaker.tryNextTools.map((t) => (
-                            <ToolPill key={`next-${t}`}>{t}</ToolPill>
-                          ))}
-                        </div>
-                      ) : null}
-                    </div>
-                  ) : null}
                 </div>
               </div>
             </div>

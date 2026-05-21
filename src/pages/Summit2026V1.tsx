@@ -27,7 +27,6 @@ import {
   AGENDA_DAY2,
   agendaRowKey,
   hasAgendaDetails,
-  getPrimaryFacilitatorSession,
 } from "@/data/summit2026Agenda";
 import EstherJ from "@/assets/EstherJ.jpg";
 import FarooqK from "@/assets/FarooqK-3.jpg";
@@ -187,13 +186,13 @@ const NOT_FOR_YOU = [
 
 const SUMMIT_TEAM: { name: string; role: string }[] = [
   { name: "Danny S", role: "Agenda, Sponsorship, Partnership, Email Marketing, Speaker Recruitment, Web Site(s), Ticketing" },
-  { name: "Suye S", role: "Main Producer, Technical Implementation" },
+  { name: "Suyen S", role: "Main Producer, Technical Implementation" },
   { name: "Hayley D", role: "Audience Engagement, Sponsorship & Partnership" },
   { name: "Sylvia B", role: "Marketing Assets" },
   { name: "Yatong W", role: "Web Site(s), Sponsorship & Partnership" },
   { name: "Esther J G", role: "Sponsorship & Partnership" },
   { name: "Renata R", role: "Agenda, Session Flow" },
-  { name: "Maria T R", role: "Sponsorship & Partnership" },
+  { name: "MT R", role: "Sponsorship & Partnership" },
   { name: "Jerry", role: "Tech Support, Video Production" },
   { name: "Tim Bot (OpenClaw)", role: "Execution & Tech Support" },
 ];
@@ -581,7 +580,7 @@ const Summit2026V1 = () => {
           Day 2 — <HandDrawnHighlight className="rotate-[0.25deg]">The Practice</HandDrawnHighlight>
         </p>
         <p className="mt-0 mb-4 text-left font-hand text-xl text-muted-foreground">
-          *All times are in UTC-4 (Eastern Daylight Time).
+          *All times are in UTC-4 (Eastern Daylight Time). All sessions are subject to change.
         </p>
 
         <div className="grid md:grid-cols-2 gap-12">
@@ -716,28 +715,21 @@ const Summit2026V1 = () => {
       {/* Facilitators */}
       <section id="facilitators" className="max-w-7xl mx-auto px-6 scroll-mt-16 overflow-visible">
         <SketchySectionTitle className="mb-6">Meet the Facilitators</SketchySectionTitle>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-x-6 lg:gap-y-6 relative overflow-visible">
-          {SUMMIT_2026_FACILITATORS.map((facilitator) => {
-            const primary = getPrimaryFacilitatorSession(
-              facilitator.name,
-              facilitator.excludeSessionTitles,
-            );
-            return (
-              <Summit2026FacilitatorCard
-                key={facilitator.name}
-                name={facilitator.name}
-                roleLine={formatSummitFacilitatorRoleLine(facilitator.title, facilitator.company)}
-                imageSrc={facilitator.image}
-                linkedinUrl={facilitator.linkedin}
-                sessionTitle={primary?.title}
-                sessionDayTime={primary ? `${primary.dayLabel} · ${primary.time}` : undefined}
-                keynote={facilitator.keynote}
-                onOpen={() =>
-                  setActiveSpeaker(buildSummitFacilitatorModalSpeaker(facilitator))
-                }
-              />
-            );
-          })}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-x-6 lg:gap-y-6 relative overflow-visible items-stretch">
+          {SUMMIT_2026_FACILITATORS.map((facilitator) => (
+            <Summit2026FacilitatorCard
+              key={facilitator.name}
+              name={facilitator.name}
+              roleLine={formatSummitFacilitatorRoleLine(facilitator.title, facilitator.company)}
+              imageSrc={facilitator.image}
+              linkedinUrl={facilitator.linkedin}
+              bio={facilitator.bioParagraphs.join(" ")}
+              keynote={facilitator.keynote}
+              onOpen={() =>
+                setActiveSpeaker(buildSummitFacilitatorModalSpeaker(facilitator))
+              }
+            />
+          ))}
         </div>
       </section>
 

@@ -122,31 +122,18 @@ export const AGENDA_DAY1: AgendaRow[] = [
   { time: "10:45 AM", title: "Break" },
   {
     time: "11:00 AM",
-    title: "Trust, Transparency & Control",
+    title: "Designing Trust in Agentic AI",
     facilitator: "Silvia",
   },
   {
     time: "12:00 PM",
-    title: "Designing with Agentic AI — From Vision to Outcome",
+    title: "Designing from Vision to Outcome in Agentic AI",
     facilitator: "Esther",
-    details: {
-      description:
-        "In this session, you'll learn to treat AI as a \"creative intern\" rather than just a tool. Drawing on a decade of experience in cross-functional leadership, Esther bridges the gap between complex AI and practical productivity by focusing on agentic workflows that automate the \"drag\" of execution.\n\nYou'll explore multimodal systems that move rapidly from problem statements to a wide range of tangible outcomes. By mastering these agentic workflows, designers can reclaim their creative energy and stay focused where it matters most.",
-    },
   },
   {
     time: "12:45 PM",
-    title: "Multimodal Futures",
+    title: "Designing Multimodal Futures in Agentic AI",
     facilitator: "Corey",
-    details: {
-      description:
-        "You've been designing context your whole career — what users see, hear, feel, and bring with them into every moment of an experience. Agentic AI needs exactly that thinking, and right now, almost nobody is applying it.\n\nIn this workshop, you'll learn to see AI agents the way a designer should: not as black boxes, but as systems that fuse signals — voice, vision, text, history — to build confidence and take action. You'll map what your agent perceives, where its blind spots are, and what a real person actually feels when they encounter it. Groups break into moderated rooms, define what their agent should and shouldn't do, then use AI to generate a customer journey and suggest multimodal inputs. No code required.",
-      outcomes: [
-        "A high-level specification for an agentic AI",
-        "A journey map with multimodal sources called out",
-        "A short video of the end-user journey",
-      ],
-    },
   },
   {
     time: "01:30 PM",
@@ -162,49 +149,37 @@ export const AGENDA_DAY2: AgendaRow[] = [
     facilitator: "Suyen",
   },
   {
-    time: "09:15 AM",
+    time: "TBD",
     title: "Orchestrating Complexity",
     facilitator: "Volkan",
-    details: {
-      description:
-        "Three Agents, No Hero: A Field Report From the Orchestrator's Seat.\n\nEvery generation of design tools has promised to reduce complexity and merely moved it. In 2026, complexity has relocated to the orchestrator's seat, where judgment-per-agent halves with every parallel agent you add. This is why you need a Review Budget more than you need another tool.",
-    },
   },
-  { time: "10:15 AM", title: "Break" },
+  { time: "TBD", title: "Break" },
   {
-    time: "10:30 AM",
+    time: "TBD",
     title: "Building Your Process",
     facilitator: "Suyen",
-    details: {
-      description:
-        "In this hands-on workshop, you'll explore where human judgment should stay in the loop when automating workflows, and design systems that speed decisions without abdicating responsibility — running AI systems that don't break trust.\n\nWe'll explore questions like:\n• Where should humans stay in the loop, and what actually happens if they don't?\n• How do you speed up decisions without abdicating responsibility?\n• How do you talk about automation decisions with your team and stakeholders?",
-      outcomes: [
-        "A framework for guardrail moments — concrete decision points where you automate information gathering but keep human judgment in the loop",
-        "Three design patterns: draft modes, proposal systems, and soft guardrails (flag-but-don't-block) you can steal for your own work",
-        "Shared vocabulary like 'system proposes vs. system decides' to navigate team and stakeholder conversations",
-      ],
-    },
   },
   {
-    time: "11:30 AM",
+    time: "TBD",
     title: "Your Path Forward",
     facilitator: "Renata",
   },
   {
-    time: "12:15 PM",
+    time: "TBD",
     title: "Break",
   },
   {
-    time: "12:30 PM",
+    time: "TBD",
     title: "Design Your AI Networking Agent (teams refine + collaborate with other agents)",
     facilitator: "Alexis",
-    details: {
-      description:
-        "A practical workshop designed to help UX and product designers automate their professional outreach. The session shifts the focus from manual networking to an architectural approach, teaching you how to build a personalized AI networking agent.\n\nUsing a combination of Claude, Notion, and Gmail, you'll integrate these platforms into a functional automation framework for managing relationships. This hands-on experience aims to provide immediate utility, allowing creative professionals to apply their technical skills to their own career infrastructure — empowering you to maintain a robust professional network without the burden of constant manual upkeep.",
-    },
+  },  
+  {
+    time: "TBD",
+    title: "Auditing & Trusting Agent Output",
+    facilitator: "MT",
   },
   {
-    time: "01:35 PM",
+    time: "TBD",
     title: "Close",
     facilitator: "Suyen/Danny",
   },

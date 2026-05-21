@@ -7,12 +7,14 @@ import AlexisB from "@/assets/Summit2026-AlexisB.png";
 import CoreyM from "@/assets/CoreyM-2.png";
 import EstherGJ from "@/assets/Summit2026-EstherGJ.png";
 import type { SummitFacilitatorModalSpeaker } from "@/components/sketchy/Summit2026FacilitatorModal";
-import {
-  DAY1_DATE_LABEL,
-  DAY2_DATE_LABEL,
-  SUMMIT_TIME_SUFFIX,
-  getPrimaryFacilitatorSessions,
-} from "@/data/summit2026Agenda";
+// Imports below are unused while session info is hidden pre-event; re-add when restoring sessions
+// in buildSummitFacilitatorModalSpeaker:
+//   import {
+//     DAY1_DATE_LABEL,
+//     DAY2_DATE_LABEL,
+//     SUMMIT_TIME_SUFFIX,
+//     getPrimaryFacilitatorSessions,
+//   } from "@/data/summit2026Agenda";
 
 /** Agenda-aligned order: Day 1 appearance, then Day 2 (see Summit2026V1 agenda). */
 export type Summit2026FacilitatorEntry = {
@@ -79,8 +81,17 @@ export const SUMMIT_2026_FACILITATORS: Summit2026FacilitatorEntry[] = [
     ],
     linkedin: "https://www.linkedin.com/in/silviabalu/",
     image: SilviaB,
-    favAITools: [],
-    tryNextTools: [],
+    favAITools: [
+      "ChatGPT",
+      "Lovable",
+      "Suno",
+      "Bolt",
+      "Replit",
+      "Descript",
+      "Gamma",
+      "Eleven Labs",
+    ],
+    tryNextTools: ["Granola"],
   },
   {
     name: "Esther Greenfield-Jakar",
@@ -154,6 +165,18 @@ export const SUMMIT_2026_FACILITATORS: Summit2026FacilitatorEntry[] = [
     ],
     tryNextTools: ["Open Claw"],
   },
+  {
+    name: "Maria Teresa (MT) Ramos",
+    title: "UX Strategist, Systems Thinker, Problem Archaeologist",
+    company: null,
+    bioParagraphs: [
+      "Staff product designer and founder of Mater Design and Technology, a boutique AI-native design and technology consultancy. Fifteen years of product design leadership across healthcare, financial services, insurance, and government. Thinks in systems, prototypes in code, and writes about turning messy enterprise workflows into products people actually want to use. Obsessed with finding the real problem before solving the wrong one well.",
+      "Former: S&P Global, New York Life Insurance, Conductor, Muck Rack, StrataPT.",
+    ],
+    linkedin: "https://www.linkedin.com/in/mtramos/",
+    favAITools: ["Claude", "Perplexity", "NotebookLM"],
+    tryNextTools: ["Unicorn Studio"],
+  },
 ];
 
 /**
@@ -163,14 +186,13 @@ export const SUMMIT_2026_FACILITATORS: Summit2026FacilitatorEntry[] = [
 export function buildSummitFacilitatorModalSpeaker(
   facilitator: Summit2026FacilitatorEntry,
 ): SummitFacilitatorModalSpeaker {
-  const sessions = getPrimaryFacilitatorSessions(
-    facilitator.name,
-    facilitator.excludeSessionTitles,
-  ).map((s) => ({
-    day: s.dayLabel === "Day 1" ? DAY1_DATE_LABEL : DAY2_DATE_LABEL,
-    time: `${s.time} ${SUMMIT_TIME_SUFFIX}`,
-    title: s.title,
-  }));
+  // Workshop/session info intentionally hidden pre-event. To restore, swap `sessions` for:
+  //   getPrimaryFacilitatorSessions(facilitator.name, facilitator.excludeSessionTitles).map((s) => ({
+  //     day: s.dayLabel === "Day 1" ? DAY1_DATE_LABEL : DAY2_DATE_LABEL,
+  //     time: `${s.time} ${SUMMIT_TIME_SUFFIX}`,
+  //     title: s.title,
+  //   }))
+  const sessions: SummitFacilitatorModalSpeaker["sessions"] = [];
   return {
     name: facilitator.name,
     tagline: formatSummitFacilitatorRoleLine(facilitator.title, facilitator.company),
