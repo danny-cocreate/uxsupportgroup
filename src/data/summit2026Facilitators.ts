@@ -6,6 +6,7 @@ import RenataR from "@/assets/Summit2026-RenataR.png";
 import AlexisB from "@/assets/Summit2026-AlexisB.png";
 import CoreyM from "@/assets/CoreyM-2.png";
 import EstherGJ from "@/assets/Summit2026-EstherGJ.png";
+import MTRamos from "@/assets/Summit2026-MTRamos.png";
 import type { SummitFacilitatorModalSpeaker } from "@/components/sketchy/Summit2026FacilitatorModal";
 // Imports below are unused while session info is hidden pre-event; re-add when restoring sessions
 // in buildSummitFacilitatorModalSpeaker:
@@ -169,6 +170,7 @@ export const SUMMIT_2026_FACILITATORS: Summit2026FacilitatorEntry[] = [
     name: "Maria Teresa (MT) Ramos",
     title: "UX Strategist, Systems Thinker, Problem Archaeologist",
     company: null,
+    image: MTRamos,
     bioParagraphs: [
       "Staff product designer and founder of Mater Design and Technology, a boutique AI-native design and technology consultancy. Fifteen years of product design leadership across healthcare, financial services, insurance, and government. Thinks in systems, prototypes in code, and writes about turning messy enterprise workflows into products people actually want to use. Obsessed with finding the real problem before solving the wrong one well.",
       "Former: S&P Global, New York Life Insurance, Conductor, Muck Rack, StrataPT.",

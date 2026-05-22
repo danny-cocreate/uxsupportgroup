@@ -954,11 +954,11 @@ const Summit2026V1 = () => {
         >
           The team who made this happen
         </SketchySectionTitle>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-x-4 gap-y-6 pt-2">
+        <div className="flex flex-wrap justify-center gap-x-4 gap-y-6 pt-2">
           {SUMMIT_TEAM.map((member, i) => (
             <div
               key={member.name}
-              className={`relative bg-white border border-uxsg-ink/80 shadow-[1px_1px_0_0_var(--uxsg-ink)] px-3 pt-4 pb-3 ${TEAM_CARD_ROTATIONS[i % TEAM_CARD_ROTATIONS.length]}`}
+              className={`relative w-[9.5rem] sm:w-[10.5rem] bg-white border border-uxsg-ink/80 shadow-[1px_1px_0_0_var(--uxsg-ink)] px-3 pt-4 pb-3 text-center ${TEAM_CARD_ROTATIONS[i % TEAM_CARD_ROTATIONS.length]}`}
             >
               <SketchyTape
                 position={i % 2 === 0 ? "topLeft" : "topRight"}

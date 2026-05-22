@@ -146,7 +146,7 @@ export function Summit2026FacilitatorCard({
           <>
             <hr className="border-0 border-t border-dashed border-uxsg-ink/25" />
             <div className="flex-1">
-              <p className="font-body text-[15px] text-uxsg-ink leading-snug line-clamp-4">
+              <p className="font-body text-[15px] text-uxsg-ink leading-snug line-clamp-3">
                 {bio}
               </p>
             </div>
