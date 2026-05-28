@@ -89,25 +89,32 @@ function finiteNumber(value: unknown): number | undefined {
 function normalizeTicketAvailability(data: unknown): NormalizedTicketAvailability {
   const record = data && typeof data === "object" ? (data as Record<string, unknown>) : {};
   const serverTier = record.activeTier;
-  const activeTier: TicketTier =
-    serverTier === "early_bird" || serverTier === "regular" || serverTier === "late"
-      ? serverTier
-      : "regular";
 
-  const earlyBirdRemaining =
-    finiteNumber(record.earlyBirdRemaining) ??
-    Math.max(
-      0,
-      EARLY_BIRD_SEATS -
-        Math.max(KNOWN_EARLY_BIRD_SOLD, finiteNumber(record.earlyBirdSold) ?? KNOWN_EARLY_BIRD_SOLD)
-    );
+  const earlyBirdRemainingFromServer = finiteNumber(record.earlyBirdRemaining);
+  const earlyBirdSoldFromServer =
+    finiteNumber(record.earlyBirdSold) ??
+    (earlyBirdRemainingFromServer === undefined
+      ? undefined
+      : EARLY_BIRD_SEATS - earlyBirdRemainingFromServer);
+  const earlyBirdSold = Math.max(KNOWN_EARLY_BIRD_SOLD, earlyBirdSoldFromServer ?? 0);
+  const earlyBirdRemaining = Math.max(0, EARLY_BIRD_SEATS - earlyBirdSold);
 
-  const regularRemaining =
-    finiteNumber(record.regularRemaining) ??
-    Math.max(
-      0,
-      REGULAR_SEATS - (finiteNumber(record.regularSold) ?? KNOWN_REGULAR_SOLD)
-    );
+  const regularRemainingFromServer = finiteNumber(record.regularRemaining);
+  const regularSoldFromServer =
+    finiteNumber(record.regularSold) ??
+    (regularRemainingFromServer === undefined
+      ? undefined
+      : REGULAR_SEATS - regularRemainingFromServer);
+  const regularTierSoldFloor = serverTier === "late" ? REGULAR_SEATS : KNOWN_REGULAR_SOLD;
+  const regularSold = Math.max(regularTierSoldFloor, regularSoldFromServer ?? 0);
+  const regularRemaining = Math.max(0, REGULAR_SEATS - regularSold);
+
+  const activeTier =
+    earlyBirdSold < EARLY_BIRD_SEATS
+      ? "early_bird"
+      : regularSold < REGULAR_SEATS
+        ? "regular"
+        : "late";
 
   return {
     activeTier,
@@ -261,6 +268,18 @@ const Summit2026V1 = () => {
         setEarlyBirdRemaining(0);
         setRegularRemaining(DEFAULT_REGULAR_REMAINING);
         return;
+      }
+      if (
+        typeof data === "object" &&
+        data !== null &&
+        finiteNumber((data as { regularRemaining?: unknown }).regularRemaining) === undefined &&
+        finiteNumber((data as { regularSold?: unknown }).regularSold) === undefined
+      ) {
+        console.warn(
+          "[TICKETS] Availability API returned no regular ticket fields (likely undeployed edge function). " +
+            "Regular count will stay at the static default until check-ticket-availability is redeployed.",
+          data
+        );
       }
       if (import.meta.env.DEV && data && typeof data === "object") {
         console.info("[TICKETS] Availability", {
