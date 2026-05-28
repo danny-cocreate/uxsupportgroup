@@ -4,10 +4,7 @@ export const LATE_PRICE_ID = "price_1TSLGrEt4aAP5ylP9oTB0tFg";
 export const EARLY_BIRD_CAPACITY = 20;
 export const REGULAR_CAPACITY = 50;
 export const EARLY_BIRD_SOLD_FLOOR = 20;
-/** Regular tickets sold before Stripe metadata tracking; added to live Stripe counts. */
-export const REGULAR_SOLD_OFFSET = 7;
-/** Legacy minimum; prefer REGULAR_SOLD_OFFSET. Used only when offset env is unset/0. */
-export const REGULAR_SOLD_FLOOR = 0;
+export const REGULAR_SOLD_FLOOR = 7;
 
 export type SummitTicketType = "early_bird" | "regular" | "late";
 export type SummitTicketPhase = SummitTicketType;
@@ -166,10 +163,7 @@ export async function countPaidSummitTicketSales(
     0,
     envInt("SUMMIT_EARLY_BIRD_SOLD_FLOOR", EARLY_BIRD_SOLD_FLOOR, log)
   );
-  const regularSoldOffset = Math.max(
-    0,
-    envInt("SUMMIT_REGULAR_SOLD_OFFSET", REGULAR_SOLD_OFFSET, log)
-  );
+  const regularSoldOffset = Math.max(0, envInt("SUMMIT_REGULAR_SOLD_OFFSET", 0, log));
   const regularSoldFloor = Math.max(
     0,
     envInt("SUMMIT_REGULAR_SOLD_FLOOR", REGULAR_SOLD_FLOOR, log)
@@ -251,16 +245,13 @@ export async function countPaidSummitTicketSales(
     });
   }
 
-  // Offset/floor is a baseline for pre-tracking sales; Stripe counts new purchases on top.
-  // Legacy deployments may still set SUMMIT_REGULAR_SOLD_FLOOR with offset=0 — treat floor as baseline then.
-  const regularSoldBaseline = regularSoldOffset > 0 ? regularSoldOffset : regularSoldFloor;
-  const regularSold = regularSoldFromStripe + regularSoldBaseline;
+  const regularSoldWithOffset = regularSoldFromStripe + regularSoldOffset;
 
   return {
     earlyBirdSold: Math.max(earlyBirdSoldFromStripe, earlyBirdSoldFloor),
     earlyBirdSoldFromStripe,
     earlyBirdSoldFloor,
-    regularSold,
+    regularSold: Math.max(regularSoldWithOffset, regularSoldFloor),
     regularSoldFromStripe,
     regularSoldOffset,
     regularSoldFloor,
@@ -278,6 +269,7 @@ export async function getSummitTicketAvailability(
   const activeTier = activeSummitTicketPhase(counts.earlyBirdSold, counts.regularSold);
   return {
     ...counts,
+    apiVersion: SUMMIT_AVAILABILITY_API_VERSION,
     activeTier,
     isEarlyBird: activeTier === "early_bird",
     earlyBirdRemaining: Math.max(0, EARLY_BIRD_CAPACITY - counts.earlyBirdSold),
