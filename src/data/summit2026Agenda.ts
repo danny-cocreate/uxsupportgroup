@@ -1,15 +1,9 @@
-export type AgendaRowDetails = {
-  description?: string;
-  outcomes?: string[];
-};
-
 export type AgendaRow = {
   time: string;
   title: string;
   facilitator?: string;
   /** Short topic/theme label rendered as a pill on facilitator cards (e.g. "Trust", "Multimodal"). */
   theme?: string;
-  details?: AgendaRowDetails;
 };
 
 export type AgendaSessionWithDay = AgendaRow & {
@@ -96,12 +90,6 @@ export function getPrimaryFacilitatorSessions(
 
 export const agendaRowKey = (row: AgendaRow) => `${row.time}-${row.title}`;
 
-export const hasAgendaDetails = (row: AgendaRow) =>
-  Boolean(
-    row.details &&
-      (row.details.description || (row.details.outcomes && row.details.outcomes.length > 0)),
-  );
-
 export const AGENDA_DAY1: AgendaRow[] = [
   {
     time: "09:00 AM",
@@ -119,24 +107,26 @@ export const AGENDA_DAY1: AgendaRow[] = [
       "Create Your Summit Agent (build a simple agent you'll use/refine throughout the summit)",
     facilitator: "Danny",
   },
-  { time: "10:45 AM", title: "Break" },
+  { time: "10:45 AM", title: "Break (15 min)" },
   {
     time: "11:00 AM",
     title: "Designing Trust in Agentic AI",
     facilitator: "Silvia",
   },
+  { time: "11:55 AM", title: "Break (5 min)" },
   {
     time: "12:00 PM",
     title: "Designing from Vision to Outcome in Agentic AI",
     facilitator: "Esther",
   },
+  { time: "12:45 PM", title: "Break (5 min)" },
   {
-    time: "12:45 PM",
+    time: "12:50 PM",
     title: "Designing Multimodal Futures in Agentic AI",
     facilitator: "Corey",
   },
   {
-    time: "01:30 PM",
+    time: "01:50 PM",
     title: "Close & Day 2 preview",
     facilitator: "Suyen/Danny",
   },
@@ -150,33 +140,31 @@ export const AGENDA_DAY2: AgendaRow[] = [
   },
   {
     time: "09:15 AM",
-    title: "Orchestrating Complexity",
+    title: "Three Agents, No Heroes: An Orchestrator's Field Report",
     facilitator: "Volkan",
   },
-  { time: "10:15 AM", title: "Break" },
+  { time: "10:15 AM", title: "Break (5 min)" },
   {
-    time: "10:30 AM",
-    title: "Building Your Process",
+    time: "10:20 AM",
+    title: "Building Your Working Process",
     facilitator: "Suyen",
   },
+  { time: "11:20 AM", title: "Break (5 min)" },
   {
-    time: "11:30 AM",
-    title: "Your Path Forward",
+    time: "11:25 AM",
+    title: "Auditing & Trusting Agent Output",
+    facilitator: "MT",
+  },
+  { time: "12:10 PM", title: "Break (20 min)" },
+  {
+    time: "12:30 PM",
+    title: "Discover Your Next Move",
     facilitator: "Renata",
   },
   {
-    time: "12:15 PM",
-    title: "Break",
-  },
-  {
-    time: "12:30 PM",
-    title: "Design Your AI Networking Agent (teams refine + collaborate with other agents)",
+    time: "01:30 PM",
+    title: "Design Your AI Networking Agent",
     facilitator: "Alexis",
-  },
-  {
-    time: "01:35 PM",
-    title: "Auditing & Trusting Agent Output",
-    facilitator: "MT",
   },
   {
     time: "02:30 PM",
