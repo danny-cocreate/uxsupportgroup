@@ -384,20 +384,7 @@ All colors MUST be HSL for shadcn/ui compatibility; UXSG sketchy tokens are in :
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
   }
-  .summit-notebook-row--clickable {
-    cursor: pointer;
-    background: transparent;
-    border-left: 0;
-    border-right: 0;
-    border-top: 0;
-    transition: background-color 0.15s ease;
-  }
-  .summit-notebook-row--clickable:focus-visible {
-    outline: none;
-  }
-
-  /* Shared style: hand-drawn orange link with a wobbly yellow marker on hover. */
-  .summit-back-to-agenda,
+  /* Hand-drawn orange link with a wobbly yellow marker on hover (facilitator card "bio →" pill). */
   .summit-detail-pill {
     position: relative;
     display: inline-flex;
@@ -434,27 +421,6 @@ All colors MUST be HSL for shadcn/ui compatibility; UXSG sketchy tokens are in :
   .summit-see-last-year:focus-visible .summit-button-highlight {
     opacity: 1;
   }
-  .summit-back-to-agenda:hover,
-  .summit-back-to-agenda:focus-visible {
-    color: var(--uxsg-ink);
-    text-decoration: none;
-    transform: translateX(-2px);
-    outline: none;
-  }
-  .summit-back-to-agenda:hover .summit-button-highlight,
-  .summit-back-to-agenda:focus-visible .summit-button-highlight {
-    opacity: 1;
-  }
-  .summit-notebook-row--clickable:hover .summit-detail-pill,
-  .summit-notebook-row--clickable:focus-visible .summit-detail-pill {
-    color: var(--uxsg-ink);
-    text-decoration: none;
-    transform: translateX(2px);
-  }
-  .summit-notebook-row--clickable:hover .summit-detail-pill .summit-button-highlight,
-  .summit-notebook-row--clickable:focus-visible .summit-detail-pill .summit-button-highlight {
-    opacity: 1;
-  }
 
   /* Facilitator card "bio →" pill — larger text, hover driven by the card frame
      (excluding hover over the inner LinkedIn link). */
@@ -471,51 +437,6 @@ All colors MUST be HSL for shadcn/ui compatibility; UXSG sketchy tokens are in :
   .summit-facilitator-card-frame:hover:not(:has(a:hover)) .summit-detail-pill .summit-button-highlight,
   .summit-facilitator-card-frame:focus-visible .summit-detail-pill .summit-button-highlight {
     opacity: 1;
-  }
-
-  /* Summit 2026 — agenda card flip */
-  .summit-flip-card {
-    perspective: 1600px;
-  }
-  .summit-flip-inner {
-    position: relative;
-    width: 100%;
-    transition: transform 0.7s cubic-bezier(0.4, 0.05, 0.2, 1);
-    transform-style: preserve-3d;
-  }
-  .summit-flip-card.is-flipped .summit-flip-inner {
-    transform: rotateY(180deg);
-  }
-  .summit-flip-face {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    isolation: isolate;
-  }
-  .summit-flip-front {
-    /* Force its own 3D context so backface-visibility applies to children. */
-    transform: rotateY(0deg);
-    transition: opacity 0s linear 0.35s, visibility 0s linear 0.35s;
-  }
-  .summit-flip-back {
-    position: absolute;
-    inset: 0;
-    transform: rotateY(180deg);
-    overflow-y: auto;
-    pointer-events: none;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0s linear 0.35s, visibility 0s linear 0.35s;
-  }
-  .summit-flip-card.is-flipped .summit-flip-front {
-    pointer-events: none;
-    opacity: 0;
-    visibility: hidden;
-  }
-  .summit-flip-card.is-flipped .summit-flip-back {
-    pointer-events: auto;
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0s linear 0.35s, visibility 0s linear 0.35s;
   }
 
   /* Summit 2026 (Stitch) — handwritten accent */

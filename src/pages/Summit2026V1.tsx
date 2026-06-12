@@ -26,7 +26,6 @@ import {
   AGENDA_DAY1,
   AGENDA_DAY2,
   agendaRowKey,
-  hasAgendaDetails,
 } from "@/data/summit2026Agenda";
 import EstherJ from "@/assets/EstherJ.jpg";
 import FarooqK from "@/assets/FarooqK-3.jpg";
@@ -178,7 +177,7 @@ const NOT_FOR_YOU = [
 ];
 
 const SUMMIT_TEAM: { name: string; role: string }[] = [
-  { name: "Danny S", role: "Agenda, Sponsorship, Partnership, Email Marketing, Speaker Recruitment, Web Site(s), Ticketing" },
+  { name: "Danny S", role: "Founder, Education Director" },
   { name: "Suyen S", role: "Main Producer, Technical Implementation" },
   { name: "Hayley D", role: "Audience Engagement, Sponsorship & Partnership" },
   { name: "Sylvia B", role: "Marketing Assets" },
@@ -186,7 +185,7 @@ const SUMMIT_TEAM: { name: string; role: string }[] = [
   { name: "Esther J G", role: "Sponsorship & Partnership" },
   { name: "Renata R", role: "Agenda, Session Flow" },
   { name: "MT R", role: "Sponsorship & Partnership" },
-  { name: "Jerry", role: "Tech Support, Video Production" },
+  { name: "Jerry B", role: "Tech Support, Video Production" },
   { name: "Tim Bot (OpenClaw)", role: "Execution & Tech Support" },
 ];
 
@@ -246,7 +245,6 @@ const Summit2026V1 = () => {
   const [regularRemaining, setRegularRemaining] = useState(DEFAULT_REGULAR_REMAINING);
   const [checkoutLoading, setCheckoutLoading] = useState<CheckoutSlot | null>(null);
   const [taglineHighlightStep, setTaglineHighlightStep] = useState(0);
-  const [flippedRowByDay, setFlippedRowByDay] = useState<Record<string, string | null>>({});
   const [activeSpeaker, setActiveSpeaker] = useState<SummitFacilitatorModalSpeaker | null>(null);
   const taglineParagraphRef = useRef<HTMLParagraphElement>(null);
   const taglineHighlightHasPlayedRef = useRef(false);
@@ -573,9 +571,7 @@ const Summit2026V1 = () => {
       {/* Agenda */}
       <section id="agenda" className="max-w-7xl mx-auto px-6 scroll-mt-16">
         <SketchySectionTitle
-          className="mb-4"
-          badge={<SketchyBadge rotation="subtle">Tentative</SketchyBadge>}
-        >
+          className="mb-4"        >
           The Agenda
         </SketchySectionTitle>
         <p className="font-body text-lg text-center text-foreground/90 mb-16 max-w-2xl mx-auto">
@@ -585,131 +581,42 @@ const Summit2026V1 = () => {
           Day 2 — <HandDrawnHighlight className="rotate-[0.25deg]">The Practice</HandDrawnHighlight>
         </p>
         <p className="mt-0 mb-4 text-left font-hand text-xl text-muted-foreground">
-          *All times are in UTC-4 (Eastern Daylight Time). All sessions are subject to change.
+          *All times are in UTC-4 (Eastern Daylight Time).
         </p>
 
         <div className="grid md:grid-cols-2 gap-12">
           {(
             [
-              { day: "Day 1 - June 18 (Thursday)", theme: "The Shift", rows: AGENDA_DAY1 },
-              { day: "Day 2 -June 19 (Friday)", theme: "The Practice", rows: AGENDA_DAY2 },
+              { day: "Day 1 - June 18 (Thursday)", hours: "9 AM – 2 PM", theme: "The Shift", rows: AGENDA_DAY1 },
+              { day: "Day 2 -June 19 (Friday)", hours: "9 AM – 2:45 PM", theme: "The Practice", rows: AGENDA_DAY2 },
             ] as const
-          ).map(({ day, theme, rows }) => {
-            const flippedKey = flippedRowByDay[day] ?? null;
-            const flippedRow = flippedKey
-              ? rows.find((r) => agendaRowKey(r) === flippedKey)
-              : null;
-            const isFlipped = Boolean(flippedRow);
+          ).map(({ day, hours, theme, rows }) => {
             return (
               <div
                 key={day}
-                className={`summit-flip-card h-full ${isFlipped ? "is-flipped" : ""}`}
+                className="summit-notebook-sheet p-8 pl-14 relative h-full"
               >
-                <div className="summit-flip-inner h-full">
-                  <div
-                    className="summit-flip-face summit-flip-front summit-notebook-sheet p-8 pl-14 relative h-full"
-                    aria-hidden={isFlipped}
-                  >
-                    <div className="summit-notebook-margin-rail" aria-hidden />
-                    <h3 className="font-headline text-3xl mb-2 text-uxsg-ink relative z-10">{day}</h3>
-                    <p className="font-body text-uxsg-rsvp font-bold mb-8 italic relative z-10">
-                      Theme: &ldquo;{theme}&rdquo;
-                    </p>
-                    <div className="relative z-10">
-                      {rows.map((row) => {
-                        const key = agendaRowKey(row);
-                        const clickable = hasAgendaDetails(row);
-                        const rowContent = (
-                          <>
-                            <span className="font-hand shrink-0 text-neutral-700">{row.time}</span>
-                            <div className="text-left min-w-0 sm:max-w-[min(100%,22rem)]">
-                              <span className="block font-bold">{row.title}</span>
-                              {row.facilitator ? (
-                                <span className="block font-body text-sm text-muted-foreground mt-0.5">
-                                  {row.facilitator}
-                                </span>
-                              ) : null}
-                            </div>
-                          </>
-                        );
-                        return clickable ? (
-                          <button
-                            key={key}
-                            type="button"
-                            onClick={() =>
-                              setFlippedRowByDay((prev) => ({ ...prev, [day]: key }))
-                            }
-                            className="summit-notebook-row summit-notebook-row--clickable w-full flex flex-col sm:flex-row gap-1 sm:gap-4 font-mono text-[0.95rem] text-neutral-600 text-left"
-                          >
-                            {rowContent}
-                            <span
-                              aria-hidden
-                              className="summit-detail-pill font-hand sm:ml-auto self-start mt-1 sm:mt-0 shrink-0"
-                            >
-                              <HandDrawnHighlightSVG className="summit-button-highlight" />
-                              <span className="relative z-[1]">detail →</span>
-                            </span>
-                            <span className="sr-only">View session details</span>
-                          </button>
-                        ) : (
-                          <div
-                            key={key}
-                            className="summit-notebook-row flex flex-col sm:flex-row gap-1 sm:gap-4 font-mono text-[0.95rem] text-neutral-600"
-                          >
-                            {rowContent}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  <div
-                    className="summit-flip-face summit-flip-back summit-notebook-sheet p-8 pl-14 relative"
-                    aria-hidden={!isFlipped}
-                  >
-                    <div className="summit-notebook-margin-rail" aria-hidden />
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setFlippedRowByDay((prev) => ({ ...prev, [day]: null }))
-                      }
-                      className="summit-back-to-agenda font-hand text-base mb-8 relative z-10"
+                <div className="summit-notebook-margin-rail" aria-hidden />
+                <h3 className="font-headline text-3xl mb-1 text-uxsg-ink relative z-10">{day}</h3>
+                <p className="font-hand text-lg text-neutral-700 mb-2 relative z-10">{hours}</p>
+                <p className="font-body text-uxsg-rsvp font-bold mb-8 italic relative z-10">
+                  Theme: &ldquo;{theme}&rdquo;
+                </p>
+                <div className="relative z-10">
+                  {rows.map((row) => (
+                    <div
+                      key={agendaRowKey(row)}
+                      className="summit-notebook-row flex flex-col sm:flex-row sm:items-baseline gap-x-4 gap-y-0.5 font-mono text-[0.95rem] text-neutral-600"
                     >
-                      <HandDrawnHighlightSVG className="summit-button-highlight" />
-                      <span className="relative z-[1]">← Back to agenda</span>
-                    </button>
-                    {flippedRow ? (
-                      <div className="relative z-10">
-                        <p className="font-hand text-lg text-neutral-700 mb-1">
-                          {flippedRow.time}
-                        </p>
-                        <h3 className="font-headline text-2xl mb-2 text-uxsg-ink">
-                          {flippedRow.title}
-                        </h3>
-                        {flippedRow.facilitator ? (
-                          <p className="font-body text-sm text-muted-foreground mb-4 italic">
-                            with {flippedRow.facilitator}
-                          </p>
-                        ) : null}
-                        {flippedRow.details?.description ? (
-                          <p className="font-body text-base text-foreground/90 mb-4 whitespace-pre-line">
-                            {flippedRow.details.description}
-                          </p>
-                        ) : null}
-                        {flippedRow.details?.outcomes && flippedRow.details.outcomes.length > 0 ? (
-                          <>
-                            <p className="font-body font-bold text-sm uppercase tracking-wide text-uxsg-ink mb-2">
-                              You&rsquo;ll leave with
-                            </p>
-                            <ul className="font-body text-base text-foreground/90 list-disc pl-5 space-y-1">
-                              {flippedRow.details.outcomes.map((o) => (
-                                <li key={o}>{o}</li>
-                              ))}
-                            </ul>
-                          </>
-                        ) : null}
-                      </div>
-                    ) : null}
-                  </div>
+                      <span className="font-hand shrink-0 text-neutral-700">{row.time}</span>
+                      <span className="font-bold text-left min-w-0">{row.title}</span>
+                      {row.facilitator ? (
+                        <span className="font-body text-sm text-muted-foreground shrink-0 sm:ml-auto sm:text-right">
+                          {row.facilitator}
+                        </span>
+                      ) : null}
+                    </div>
+                  ))}
                 </div>
               </div>
             );
