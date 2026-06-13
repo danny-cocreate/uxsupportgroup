@@ -155,12 +155,13 @@ export const AGENDA_DAY2: AgendaRow[] = [
     title: "Auditing & Trusting Agent Output",
     facilitator: "MT",
   },
-  { time: "12:10 PM", title: "Break (20 min)" },
+  { time: "12:10 PM", title: "Break (15 min)" },
   {
-    time: "12:30 PM",
+    time: "12:25 PM",
     title: "Discover Your Next Move",
     facilitator: "Renata",
   },
+  { time: "01:25 PM", title: "Break (5 min)" },
   {
     time: "01:30 PM",
     title: "Design Your AI Networking Agent",
