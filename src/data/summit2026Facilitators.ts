@@ -150,7 +150,7 @@ export const SUMMIT_2026_FACILITATORS: Summit2026FacilitatorEntry[] = [
   {
     name: "Alexis Brochu",
     title: "Principal, AI Product Strategist",
-    company: "Alexis Design",
+    company: "Upstart Labs",
     bioParagraphs: [
       "Alexis Brochu is a UX Product Manager and AI Enablement Specialist with 20+ years of experience, PMP and Prosci CMP certified. She chairs Strategic AI Enablement for the New Hampshire Tech Alliance AI Task Force, co-hosts UXSG's weekly AIxUX meetup, and of course, she loves teaching designers how they can automate their processes.",
     ],
