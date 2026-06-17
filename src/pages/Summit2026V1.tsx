@@ -218,6 +218,10 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
     a: "You should have a working familiarity with AI tools, but you don't need to be an expert. This summit is designed for UX and product designers who are actively exploring how AI fits into their practice — not a beginner-level introduction.",
   },
   {
+  q: "Do I need any paid AI tools to attend?",
+  a: "Yes. A core part of this summit is hands-on building with Claude Cowork, you'll need at least a Claude Pro plan ($20/month) and the Claude Desktop app (Mac or Windows). We'll email pre-event prep instructions about this and any other tools to register for.",
+  },
+  {
     q: "Who are the speakers?",
     a: "Our sessions are led by 6-8 practitioners who are actively shipping AI-powered products — not professional keynote speakers. Check the agenda section above for confirmed facilitators and session topics.",
   },
