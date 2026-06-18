@@ -9,6 +9,7 @@ import { RoughWavyUnderline } from "@/components/sketchy/RoughWavyUnderline";
 import { SketchyBadge } from "@/components/sketchy/SketchyBadge";
 import { SketchySectionTitle } from "@/components/sketchy/SketchySectionTitle";
 import { Summit2026PointerGlow } from "@/components/sketchy/Summit2026PointerGlow";
+import { SketchySoldOutTape } from "@/components/sketchy/SketchySoldOutTape";
 import { SketchyTallCard } from "@/components/sketchy/SketchyTallCard";
 import { SketchyTape } from "@/components/sketchy/SketchyTape";
 import { SketchyTestimonialNote } from "@/components/sketchy/SketchyTestimonialNote";
@@ -682,6 +683,7 @@ const Summit2026V1 = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="relative h-full">
             <SketchyTallCard
               variant="light"
               fill="#ffe24a"
@@ -725,7 +727,7 @@ const Summit2026V1 = () => {
                 onClick={() => startCheckout(EARLY_BIRD_PRICE_ID, "early")}
               >
                 {!SUMMIT_TICKET_PURCHASE_ENABLED
-                  ? "Unavailable"
+                  ? "Sold Out"
                   : checkoutLoading === "early"
                   ? "Opening checkout…"
                   : isEarlyBird
@@ -733,6 +735,9 @@ const Summit2026V1 = () => {
                     : "Sold Out"}
               </SketchyRectButton>
             </SketchyTallCard>
+            {!SUMMIT_TICKET_PURCHASE_ENABLED && <SketchySoldOutTape rotation="left" />}
+            </div>
+            <div className="relative h-full">
             <SketchyTallCard
               variant="light"
               fill={CARD_FILL}
@@ -776,7 +781,7 @@ const Summit2026V1 = () => {
                 onClick={() => startCheckout(REGULAR_PRICE_ID, "regular")}
               >
                 {!SUMMIT_TICKET_PURCHASE_ENABLED
-                  ? "Unavailable"
+                  ? "Sold Out"
                   : checkoutLoading === "regular"
                   ? "Opening checkout…"
                   : isEarlyBird
@@ -786,6 +791,9 @@ const Summit2026V1 = () => {
                       : "Get Regular Ticket"}
               </SketchyRectButton>
             </SketchyTallCard>
+            {!SUMMIT_TICKET_PURCHASE_ENABLED && <SketchySoldOutTape rotation="right" />}
+            </div>
+            <div className="relative h-full">
             <SketchyTallCard
               variant="light"
               fill="#f97316"
@@ -816,7 +824,7 @@ const Summit2026V1 = () => {
                 onClick={() => startCheckout(LATE_PRICE_ID, "late")}
               >
                 {!SUMMIT_TICKET_PURCHASE_ENABLED
-                  ? "Unavailable"
+                  ? "Sold Out"
                   : checkoutLoading === "late"
                   ? "Opening checkout…"
                   : isLate
@@ -824,6 +832,8 @@ const Summit2026V1 = () => {
                     : "Available after regular"}
               </SketchyRectButton>
             </SketchyTallCard>
+            {!SUMMIT_TICKET_PURCHASE_ENABLED && <SketchySoldOutTape rotation="slight" />}
+            </div>
           </div>
         </div>
       </section>
