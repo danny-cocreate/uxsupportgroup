@@ -41,7 +41,7 @@ const LATE_PRICE_ID = "price_1TSLGrEt4aAP5ylP9oTB0tFg";
 const EARLY_BIRD_SEATS = 20;
 const REGULAR_SEATS = 50;
 const KNOWN_EARLY_BIRD_SOLD = 20;
-const KNOWN_REGULAR_SOLD = 7;
+const KNOWN_REGULAR_SOLD = 50;
 const DEFAULT_REGULAR_REMAINING = REGULAR_SEATS - KNOWN_REGULAR_SOLD;
 
 /** Set to false to hide purchase CTAs and disable checkout on `/summit`. */
@@ -248,7 +248,7 @@ const FAQ_ITEMS: { q: string; a: string }[] = [
 ];
 
 const Summit2026V1 = () => {
-  const [activeTicketTier, setActiveTicketTier] = useState<TicketTier>("regular");
+  const [activeTicketTier, setActiveTicketTier] = useState<TicketTier>("late");
   const [earlyBirdRemaining, setEarlyBirdRemaining] = useState(0);
   const [regularRemaining, setRegularRemaining] = useState(DEFAULT_REGULAR_REMAINING);
   const [checkoutLoading, setCheckoutLoading] = useState<CheckoutSlot | null>(null);
@@ -263,7 +263,7 @@ const Summit2026V1 = () => {
       const { data, error } = await supabase.functions.invoke("check-ticket-availability");
       if (error || !data) {
         console.error("[TICKETS] Availability error", error, data);
-        setActiveTicketTier("regular");
+        setActiveTicketTier("late");
         setEarlyBirdRemaining(0);
         setRegularRemaining(DEFAULT_REGULAR_REMAINING);
         return;
@@ -297,7 +297,7 @@ const Summit2026V1 = () => {
       setRegularRemaining(availability.regularRemaining);
     } catch (e) {
       console.error("[TICKETS] Availability fetch failed", e);
-      setActiveTicketTier("regular");
+      setActiveTicketTier("late");
       setEarlyBirdRemaining(0);
       setRegularRemaining(DEFAULT_REGULAR_REMAINING);
     }

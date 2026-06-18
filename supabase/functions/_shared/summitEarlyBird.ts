@@ -5,7 +5,7 @@ export const EARLY_BIRD_CAPACITY = 20;
 export const REGULAR_CAPACITY = 50;
 export const EARLY_BIRD_SOLD_FLOOR = 20;
 /** Regular tickets sold before Stripe metadata tracking; added to live Stripe counts. */
-export const REGULAR_SOLD_OFFSET = 7;
+export const REGULAR_SOLD_OFFSET = 50;
 /** Legacy minimum; prefer REGULAR_SOLD_OFFSET. Used only when offset env is unset/0. */
 export const REGULAR_SOLD_FLOOR = 0;
 
