@@ -824,7 +824,7 @@ const Summit2026V1 = () => {
                 onClick={() => startCheckout(LATE_PRICE_ID, "late")}
               >
                 {!SUMMIT_TICKET_PURCHASE_ENABLED
-                  ? "Sold Out"
+                  ? "Unavailable"
                   : checkoutLoading === "late"
                   ? "Opening checkout…"
                   : isLate
@@ -832,7 +832,6 @@ const Summit2026V1 = () => {
                     : "Available after regular"}
               </SketchyRectButton>
             </SketchyTallCard>
-            {!SUMMIT_TICKET_PURCHASE_ENABLED && <SketchySoldOutTape rotation="slight" />}
             </div>
           </div>
         </div>
