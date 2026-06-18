@@ -43,6 +43,9 @@ const KNOWN_EARLY_BIRD_SOLD = 20;
 const KNOWN_REGULAR_SOLD = 7;
 const DEFAULT_REGULAR_REMAINING = REGULAR_SEATS - KNOWN_REGULAR_SOLD;
 
+/** Set to false to hide purchase CTAs and disable checkout on `/summit`. */
+const SUMMIT_TICKET_PURCHASE_ENABLED = false;
+
 type TicketTier = "early_bird" | "regular" | "late";
 type CheckoutSlot = "early" | "regular" | "late";
 
@@ -300,12 +303,14 @@ const Summit2026V1 = () => {
   }, []);
 
   useEffect(() => {
+    if (!SUMMIT_TICKET_PURCHASE_ENABLED) return;
     fetchAvailability();
     const id = window.setInterval(fetchAvailability, 30_000);
     return () => window.clearInterval(id);
   }, [fetchAvailability]);
 
   useEffect(() => {
+    if (!SUMMIT_TICKET_PURCHASE_ENABLED) return;
     const params = new URLSearchParams(window.location.search);
     const checkout = params.get("checkout");
     if (checkout === "success") {
@@ -375,6 +380,7 @@ const Summit2026V1 = () => {
   }, []);
 
   const startCheckout = async (priceId: string, slot: CheckoutSlot) => {
+    if (!SUMMIT_TICKET_PURCHASE_ENABLED) return;
     setCheckoutLoading(slot);
     try {
       const { data, error } = await supabase.functions.invoke("create-checkout", {
@@ -496,24 +502,26 @@ const Summit2026V1 = () => {
               .
             </p>
             <div className="flex flex-col items-center gap-4 pt-2">
-              <div className="relative inline-flex shrink-0 transition-transform duration-200 hover:scale-105 active:scale-95">
-                <button
-                  type="button"
-                  onClick={scrollPricingBelowStickyHeader}
-                  aria-describedby="hero-limited-seats-badge"
-                  className="relative inline-flex origin-center items-center justify-center rounded-full border-[1.5px] border-uxsg-ink bg-[#e67e22] px-10 py-5 font-heading text-xl font-extrabold text-white shadow-[1px_1px_0_0_var(--uxsg-ink),-1px_2px_0_0_var(--uxsg-ink)] transition-colors motion-safe:hover:animate-summit-ticket-wiggle"
-                >
-                  Get My Ticket
-                </button>
-                <SketchyBadge
-                  id="hero-limited-seats-badge"
-                  variant="white"
-                  rotation="subtle"
-                  className="pointer-events-none absolute -right-2 -top-2.5 z-20 shadow-sm"
-                >
-                  Limited seats
-                </SketchyBadge>
-              </div>
+              {SUMMIT_TICKET_PURCHASE_ENABLED && (
+                <div className="relative inline-flex shrink-0 transition-transform duration-200 hover:scale-105 active:scale-95">
+                  <button
+                    type="button"
+                    onClick={scrollPricingBelowStickyHeader}
+                    aria-describedby="hero-limited-seats-badge"
+                    className="relative inline-flex origin-center items-center justify-center rounded-full border-[1.5px] border-uxsg-ink bg-[#e67e22] px-10 py-5 font-heading text-xl font-extrabold text-white shadow-[1px_1px_0_0_var(--uxsg-ink),-1px_2px_0_0_var(--uxsg-ink)] transition-colors motion-safe:hover:animate-summit-ticket-wiggle"
+                  >
+                    Get My Ticket
+                  </button>
+                  <SketchyBadge
+                    id="hero-limited-seats-badge"
+                    variant="white"
+                    rotation="subtle"
+                    className="pointer-events-none absolute -right-2 -top-2.5 z-20 shadow-sm"
+                  >
+                    Limited seats
+                  </SketchyBadge>
+                </div>
+              )}
               <div className="font-hand inline-flex max-w-full flex-row flex-wrap items-center justify-center gap-x-2 gap-y-0.5 text-center text-xl text-muted-foreground sm:flex-nowrap">
                 <span className="shrink-0 text-3xl leading-none" aria-hidden>
                   ✨
@@ -711,10 +719,14 @@ const Summit2026V1 = () => {
                 type="button"
                 variant="dark-bg"
                 fullWidth
-                disabled={!isEarlyBird || checkoutLoading !== null}
+                disabled={
+                  !SUMMIT_TICKET_PURCHASE_ENABLED || !isEarlyBird || checkoutLoading !== null
+                }
                 onClick={() => startCheckout(EARLY_BIRD_PRICE_ID, "early")}
               >
-                {checkoutLoading === "early"
+                {!SUMMIT_TICKET_PURCHASE_ENABLED
+                  ? "Unavailable"
+                  : checkoutLoading === "early"
                   ? "Opening checkout…"
                   : isEarlyBird
                     ? "Get Early Bird"
@@ -758,10 +770,14 @@ const Summit2026V1 = () => {
                 type="button"
                 variant="dark-bg"
                 fullWidth
-                disabled={!isRegular || checkoutLoading !== null}
+                disabled={
+                  !SUMMIT_TICKET_PURCHASE_ENABLED || !isRegular || checkoutLoading !== null
+                }
                 onClick={() => startCheckout(REGULAR_PRICE_ID, "regular")}
               >
-                {checkoutLoading === "regular"
+                {!SUMMIT_TICKET_PURCHASE_ENABLED
+                  ? "Unavailable"
+                  : checkoutLoading === "regular"
                   ? "Opening checkout…"
                   : isEarlyBird
                     ? "Available after early bird"
@@ -796,10 +812,12 @@ const Summit2026V1 = () => {
                 type="button"
                 variant="dark-bg"
                 fullWidth
-                disabled={!isLate || checkoutLoading !== null}
+                disabled={!SUMMIT_TICKET_PURCHASE_ENABLED || !isLate || checkoutLoading !== null}
                 onClick={() => startCheckout(LATE_PRICE_ID, "late")}
               >
-                {checkoutLoading === "late"
+                {!SUMMIT_TICKET_PURCHASE_ENABLED
+                  ? "Unavailable"
+                  : checkoutLoading === "late"
                   ? "Opening checkout…"
                   : isLate
                     ? "Get Late Ticket"
